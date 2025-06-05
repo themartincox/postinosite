@@ -8,12 +8,10 @@ export default function ProcessCategoryPage() {
       categorySlug="process"
       categoryDescription="Intelligent process automation that eliminates manual bottlenecks, reduces errors, and scales your operations efficiently."
       parentService="ai-automation"
-
       heroTitle="Process Automation That Transforms Operations"
       heroSubtitle="Process Automation Services"
       heroDescription="Eliminate manual bottlenecks and human error with sophisticated automation systems. Our process automation solutions work 24/7 to handle complex workflows, freeing your team to focus on strategic growth activities."
       heroColor="coral-red"
-
       services={[
         {
           name: "Business Process Automation",
@@ -32,16 +30,16 @@ export default function ProcessCategoryPage() {
         {
           name: "Workflow Automation",
           slug: "workflow-automation",
-          description: "Streamlined workflows that connect systems and automate handoffs",
+          description: "Streamlined workflows that improve efficiency and reduce operational complexity",
           features: [
-            "Cross-system workflow integration",
-            "Automated approvals and notifications",
-            "Document processing and routing",
-            "Task assignment and tracking",
-            "Workflow performance monitoring"
+            "Custom workflow design and implementation",
+            "Multi-system integration and orchestration",
+            "Automated decision-making and routing",
+            "Exception handling and escalation",
+            "Performance monitoring and optimisation"
           ],
           icon: Workflow,
-          resultMetric: "67% reduction in process completion time"
+          resultMetric: "70% reduction in workflow completion time"
         },
         {
           name: "Quality Control Systems",
@@ -56,9 +54,36 @@ export default function ProcessCategoryPage() {
           ],
           icon: Settings,
           resultMetric: "95% reduction in quality control errors"
+        },
+        {
+          name: "Task Management",
+          slug: "task-management",
+          description: "Intelligent task prioritisation and automated assignment systems",
+          features: [
+            "AI-powered task prioritisation based on business impact",
+            "Smart assignment based on skills and capacity",
+            "Automated workflow orchestration",
+            "Real-time workload balancing",
+            "Performance analytics and insights"
+          ],
+          icon: Target,
+          resultMetric: "78% improvement in team productivity and efficiency"
+        },
+        {
+          name: "System Integration",
+          slug: "system-integration", 
+          description: "Seamless integration that connects all your business systems",
+          features: [
+            "Custom API development and system connections",
+            "Real-time data synchronisation across platforms",
+            "Automated workflow orchestration between systems",
+            "Legacy system modernisation and integration",
+            "Unified dashboard and reporting capabilities"
+          ],
+          icon: Zap,
+          resultMetric: "95% elimination of manual data transfer tasks"
         }
       ]}
-
       processSteps={[
         {
           step: "01",
@@ -69,58 +94,54 @@ export default function ProcessCategoryPage() {
         {
           step: "02",
           title: "Solution Design",
-          description: "Design automated workflows tailored to your business requirements.",
+          description: "Design custom automation solutions tailored to your specific needs.",
           icon: Target
         },
         {
           step: "03",
           title: "Implementation",
-          description: "Build and deploy automation systems with comprehensive testing.",
+          description: "Deploy and integrate automation systems with minimal disruption.",
           icon: Cog
         },
         {
           step: "04",
           title: "Optimisation",
-          description: "Monitor performance and continuously improve automation efficiency.",
+          description: "Monitor performance and continuously improve automation effectiveness.",
           icon: TrendingUp
         }
       ]}
-
       categoryBenefits={[
-        "Eliminate manual bottlenecks that slow down operations",
-        "Reduce human errors by up to 95% through intelligent automation",
+        "Eliminate 80-95% of manual, repetitive tasks across your operations",
+        "Reduce human error rates by up to 98% through intelligent automation",
         "Scale operations without proportional increases in headcount",
-        "Improve process consistency and quality across all operations",
-        "Free team members to focus on strategic and creative work",
-        "Create complete audit trails for compliance and reporting"
+        "Free valuable team time to focus on strategic and creative work",
+        "Create consistent, auditable processes that improve compliance",
+        "Achieve 24/7 operational capability with automated monitoring"
       ]}
-
       categoryMetrics={[
         {
-          metric: "Weekly Time Savings",
-          value: "45hrs",
-          description: "Average hours saved through automation"
+          metric: "Average Time Savings",
+          value: "40+",
+          description: "Hours saved per week through process automation"
         },
         {
           metric: "Error Reduction",
           value: "95%",
-          description: "Decrease in manual processing errors"
+          description: "Reduction in manual processing errors"
         },
         {
           metric: "ROI Achievement",
-          value: "520%",
-          description: "Return on automation investment"
+          value: "6 months",
+          description: "Average time to achieve positive ROI"
         }
       ]}
-
       ctaPrimary={{
-        text: "Request Automation Assessment",
-        href: "/ai-automation-demo"
+        text: "Automate Your Processes",
+        href: "/contact"
       }}
-
       ctaSecondary={{
-        text: "View Automation Results",
-        href: "/case-studies"
+        text: "Explore AI Automation",
+        href: "/ai-automation"
       }}
     />
   )

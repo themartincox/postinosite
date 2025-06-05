@@ -155,6 +155,12 @@ export default function AIAutomationPage() {
                     </ul>
                   </div>
                 </div>
+                <Button asChild className="w-full bg-coral-red hover:bg-coral-red/90 text-white">
+                  <Link href="/ai-automation/process">
+                    Explore Process Automation Services
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
               </CardContent>
             </Card>
 
@@ -212,6 +218,12 @@ export default function AIAutomationPage() {
                     </ul>
                   </div>
                 </div>
+                <Button asChild className="w-full bg-forest-green hover:bg-forest-green/90 text-white mt-6">
+                  <Link href="/ai-automation/intelligence">
+                    Explore Intelligence & Data Services
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
               </CardContent>
             </Card>
 
@@ -269,6 +281,12 @@ export default function AIAutomationPage() {
                     </ul>
                   </div>
                 </div>
+                <Button asChild className="w-full bg-midnight-blue hover:bg-midnight-blue/90 text-white mt-6">
+                  <Link href="/ai-automation/custom-ai">
+                    Explore Custom AI Solutions
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
               </CardContent>
             </Card>
           </div>

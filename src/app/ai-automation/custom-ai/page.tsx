@@ -16,8 +16,8 @@ export default function CustomAICategoryPage() {
 
       services={[
         {
-          name: "Custom AI Chatbots",
-          slug: "custom-ai-chatbots",
+          name: "Intelligent Chatbot Development",
+          slug: "intelligent-chatbots",
           description: "Intelligent conversational AI that handles customer service and lead qualification",
           features: [
             "Natural language processing and understanding",

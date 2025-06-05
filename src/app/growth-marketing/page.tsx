@@ -115,6 +115,12 @@ export default function GrowthMarketingPage() {
                     <li>• Predictive email send time optimization</li>
                   </ul>
                 </div>
+                <Button asChild className="w-full bg-forest-green hover:bg-forest-green/90 text-white">
+                  <Link href="/growth-marketing/inbound">
+                    Explore Inbound Marketing Services
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
               </CardContent>
             </Card>
 
@@ -175,6 +181,12 @@ export default function GrowthMarketingPage() {
                     <li>• Enhanced content performance and user engagement</li>
                   </ul>
                 </div>
+                <Button asChild className="w-full bg-coral-red hover:bg-coral-red/90 text-white">
+                  <Link href="/growth-marketing/ai-search">
+                    Explore AI Search Services
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
               </CardContent>
             </Card>
 
@@ -235,6 +247,12 @@ export default function GrowthMarketingPage() {
                     <li>• Mobile-first, conversion-optimized approach</li>
                   </ul>
                 </div>
+                <Button asChild className="w-full bg-midnight-blue hover:bg-midnight-blue/90 text-white">
+                  <Link href="/growth-marketing/branding">
+                    Explore Branding Services
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
               </CardContent>
             </Card>
 
@@ -295,6 +313,12 @@ export default function GrowthMarketingPage() {
                     <li>• Executive-level strategic consulting</li>
                   </ul>
                 </div>
+                <Button asChild className="w-full bg-forest-green hover:bg-forest-green/90 text-white">
+                  <Link href="/growth-marketing/strategy">
+                    Explore Strategy Services
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
               </CardContent>
             </Card>
           </div>
