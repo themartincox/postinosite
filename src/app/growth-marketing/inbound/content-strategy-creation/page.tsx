@@ -135,7 +135,7 @@ export default function ContentStrategyCreationPage() {
       relatedServices={[
         {
           name: "SEO Strategy & Implementation",
-          slug: "seo-strategy-implementation",
+          slug: "seo",
           description: "Optimise content for search engines to maximise organic visibility"
         },
         {
