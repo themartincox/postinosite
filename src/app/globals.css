@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Postino Brand Colors */
+    --midnight-blue: 210 100% 12%;
+    --forest-green: 158 64% 26%;
+    --coral-red: 14 100% 64%;
+    --soft-gray: 210 20% 98%;
+    --charcoal: 210 24% 16%;
+    --warm-white: 0 0% 100%;
+
+    /* Design System Colors */
+    --background: 0 0% 100%;
+    --foreground: 210 24% 16%;
+    --card: 0 0% 100%;
+    --card-foreground: 210 24% 16%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 24% 16%;
+    --primary: 210 100% 12%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 210 20% 98%;
+    --secondary-foreground: 210 24% 16%;
+    --muted: 210 20% 98%;
+    --muted-foreground: 210 10% 46%;
+    --accent: 158 64% 26%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 14 100% 64%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 210 20% 90%;
+    --input: 210 20% 90%;
+    --ring: 210 100% 12%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 210 24% 16%;
+    --foreground: 0 0% 98%;
+    --card: 210 24% 16%;
+    --card-foreground: 0 0% 98%;
+    --popover: 210 24% 16%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 210 24% 16%;
+    --secondary: 210 20% 20%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 210 20% 20%;
+    --muted-foreground: 210 10% 64%;
+    --accent: 158 64% 35%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 14 100% 64%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 210 20% 25%;
+    --input: 210 20% 25%;
+    --ring: 210 100% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-serif;
+    font-family: 'Crimson Text', serif;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', sans-serif;
+    @apply font-semibold;
+  }
+}
+
+@layer components {
+  /* Brand Color Utilities */
+  .text-midnight-blue {
+    color: hsl(var(--midnight-blue));
+  }
+  .text-forest-green {
+    color: hsl(var(--forest-green));
+  }
+  .text-coral-red {
+    color: hsl(var(--coral-red));
+  }
+  .bg-midnight-blue {
+    background-color: hsl(var(--midnight-blue));
+  }
+  .bg-forest-green {
+    background-color: hsl(var(--forest-green));
+  }
+  .bg-coral-red {
+    background-color: hsl(var(--coral-red));
+  }
+  .bg-soft-gray {
+    background-color: hsl(var(--soft-gray));
+  }
+
+  /* Typography */
+  .font-heading {
+    font-family: 'Inter', sans-serif;
+  }
+  .font-body {
+    font-family: 'Crimson Text', serif;
+  }
+
+  /* Custom Components */
+  .gradient-midnight-forest {
+    background: linear-gradient(135deg, hsl(var(--midnight-blue)), hsl(var(--forest-green)));
+  }
+
+  .hero-gradient {
+    background: linear-gradient(135deg, hsl(var(--midnight-blue)) 0%, hsl(var(--forest-green)) 100%);
+  }
+
+  /* Enhanced animations */
+  .animate-pulse-slow {
+    animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes pulse-slow {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Enhanced backdrop blur support */
+  .backdrop-blur-sm {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+}
