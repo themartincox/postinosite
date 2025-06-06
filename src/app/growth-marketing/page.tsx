@@ -80,28 +80,36 @@ export default function GrowthMarketingPage() {
                   <div className="flex items-start space-x-3">
                     <Search className="h-5 w-5 text-forest-green mt-1 flex-shrink-0" />
                     <div>
-                      <h4 className="font-heading font-semibold text-midnight-blue mb-1">SEO Strategy & Implementation</h4>
+                      <Link href="/growth-marketing/inbound/seo" className="hover:text-forest-green transition-colors">
+                        <h4 className="font-heading font-semibold text-midnight-blue mb-1 hover:text-forest-green transition-colors">SEO Strategy & Implementation</h4>
+                      </Link>
                       <p className="font-body text-gray-600 text-sm">AI-enhanced keyword research, technical SEO, and content optimization for maximum organic visibility</p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
                     <PenTool className="h-5 w-5 text-forest-green mt-1 flex-shrink-0" />
                     <div>
-                      <h4 className="font-heading font-semibold text-midnight-blue mb-1">Content Strategy & Creation</h4>
+                      <Link href="/growth-marketing/inbound/content-strategy-creation" className="hover:text-forest-green transition-colors">
+                        <h4 className="font-heading font-semibold text-midnight-blue mb-1 hover:text-forest-green transition-colors">Content Strategy & Creation</h4>
+                      </Link>
                       <p className="font-body text-gray-600 text-sm">Strategic content planning, blog management, and thought leadership content that drives engagement</p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
                     <Mail className="h-5 w-5 text-forest-green mt-1 flex-shrink-0" />
                     <div>
-                      <h4 className="font-heading font-semibold text-midnight-blue mb-1">Email Marketing Automation</h4>
+                      <Link href="/growth-marketing/inbound/email-marketing-automation" className="hover:text-forest-green transition-colors">
+                        <h4 className="font-heading font-semibold text-midnight-blue mb-1 hover:text-forest-green transition-colors">Email Marketing Automation</h4>
+                      </Link>
                       <p className="font-body text-gray-600 text-sm">Automated nurture sequences, personalized campaigns, and performance optimization</p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
                     <Share2 className="h-5 w-5 text-forest-green mt-1 flex-shrink-0" />
                     <div>
-                      <h4 className="font-heading font-semibold text-midnight-blue mb-1">Social Media Management</h4>
+                      <Link href="/growth-marketing/inbound/social-media-management" className="hover:text-forest-green transition-colors">
+                        <h4 className="font-heading font-semibold text-midnight-blue mb-1 hover:text-forest-green transition-colors">Social Media Management</h4>
+                      </Link>
                       <p className="font-body text-gray-600 text-sm">Strategic social presence, community building, and engagement optimization</p>
                     </div>
                   </div>
@@ -146,28 +154,36 @@ export default function GrowthMarketingPage() {
                   <div className="flex items-start space-x-3">
                     <Target className="h-5 w-5 text-coral-red mt-1 flex-shrink-0" />
                     <div>
-                      <h4 className="font-heading font-semibold text-midnight-blue mb-1">AI-Driven Keyword Research</h4>
+                      <Link href="/growth-marketing/ai-search/ai-keyword-research" className="hover:text-coral-red transition-colors">
+                        <h4 className="font-heading font-semibold text-midnight-blue mb-1 hover:text-coral-red transition-colors">AI-Driven Keyword Research</h4>
+                      </Link>
                       <p className="font-body text-gray-600 text-sm">Machine learning algorithms identify high-opportunity keywords and search trends</p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
                     <Eye className="h-5 w-5 text-coral-red mt-1 flex-shrink-0" />
                     <div>
-                      <h4 className="font-heading font-semibold text-midnight-blue mb-1">Content Relevance Optimization</h4>
+                      <Link href="/growth-marketing/ai-search/content-relevance-optimization" className="hover:text-coral-red transition-colors">
+                        <h4 className="font-heading font-semibold text-midnight-blue mb-1 hover:text-coral-red transition-colors">Content Relevance Optimization</h4>
+                      </Link>
                       <p className="font-body text-gray-600 text-sm">AI analysis ensures content perfectly matches search intent and user behavior</p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
                     <BarChart3 className="h-5 w-5 text-coral-red mt-1 flex-shrink-0" />
                     <div>
-                      <h4 className="font-heading font-semibold text-midnight-blue mb-1">Predictive SEO Analytics</h4>
+                      <Link href="/growth-marketing/ai-search/predictive-seo-analytics" className="hover:text-coral-red transition-colors">
+                        <h4 className="font-heading font-semibold text-midnight-blue mb-1 hover:text-coral-red transition-colors">Predictive SEO Analytics</h4>
+                      </Link>
                       <p className="font-body text-gray-600 text-sm">Forecast ranking opportunities and identify content gaps before competitors</p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
                     <Globe className="h-5 w-5 text-coral-red mt-1 flex-shrink-0" />
                     <div>
-                      <h4 className="font-heading font-semibold text-midnight-blue mb-1">Organic Visibility Enhancement</h4>
+                      <Link href="/growth-marketing/ai-search/organic-visibility-enhancement" className="hover:text-coral-red transition-colors">
+                        <h4 className="font-heading font-semibold text-midnight-blue mb-1 hover:text-coral-red transition-colors">Organic Visibility Enhancement</h4>
+                      </Link>
                       <p className="font-body text-gray-600 text-sm">Systematic approach to improving search rankings and organic traffic quality</p>
                     </div>
                   </div>
@@ -212,28 +228,36 @@ export default function GrowthMarketingPage() {
                   <div className="flex items-start space-x-3">
                     <Target className="h-5 w-5 text-midnight-blue mt-1 flex-shrink-0" />
                     <div>
-                      <h4 className="font-heading font-semibold text-midnight-blue mb-1">Brand Identity Development</h4>
+                      <Link href="/growth-marketing/branding/brand-identity-development" className="hover:text-midnight-blue transition-colors">
+                        <h4 className="font-heading font-semibold text-midnight-blue mb-1 hover:text-coral-red transition-colors">Brand Identity Development</h4>
+                      </Link>
                       <p className="font-body text-gray-600 text-sm">Strategic brand positioning, visual identity, and messaging that resonates with your audience</p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
                     <Eye className="h-5 w-5 text-midnight-blue mt-1 flex-shrink-0" />
                     <div>
-                      <h4 className="font-heading font-semibold text-midnight-blue mb-1">Collateral & Design</h4>
+                      <Link href="/growth-marketing/branding/collateral-design" className="hover:text-midnight-blue transition-colors">
+                        <h4 className="font-heading font-semibold text-midnight-blue mb-1 hover:text-coral-red transition-colors">Collateral & Design</h4>
+                      </Link>
                       <p className="font-body text-gray-600 text-sm">Professional marketing materials, presentations, and brand assets that build credibility</p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
                     <Globe className="h-5 w-5 text-midnight-blue mt-1 flex-shrink-0" />
                     <div>
-                      <h4 className="font-heading font-semibold text-midnight-blue mb-1">Website Design & Development</h4>
+                      <Link href="/growth-marketing/branding/website-design-development" className="hover:text-midnight-blue transition-colors">
+                        <h4 className="font-heading font-semibold text-midnight-blue mb-1 hover:text-coral-red transition-colors">Website Design & Development</h4>
+                      </Link>
                       <p className="font-body text-gray-600 text-sm">Conversion-optimized websites that combine beautiful design with exceptional user experience</p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
                     <TrendingUp className="h-5 w-5 text-midnight-blue mt-1 flex-shrink-0" />
                     <div>
-                      <h4 className="font-heading font-semibold text-midnight-blue mb-1">Conversion Funnels</h4>
+                      <Link href="/growth-marketing/branding/conversion-funnels" className="hover:text-midnight-blue transition-colors">
+                        <h4 className="font-heading font-semibold text-midnight-blue mb-1 hover:text-coral-red transition-colors">Conversion Funnels</h4>
+                      </Link>
                       <p className="font-body text-gray-600 text-sm">Strategic customer journey design and funnel optimization for maximum conversions</p>
                     </div>
                   </div>
@@ -278,28 +302,36 @@ export default function GrowthMarketingPage() {
                   <div className="flex items-start space-x-3">
                     <Search className="h-5 w-5 text-forest-green mt-1 flex-shrink-0" />
                     <div>
-                      <h4 className="font-heading font-semibold text-midnight-blue mb-1">Research & Market Analysis</h4>
+                      <Link href="/growth-marketing/strategy/research-market-analysis" className="hover:text-forest-green transition-colors">
+                        <h4 className="font-heading font-semibold text-midnight-blue mb-1 hover:text-forest-green transition-colors">Research & Market Analysis</h4>
+                      </Link>
                       <p className="font-body text-gray-600 text-sm">Deep market insights, competitor analysis, and customer research to inform strategy</p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
                     <Target className="h-5 w-5 text-forest-green mt-1 flex-shrink-0" />
                     <div>
-                      <h4 className="font-heading font-semibold text-midnight-blue mb-1">Marketing Planning</h4>
+                      <Link href="/growth-marketing/strategy/marketing-planning" className="hover:text-forest-green transition-colors">
+                        <h4 className="font-heading font-semibold text-midnight-blue mb-1 hover:text-forest-green transition-colors">Marketing Planning</h4>
+                      </Link>
                       <p className="font-body text-gray-600 text-sm">Comprehensive marketing strategies with clear roadmaps and measurable objectives</p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
                     <BarChart3 className="h-5 w-5 text-forest-green mt-1 flex-shrink-0" />
                     <div>
-                      <h4 className="font-heading font-semibold text-midnight-blue mb-1">Analytics & Reporting</h4>
+                      <Link href="/growth-marketing/strategy/analytics-reporting" className="hover:text-forest-green transition-colors">
+                        <h4 className="font-heading font-semibold text-midnight-blue mb-1 hover:text-forest-green transition-colors">Analytics & Reporting</h4>
+                      </Link>
                       <p className="font-body text-gray-600 text-sm">Advanced analytics setup, performance tracking, and actionable insights reporting</p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
                     <TrendingUp className="h-5 w-5 text-forest-green mt-1 flex-shrink-0" />
                     <div>
-                      <h4 className="font-heading font-semibold text-midnight-blue mb-1">Conversion Rate Optimization</h4>
+                      <Link href="/growth-marketing/strategy/conversion-rate-optimization" className="hover:text-forest-green transition-colors">
+                        <h4 className="font-heading font-semibold text-midnight-blue mb-1 hover:text-forest-green transition-colors">Conversion Rate Optimization</h4>
+                      </Link>
                       <p className="font-body text-gray-600 text-sm">Systematic testing and optimization to improve conversion rates across all touchpoints</p>
                     </div>
                   </div>

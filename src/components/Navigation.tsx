@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { Menu, X } from "lucide-react"
@@ -8,11 +8,81 @@ import { usePathname } from 'next/navigation'
 
 export default function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
   const pathname = usePathname()
 
   const isActive = (path: string) => {
     return pathname === path || pathname.startsWith(`${path}/`)
   }
+
+  // Handle scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // Determine nav colors based on page and scroll state
+  const getNavColors = () => {
+    if (isScrolled) {
+      return {
+        nav: 'bg-white shadow-lg',
+        logo: 'text-midnight-blue',
+        links: 'text-gray-600',
+        activeLinks: 'text-midnight-blue',
+        contactBtn: 'border-2 border-coral-red text-coral-red hover:bg-coral-red hover:text-white'
+      }
+    }
+
+    // Get page-specific hero colors when not scrolled
+    if (pathname === '/') {
+      return {
+        nav: 'bg-gradient-to-r from-midnight-blue to-forest-green',
+        logo: 'text-white',
+        links: 'text-white/80',
+        activeLinks: 'text-white',
+        contactBtn: 'border-2 border-coral-red text-coral-red hover:bg-coral-red hover:text-white'
+      }
+    } else if (pathname.startsWith('/growth-marketing')) {
+      return {
+        nav: 'bg-forest-green',
+        logo: 'text-white',
+        links: 'text-white/80',
+        activeLinks: 'text-white',
+        contactBtn: 'border-2 border-coral-red text-coral-red hover:bg-coral-red hover:text-white'
+      }
+    } else if (pathname.startsWith('/ai-automation')) {
+      return {
+        nav: 'bg-coral-red',
+        logo: 'text-white',
+        links: 'text-white/80',
+        activeLinks: 'text-white',
+        contactBtn: 'border-2 border-coral-red text-white hover:bg-coral-red hover:text-midnight-blue bg-coral-red/20'
+      }
+    } else if (pathname === '/case-studies') {
+      return {
+        nav: 'bg-gradient-to-br from-midnight-blue to-forest-green',
+        logo: 'text-white',
+        links: 'text-white/80',
+        activeLinks: 'text-white',
+        contactBtn: 'border-2 border-coral-red text-coral-red hover:bg-coral-red hover:text-white'
+      }
+    }
+
+    // Default colors for other pages
+    return {
+      nav: 'bg-white shadow-sm',
+      logo: 'text-midnight-blue',
+      links: 'text-gray-600',
+      activeLinks: 'text-midnight-blue',
+      contactBtn: 'border-2 border-coral-red text-coral-red hover:bg-coral-red hover:text-white'
+    }
+  }
+
+  const navColors = getNavColors()
 
   const navigationItems = [
     { href: "/growth-marketing", label: "Growth Marketing" },
@@ -23,14 +93,14 @@ export default function Navigation() {
   ]
 
   return (
-    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+    <nav className={`${navColors.nav} border-b border-white/10 sticky top-0 z-50 transition-all duration-300`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center">
             <Link
               href="/"
-              className="text-2xl font-heading font-bold text-midnight-blue hover:text-coral-red transition-colors duration-200"
+              className={`text-2xl font-heading font-bold ${navColors.logo} hover:text-coral-red transition-colors duration-200`}
             >
               Postino.
             </Link>
@@ -44,8 +114,8 @@ export default function Navigation() {
                 href={item.href}
                 className={`font-heading font-medium transition-all duration-200 relative group ${
                   isActive(item.href)
-                    ? 'text-midnight-blue font-semibold'
-                    : 'text-gray-600 hover:text-midnight-blue'
+                    ? `${navColors.activeLinks} font-semibold`
+                    : `${navColors.links} hover:text-white`
                 }`}
               >
                 {item.label}
@@ -58,7 +128,7 @@ export default function Navigation() {
             <Button
               asChild
               variant="outline"
-              className="border-midnight-blue text-midnight-blue hover:bg-midnight-blue hover:text-white transition-all duration-200"
+              className={`${navColors.contactBtn} font-heading font-semibold transition-all duration-200`}
             >
               <Link href="/contact">Contact</Link>
             </Button>
@@ -68,7 +138,7 @@ export default function Navigation() {
           <div className="md:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="text-midnight-blue hover:text-coral-red transition-colors p-2"
+              className={`${navColors.logo} hover:text-coral-red transition-colors p-2`}
               aria-label="Toggle mobile menu"
             >
               {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -78,7 +148,7 @@ export default function Navigation() {
 
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-gray-200 py-4 space-y-3">
+          <div className="md:hidden border-t border-white/20 py-4 space-y-3">
             {navigationItems.map((item) => (
               <Link
                 key={item.href}
@@ -86,8 +156,8 @@ export default function Navigation() {
                 onClick={() => setMobileMenuOpen(false)}
                 className={`block px-4 py-2 font-heading font-medium transition-colors rounded-lg ${
                   isActive(item.href)
-                    ? 'text-midnight-blue bg-coral-red/5 font-semibold'
-                    : 'text-gray-600 hover:text-midnight-blue hover:bg-gray-50'
+                    ? `${navColors.activeLinks} bg-white/10 font-semibold`
+                    : `${navColors.links} hover:text-white hover:bg-white/10`
                 }`}
               >
                 {item.label}
@@ -97,7 +167,7 @@ export default function Navigation() {
               <Button
                 asChild
                 variant="outline"
-                className="w-full border-midnight-blue text-midnight-blue hover:bg-midnight-blue hover:text-white"
+                className={`w-full ${navColors.contactBtn} font-heading font-semibold`}
               >
                 <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>
                   Contact

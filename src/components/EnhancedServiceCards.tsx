@@ -55,13 +55,14 @@ export default function EnhancedServiceCards() {
     >
       {/* Growth Marketing Card */}
       <motion.div variants={cardVariants}>
-        <Card
-          className={`bg-white shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer relative overflow-hidden group ${
-            hoveredCard === 'growth' ? 'scale-105 shadow-2xl' : ''
-          }`}
-          onMouseEnter={() => setHoveredCard('growth')}
-          onMouseLeave={() => setHoveredCard(null)}
-        >
+        <Link href="/growth-marketing" className="block">
+          <Card
+            className={`bg-white shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer relative overflow-hidden group ${
+              hoveredCard === 'growth' ? 'scale-105 shadow-2xl' : ''
+            }`}
+            onMouseEnter={() => setHoveredCard('growth')}
+            onMouseLeave={() => setHoveredCard(null)}
+          >
           {/* Animated background */}
           <div className="absolute inset-0 bg-gradient-to-br from-forest-green/5 via-transparent to-coral-red/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
@@ -105,15 +106,14 @@ export default function EnhancedServiceCards() {
             </div>
 
             <motion.div
+              className="text-center mt-6 pt-4 border-t border-gray-100"
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <Button asChild variant="outline" className="w-full mt-6 font-heading font-semibold border-forest-green text-forest-green hover:bg-forest-green hover:text-white transition-all duration-300">
-                <Link href="/growth-marketing">
-                  Explore Growth Services
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
+              <span className="font-heading font-semibold text-forest-green flex items-center justify-center">
+                Explore Growth Services
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </span>
             </motion.div>
           </CardContent>
 
@@ -146,15 +146,17 @@ export default function EnhancedServiceCards() {
               ))}
             </div>
           )}
-        </Card>
+          </Card>
+        </Link>
       </motion.div>
 
       {/* AI Automation Card */}
       <motion.div variants={cardVariants}>
-        <Card
-          className={`bg-white shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer relative overflow-hidden group ${
-            hoveredCard === 'ai' ? 'scale-105 shadow-2xl' : ''
-          }`}
+        <Link href="/ai-automation" className="block">
+          <Card
+            className={`bg-white shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer relative overflow-hidden group ${
+              hoveredCard === 'ai' ? 'scale-105 shadow-2xl' : ''
+            }`}
           onMouseEnter={() => setHoveredCard('ai')}
           onMouseLeave={() => setHoveredCard(null)}
         >
@@ -201,15 +203,14 @@ export default function EnhancedServiceCards() {
             </div>
 
             <motion.div
+              className="text-center mt-6 pt-4 border-t border-gray-100"
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <Button asChild variant="outline" className="w-full mt-6 font-heading font-semibold border-coral-red text-coral-red hover:bg-coral-red hover:text-white transition-all duration-300">
-                <Link href="/ai-automation">
-                  Discover AI Solutions
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
+              <span className="font-heading font-semibold text-coral-red flex items-center justify-center">
+                Discover AI Solutions
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </span>
             </motion.div>
           </CardContent>
 
@@ -242,7 +243,8 @@ export default function EnhancedServiceCards() {
               ))}
             </div>
           )}
-        </Card>
+          </Card>
+        </Link>
       </motion.div>
     </motion.div>
   )
