@@ -34,7 +34,7 @@ export default function NewBlogPost() {
     content: "",
     category: "",
     tags: "",
-    author: "Sarah Mitchell",
+    author: "Martin",
     status: "draft",
     featured: false,
     publishDate: "",
@@ -76,18 +76,9 @@ export default function NewBlogPost() {
   ];
 
   const authors = [
-    "Sarah Mitchell",
-    "James Rodriguez",
-    "Emma Thompson",
-    "David Chen",
+    "Martin",
   ];
-
-  return (
-    <div className="flex flex-col min-h-screen">
-      {/* Navigation */}
       <Navigation />
-
-      {/* Header */}
       <div className="bg-midnight-blue text-white py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
@@ -116,7 +107,6 @@ export default function NewBlogPost() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid lg:grid-cols-3 gap-8">
-          {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
             {/* Post Content */}
             <Card>
@@ -246,8 +236,6 @@ export default function NewBlogPost() {
               </CardContent>
             </Card>
           </div>
-
-          {/* Sidebar */}
           <div className="space-y-6">
             {/* Publish Settings */}
             <Card>
@@ -400,8 +388,6 @@ export default function NewBlogPost() {
           </div>
         </div>
       </div>
-
-      {/* Footer */}
       <footer className="bg-charcoal text-white py-8 mt-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="font-body text-gray-400">

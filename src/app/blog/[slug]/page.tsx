@@ -36,7 +36,7 @@ const getBlogPost = (slug: string) => {
       <p>In 2024, we're witnessing an unprecedented democratisation of AI tools. SMEs can now leverage sophisticated algorithms for customer segmentation, predictive analytics, and automated content creation at a fraction of the cost it would have required just two years ago.</p>
 
       <blockquote>
-        <p>"The businesses that embrace AI marketing now will have an insurmountable competitive advantage within the next 18 months." - Sarah Mitchell, Growth Strategy Expert</p>
+        <p>"The businesses that embrace AI marketing now will have an insurmountable competitive advantage within the next 18 months." - Martin, Growth Strategy Expert</p>
       </blockquote>
 
       <h2>Key Areas Where AI is Making an Impact</h2>
@@ -84,7 +84,7 @@ const getBlogPost = (slug: string) => {
     excerpt:
       "Discover how small and medium enterprises are leveraging artificial intelligence to compete with industry giants and achieve unprecedented growth rates.",
     author: {
-      name: "Sarah Mitchell",
+      name: "Martin",
       bio: "Sarah is a growth strategy expert with over 10 years of experience helping SMEs scale through innovative marketing approaches.",
       avatar:
         "https://images.unsplash.com/photo-1494790108755-2616b612b1c4?w=150&h=150&fit=crop&crop=face",

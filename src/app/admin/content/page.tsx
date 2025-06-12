@@ -108,7 +108,7 @@ export default function ContentManager() {
         roi: "520%",
       },
       testimonial: "Postino didn't just automate our processes—they transformed how we think about growth.",
-      clientName: "Sarah Mitchell",
+      clientName: "Martin",
       clientRole: "CEO",
     },
     {
@@ -124,7 +124,7 @@ export default function ContentManager() {
         roi: "420%",
       },
       testimonial: "Within 6 months, we went from struggling to find clients to having a waiting list.",
-      clientName: "James Rodriguez",
+      clientName: "Martin",
       clientRole: "Managing Partner",
     },
   ]);

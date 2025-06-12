@@ -1,3 +1,5 @@
+"use client";
+
 import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -11,10 +13,45 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowRight, CheckCircle, Mail, MapPin, Phone } from "lucide-react";
+import { ArrowRight, CheckCircle, Mail, MapPin, Phone, MessageSquare } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function ContactPage() {
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    // Simulate form submission - replace with actual form handling
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+    
+    try {
+      const response = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(formData as any).toString()
+      });
+      
+      if (response.ok) {
+            }
+  };
+      } else 
+        throw new Error("Form submission failed");
+    } catch (error) {
+      console.error("Form submission error:", error);
+      // Still show success message for UX, but log error
+          }
+  };
+    } finally {
+
+    
+        }
+  };
+  };
   return (
     <div className="flex flex-col min-h-screen">
       {/* Navigation */}
@@ -94,7 +131,7 @@ export default function ContactPage() {
                 <p className="text-gray-700 mb-2">
                   Call us on{" "}
                   <Link
-                    href="tel:+442012345678"
+                    href="tel:+4407432039801"
                     className="text-coral-red hover:underline font-semibold"
                   >
                     +44 20 1234 5678
@@ -107,7 +144,45 @@ export default function ContactPage() {
 
           {/* Right Side - Form */}
           <div className="bg-coral-red p-8 lg:p-16 flex flex-col justify-center">
-            <form className="space-y-6">
+            {isSubmitted ? (
+              <div className="text-center">
+                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-6">
+                  <CheckCircle className="h-8 w-8 text-coral-red" />
+                </div>
+                <h3 className="text-2xl font-heading font-bold text-white mb-4">
+                  Thank You!
+                </h3>
+                <p className="text-white/90 mb-6 leading-relaxed">
+                  We've received your message and one of our team will be in touch within 24 hours.
+                </p>
+                <div className="bg-white/10 rounded-lg p-4 mb-6">
+                  <p className="text-white/80 text-sm">
+                    For urgent enquiries, you can also reach us on WhatsApp or call us directly.
+                  </p>
+                </div>
+                <Button
+                  onClick={() => setIsSubmitted(false)}
+                  variant="outline"
+                  className="bg-white text-coral-red border-white hover:bg-white/90"
+                >
+                  Send Another Message
+                </Button>
+              </div>
+            ) : (
+              <form
+                className="space-y-6"
+                onSubmit={handleSubmit}
+                name="contact"
+                method="POST"
+                data-netlify="true"
+                data-netlify-honeypot="bot-field"
+              >
+                <input type="hidden" name="form-name" value="contact" />
+                <p className="hidden">
+                  <label>
+                    Don't fill this out if you're human: <input name="bot-field" />
+                  </label>
+                </p>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-heading font-semibold text-white mb-2">
@@ -115,6 +190,7 @@ export default function ContactPage() {
                     <span className="text-yellow-300">(Required)</span>
                   </label>
                   <Input
+                    name="firstName"
                     className="bg-white border-0 text-gray-900 focus:ring-2 focus:ring-yellow-300"
                     required
                   />
@@ -125,6 +201,7 @@ export default function ContactPage() {
                     <span className="text-yellow-300">(Required)</span>
                   </label>
                   <Input
+                    name="lastName"
                     className="bg-white border-0 text-gray-900 focus:ring-2 focus:ring-yellow-300"
                     required
                   />
@@ -137,6 +214,7 @@ export default function ContactPage() {
                   <span className="text-yellow-300">(Required)</span>
                 </label>
                 <Input
+                  name="email"
                   type="email"
                   className="bg-white border-0 text-gray-900 focus:ring-2 focus:ring-yellow-300"
                   required
@@ -148,6 +226,7 @@ export default function ContactPage() {
                   Contact number
                 </label>
                 <Input
+                  name="phone"
                   type="tel"
                   className="bg-white border-0 text-gray-900 focus:ring-2 focus:ring-yellow-300"
                 />
@@ -159,6 +238,7 @@ export default function ContactPage() {
                   <span className="text-yellow-300">(Required)</span>
                 </label>
                 <Input
+                  name="company"
                   className="bg-white border-0 text-gray-900 focus:ring-2 focus:ring-yellow-300"
                   required
                 />
@@ -170,6 +250,7 @@ export default function ContactPage() {
                   <span className="text-yellow-300">(Required)</span>
                 </label>
                 <Textarea
+                  name="message"
                   rows={4}
                   className="bg-white border-0 text-gray-900 focus:ring-2 focus:ring-yellow-300 resize-none"
                   placeholder="Tell us about your business, goals, and how we can help..."
@@ -182,7 +263,7 @@ export default function ContactPage() {
                   How did you hear about us?{" "}
                   <span className="text-yellow-300">(Required)</span>
                 </label>
-                <Select required>
+                <Select name="hearAboutUs" required>
                   <SelectTrigger className="bg-white border-0 text-gray-900 focus:ring-2 focus:ring-yellow-300">
                     <SelectValue placeholder="Please select" />
                   </SelectTrigger>
@@ -205,6 +286,7 @@ export default function ContactPage() {
                   Upload your brief (optional)
                 </label>
                 <Input
+                  name="brief"
                   type="file"
                   accept=".pdf,.doc,.docx,.txt"
                   className="bg-white border-0 text-gray-900 focus:ring-2 focus:ring-yellow-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-coral-red file:text-white hover:file:bg-coral-red/90"
@@ -222,6 +304,7 @@ export default function ContactPage() {
                 <div className="flex items-start space-x-3">
                   <Checkbox
                     id="newsletter"
+                    name="newsletter"
                     className="border-white text-coral-red focus:ring-yellow-300 mt-1"
                   />
                   <label
@@ -236,11 +319,13 @@ export default function ContactPage() {
 
               <Button
                 type="submit"
-                className="w-full bg-midnight-blue hover:bg-midnight-blue/90 text-white font-heading font-semibold py-3 text-lg"
+                disabled={isSubmitting}
+                className="w-full bg-midnight-blue hover:bg-midnight-blue/90 text-white font-heading font-semibold py-3 text-lg disabled:opacity-50"
               >
-                Get started
+                {isSubmitting ? "Sending..." : "Get started"}
               </Button>
-            </form>
+              </form>
+            )}
           </div>
         </div>
       </section>
@@ -248,12 +333,12 @@ export default function ContactPage() {
       {/* Location Section */}
       <section className="py-16 bg-soft-gray">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <Card className="bg-white shadow-lg border-0 overflow-hidden">
               <div className="h-48 bg-gradient-to-br from-forest-green to-midnight-blue" />
               <CardContent className="p-6">
                 <h3 className="text-xl font-heading font-bold text-midnight-blue mb-2">
-                  Nottingham
+                  Nottingham HQ
                 </h3>
                 <p className="text-gray-600 mb-4">
                   1 Fisher Lane, Bingham,
@@ -264,24 +349,14 @@ export default function ContactPage() {
                   +44 20 1234 5678
                 </p>
                 <p className="text-gray-600">hello@postino.cc</p>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-white shadow-lg border-0 overflow-hidden">
-              <div className="h-48 bg-gradient-to-br from-coral-red to-forest-green" />
-              <CardContent className="p-6">
-                <h3 className="text-xl font-heading font-bold text-midnight-blue mb-2">
-                  London
-                </h3>
-                <p className="text-gray-600 mb-4">
-                  Virtual Office,
-                  <br />
-                  Central London, UK
-                </p>
-                <p className="text-coral-red font-semibold mb-1">
-                  +44 20 1234 5678
-                </p>
-                <p className="text-gray-600">london@postino.cc</p>
+                <Link
+                  href="https://wa.me/4407432039801"
+                  target="_blank"
+                  className="inline-flex items-center mt-3 text-forest-green hover:text-forest-green/80 font-semibold"
+                >
+                  <MessageSquare className="h-4 w-4 mr-2" />
+                  WhatsApp
+                </Link>
               </CardContent>
             </Card>
 
@@ -289,17 +364,25 @@ export default function ContactPage() {
               <div className="h-48 bg-gradient-to-br from-midnight-blue to-coral-red" />
               <CardContent className="p-6">
                 <h3 className="text-xl font-heading font-bold text-midnight-blue mb-2">
-                  Remote
+                  Remote Global
                 </h3>
                 <p className="text-gray-600 mb-4">
-                  Global Reach,
+                  Digital First Approach,
                   <br />
-                  Digital First Approach
+                  Serving Clients Worldwide
                 </p>
                 <p className="text-coral-red font-semibold mb-1">
                   +44 20 1234 5678
                 </p>
-                <p className="text-gray-600">hello@postino.cc</p>
+                <p className="text-gray-600 mb-3">hello@postino.cc</p>
+                <Link
+                  href="https://wa.me/4407432039801"
+                  target="_blank"
+                  className="inline-flex items-center text-forest-green hover:text-forest-green/80 font-semibold"
+                >
+                  <MessageSquare className="h-4 w-4 mr-2" />
+                  WhatsApp Chat
+                </Link>
               </CardContent>
             </Card>
           </div>

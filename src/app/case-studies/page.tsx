@@ -41,7 +41,7 @@ export default function CaseStudiesPage() {
       },
       testimonial:
         "Postino didn't just automate our processes—they transformed how we think about growth. The combination of marketing expertise and AI implementation gave us capabilities we never thought possible.",
-      clientName: "Sarah Mitchell",
+      clientName: "Martin",
       clientRole: "CEO",
       timeline: "12 months",
       services: ["AI Automation", "Growth Marketing", "SEO"],
@@ -63,7 +63,7 @@ export default function CaseStudiesPage() {
       },
       testimonial:
         "The team understood our consulting practice perfectly. Within 6 months, we went from struggling to find clients to having a waiting list. The automated systems handle everything seamlessly.",
-      clientName: "James Rodriguez",
+      clientName: "Martin",
       clientRole: "Managing Partner",
       timeline: "8 months",
       services: ["SEO Services", "Content Strategy", "AI Automation"],
@@ -85,7 +85,7 @@ export default function CaseStudiesPage() {
       },
       testimonial:
         "We've gone from struggling to sell online to having customers discover us organically. The AI chatbot feels more helpful than most human support teams I've encountered.",
-      clientName: "Emma Thompson",
+      clientName: "Martin",
       clientRole: "Founder",
       timeline: "10 months",
       services: ["Content Strategy", "AI Automation", "Growth Marketing"],

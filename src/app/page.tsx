@@ -194,7 +194,7 @@ export default function HomePage() {
               </blockquote>
               <div>
                 <p className="font-heading font-semibold text-midnight-blue">
-                  Sarah Mitchell
+                  Martin
                 </p>
                 <p className="font-heading text-sm text-gray-500">
                   CEO, Precision Components Ltd
@@ -216,7 +216,7 @@ export default function HomePage() {
               </blockquote>
               <div>
                 <p className="font-heading font-semibold text-midnight-blue">
-                  James Rodriguez
+                  Martin
                 </p>
                 <p className="font-heading text-sm text-gray-500">
                   Managing Partner, Strategic Consulting Group
@@ -238,7 +238,7 @@ export default function HomePage() {
               </blockquote>
               <div>
                 <p className="font-heading font-semibold text-midnight-blue">
-                  Emma Thompson
+                  Martin
                 </p>
                 <p className="font-heading text-sm text-gray-500">
                   Founder, Artisan Home Goods
