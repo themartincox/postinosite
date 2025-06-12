@@ -1,12 +1,28 @@
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { ArrowRight, Calendar, Clock, User, Search, TrendingUp, Brain, Target } from "lucide-react"
-import Link from "next/link"
-import Navigation from "@/components/Navigation"
+import Navigation from "@/components/Navigation";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  ArrowRight,
+  Brain,
+  Calendar,
+  Clock,
+  Search,
+  Target,
+  TrendingUp,
+  User,
+} from "lucide-react";
+import Link from "next/link";
+import { getPublishedBlogPosts, type BlogPost } from "@/lib/sanity";
 
-// Sample blog posts data
-const featuredPost = {
+// Fallback data for when Sanity isn't configured yet
+const fallbackFeaturedPost = {
   id: 1,
   title: "The Future of SME Growth: How AI is Revolutionising Marketing in 2024",
   excerpt: "Discover how small and medium enterprises are leveraging artificial intelligence to compete with industry giants and achieve unprecedented growth rates.",
@@ -18,10 +34,10 @@ const featuredPost = {
   slug: "future-of-sme-growth-ai-marketing-2024",
   featured: true,
   image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=400&fit=crop",
-  tags: ["AI", "Marketing", "SME", "Growth"]
-}
+  tags: ["AI", "Marketing", "SME", "Growth"],
+};
 
-const blogPosts = [
+const fallbackBlogPosts = [
   {
     id: 2,
     title: "5 Marketing Automation Workflows Every SME Should Implement",
@@ -32,7 +48,7 @@ const blogPosts = [
     category: "Automation",
     slug: "5-marketing-automation-workflows-sme",
     image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=300&fit=crop",
-    tags: ["Automation", "Workflows", "Marketing"]
+    tags: ["Automation", "Workflows", "Marketing"],
   },
   {
     id: 3,
@@ -44,7 +60,7 @@ const blogPosts = [
     category: "Content Strategy",
     slug: "content-strategy-converts-data-driven-approach",
     image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=300&fit=crop",
-    tags: ["Content", "Strategy", "Data", "Conversion"]
+    tags: ["Content", "Strategy", "Data", "Conversion"],
   },
   {
     id: 4,
@@ -56,33 +72,9 @@ const blogPosts = [
     category: "SEO",
     slug: "seo-age-ai-smes-need-know",
     image: "https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=600&h=300&fit=crop",
-    tags: ["SEO", "AI", "Search", "Optimization"]
+    tags: ["SEO", "AI", "Search", "Optimization"],
   },
-  {
-    id: 5,
-    title: "Building a Growth Mindset: Lessons from High-Growth SMEs",
-    excerpt: "Discover the common traits and strategies that separate fast-growing businesses from their competitors.",
-    author: "Sarah Mitchell",
-    date: "2024-05-19",
-    readTime: "9 min read",
-    category: "Growth Strategy",
-    slug: "building-growth-mindset-lessons-high-growth-smes",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=300&fit=crop",
-    tags: ["Growth", "Mindset", "Strategy", "Leadership"]
-  },
-  {
-    id: 6,
-    title: "Customer Journey Mapping with AI: A Practical Guide",
-    excerpt: "Use artificial intelligence to understand your customers better and create more effective marketing touchpoints.",
-    author: "James Rodriguez",
-    date: "2024-05-16",
-    readTime: "8 min read",
-    category: "Customer Experience",
-    slug: "customer-journey-mapping-ai-practical-guide",
-    image: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=600&h=300&fit=crop",
-    tags: ["Customer Journey", "AI", "Mapping", "UX"]
-  }
-]
+];
 
 const categories = [
   { name: "All Posts", count: 6, slug: "all" },
@@ -90,14 +82,58 @@ const categories = [
   { name: "Automation", count: 1, slug: "automation" },
   { name: "Content Strategy", count: 1, slug: "content-strategy" },
   { name: "SEO", count: 1, slug: "seo" },
-  { name: "Growth Strategy", count: 1, slug: "growth-strategy" }
-]
+  { name: "Growth Strategy", count: 1, slug: "growth-strategy" },
+];
 
-export default function BlogPage() {
+async function getBlogData() {
+  try {
+    // Try to fetch from Sanity
+    const posts = await getPublishedBlogPosts();
+    if (posts && posts.length > 0) {
+      return {
+        featuredPost: posts.find(p => p.featured) || posts[0],
+        blogPosts: posts.filter(p => !p.featured).slice(0, 6),
+        isFromSanity: true,
+      };
+    }
+  } catch (error) {
+    console.log('Sanity not configured yet, using fallback data');
+  }
+
+  // Fallback to static data
+  return {
+    featuredPost: fallbackFeaturedPost,
+    blogPosts: fallbackBlogPosts,
+    isFromSanity: false,
+  };
+}
+
+export default async function BlogPage() {
+  const { featuredPost, blogPosts, isFromSanity } = await getBlogData();
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Navigation */}
       <Navigation />
+
+      {/* Admin Notice */}
+      {!isFromSanity && (
+        <div className="bg-amber-50 border-b border-amber-200 py-3">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-between">
+              <p className="text-sm text-amber-800">
+                <strong>Demo Mode:</strong> Blog is showing sample content. Connect Sanity.io to manage real blog posts.
+              </p>
+              <Link
+                href="/admin"
+                className="text-sm text-amber-800 underline hover:text-amber-900"
+              >
+                Setup Admin →
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-midnight-blue to-forest-green text-white py-16">
@@ -108,8 +144,7 @@ export default function BlogPage() {
               <span className="text-coral-red"> AI Innovation</span>
             </h1>
             <p className="text-xl font-body mb-8 max-w-3xl mx-auto opacity-90">
-              Expert insights, proven strategies, and cutting-edge AI applications
-              to help SMEs achieve sustainable, measurable growth.
+              Expert insights, proven strategies, and cutting-edge AI applications to help SMEs achieve sustainable, measurable growth.
             </p>
 
             {/* Search Bar */}
@@ -131,7 +166,9 @@ export default function BlogPage() {
       <section className="py-16 bg-soft-gray">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <Badge className="bg-coral-red text-white mb-4">Featured Article</Badge>
+            <Badge className="bg-coral-red text-white mb-4">
+              Featured Article
+            </Badge>
             <h2 className="text-3xl font-heading font-bold text-midnight-blue">
               Latest Insights
             </h2>
@@ -141,13 +178,13 @@ export default function BlogPage() {
             <div className="grid lg:grid-cols-2 gap-0">
               <div className="relative h-64 lg:h-auto">
                 <img
-                  src={featuredPost.image}
+                  src={isFromSanity ? featuredPost.featuredImage : featuredPost.image}
                   alt={featuredPost.title}
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute top-4 left-4">
                   <Badge className="bg-forest-green text-white">
-                    {featuredPost.category}
+                    {isFromSanity ? featuredPost.category : featuredPost.category}
                   </Badge>
                 </div>
               </div>
@@ -163,28 +200,36 @@ export default function BlogPage() {
                 <div className="flex items-center text-sm text-gray-500 mb-6 space-x-4">
                   <div className="flex items-center">
                     <User className="h-4 w-4 mr-1" />
-                    {featuredPost.author}
+                    {isFromSanity ? featuredPost.author?.name : featuredPost.author}
                   </div>
                   <div className="flex items-center">
                     <Calendar className="h-4 w-4 mr-1" />
-                    {new Date(featuredPost.date).toLocaleDateString('en-GB')}
+                    {isFromSanity
+                      ? new Date(featuredPost.publishedAt).toLocaleDateString("en-GB")
+                      : new Date(featuredPost.date).toLocaleDateString("en-GB")
+                    }
                   </div>
-                  <div className="flex items-center">
-                    <Clock className="h-4 w-4 mr-1" />
-                    {featuredPost.readTime}
-                  </div>
+                  {!isFromSanity && (
+                    <div className="flex items-center">
+                      <Clock className="h-4 w-4 mr-1" />
+                      {featuredPost.readTime}
+                    </div>
+                  )}
                 </div>
 
                 <div className="flex flex-wrap gap-2 mb-6">
-                  {featuredPost.tags.map((tag) => (
+                  {(isFromSanity ? featuredPost.tags : featuredPost.tags)?.map((tag) => (
                     <Badge key={tag} variant="secondary" className="text-xs">
                       {tag}
                     </Badge>
                   ))}
                 </div>
 
-                <Button asChild className="bg-coral-red hover:bg-coral-red/90 text-white">
-                  <Link href={`/blog/${featuredPost.slug}`}>
+                <Button
+                  asChild
+                  className="bg-coral-red hover:bg-coral-red/90 text-white"
+                >
+                  <Link href={`/blog/${isFromSanity ? featuredPost.slug.current : featuredPost.slug}`}>
                     Read Full Article
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
@@ -209,7 +254,11 @@ export default function BlogPage() {
                   {categories.map((category) => (
                     <Link
                       key={category.slug}
-                      href={category.slug === 'all' ? '/blog' : `/blog/category/${category.slug}`}
+                      href={
+                        category.slug === "all"
+                          ? "/blog"
+                          : `/blog/category/${category.slug}`
+                      }
                       className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors group"
                     >
                       <span className="font-body text-gray-700 group-hover:text-midnight-blue">
@@ -228,8 +277,20 @@ export default function BlogPage() {
                     Popular Topics
                   </h3>
                   <div className="flex flex-wrap gap-2">
-                    {["AI", "Marketing", "Automation", "Growth", "SEO", "Strategy", "Content"].map((tag) => (
-                      <Badge key={tag} variant="outline" className="text-xs hover:bg-coral-red hover:text-white hover:border-coral-red transition-colors cursor-pointer">
+                    {[
+                      "AI",
+                      "Marketing",
+                      "Automation",
+                      "Growth",
+                      "SEO",
+                      "Strategy",
+                      "Content",
+                    ].map((tag) => (
+                      <Badge
+                        key={tag}
+                        variant="outline"
+                        className="text-xs hover:bg-coral-red hover:text-white hover:border-coral-red transition-colors cursor-pointer"
+                      >
                         {tag}
                       </Badge>
                     ))}
@@ -251,29 +312,38 @@ export default function BlogPage() {
 
               <div className="grid md:grid-cols-2 gap-8">
                 {blogPosts.map((post) => (
-                  <Card key={post.id} className="overflow-hidden hover:shadow-lg transition-shadow duration-300 group">
+                  <Card
+                    key={isFromSanity ? post._id : post.id}
+                    className="overflow-hidden hover:shadow-lg transition-shadow duration-300 group"
+                  >
                     <div className="relative">
                       <img
-                        src={post.image}
+                        src={isFromSanity ? post.featuredImage : post.image}
                         alt={post.title}
                         className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                       <div className="absolute top-4 left-4">
-                        <Badge className={`text-white ${
-                          post.category === 'AI & Marketing' ? 'bg-coral-red' :
-                          post.category === 'Automation' ? 'bg-forest-green' :
-                          post.category === 'Content Strategy' ? 'bg-midnight-blue' :
-                          post.category === 'SEO' ? 'bg-coral-red' :
-                          'bg-forest-green'
-                        }`}>
-                          {post.category}
+                        <Badge
+                          className={`text-white ${
+                            (isFromSanity ? post.category : post.category) === "AI & Marketing"
+                              ? "bg-coral-red"
+                              : (isFromSanity ? post.category : post.category) === "Automation"
+                                ? "bg-forest-green"
+                                : (isFromSanity ? post.category : post.category) === "Content Strategy"
+                                  ? "bg-midnight-blue"
+                                  : (isFromSanity ? post.category : post.category) === "SEO"
+                                    ? "bg-coral-red"
+                                    : "bg-forest-green"
+                          }`}
+                        >
+                          {isFromSanity ? post.category : post.category}
                         </Badge>
                       </div>
                     </div>
 
                     <CardHeader>
                       <CardTitle className="text-lg font-heading text-midnight-blue group-hover:text-coral-red transition-colors">
-                        <Link href={`/blog/${post.slug}`}>
+                        <Link href={`/blog/${isFromSanity ? post.slug.current : post.slug}`}>
                           {post.title}
                         </Link>
                       </CardTitle>
@@ -286,28 +356,42 @@ export default function BlogPage() {
                       <div className="flex items-center text-xs text-gray-500 mb-4 space-x-3">
                         <div className="flex items-center">
                           <User className="h-3 w-3 mr-1" />
-                          {post.author}
+                          {isFromSanity ? post.author?.name : post.author}
                         </div>
                         <div className="flex items-center">
                           <Calendar className="h-3 w-3 mr-1" />
-                          {new Date(post.date).toLocaleDateString('en-GB')}
+                          {isFromSanity
+                            ? new Date(post.publishedAt).toLocaleDateString("en-GB")
+                            : new Date(post.date).toLocaleDateString("en-GB")
+                          }
                         </div>
-                        <div className="flex items-center">
-                          <Clock className="h-3 w-3 mr-1" />
-                          {post.readTime}
-                        </div>
+                        {!isFromSanity && (
+                          <div className="flex items-center">
+                            <Clock className="h-3 w-3 mr-1" />
+                            {post.readTime}
+                          </div>
+                        )}
                       </div>
 
                       <div className="flex flex-wrap gap-1 mb-4">
-                        {post.tags.slice(0, 3).map((tag) => (
-                          <Badge key={tag} variant="secondary" className="text-xs">
+                        {(isFromSanity ? post.tags : post.tags)?.slice(0, 3).map((tag) => (
+                          <Badge
+                            key={tag}
+                            variant="secondary"
+                            className="text-xs"
+                          >
                             {tag}
                           </Badge>
                         ))}
                       </div>
 
-                      <Button asChild variant="outline" size="sm" className="w-full group">
-                        <Link href={`/blog/${post.slug}`}>
+                      <Button
+                        asChild
+                        variant="outline"
+                        size="sm"
+                        className="w-full group"
+                      >
+                        <Link href={`/blog/${isFromSanity ? post.slug.current : post.slug}`}>
                           Read More
                           <ArrowRight className="ml-2 h-3 w-3 group-hover:translate-x-1 transition-transform" />
                         </Link>
@@ -319,7 +403,10 @@ export default function BlogPage() {
 
               {/* Load More */}
               <div className="text-center mt-12">
-                <Button variant="outline" className="border-midnight-blue text-midnight-blue hover:bg-midnight-blue hover:text-white">
+                <Button
+                  variant="outline"
+                  className="border-midnight-blue text-midnight-blue hover:bg-midnight-blue hover:text-white"
+                >
                   Load More Articles
                   <TrendingUp className="ml-2 h-4 w-4" />
                 </Button>
@@ -336,8 +423,7 @@ export default function BlogPage() {
             Stay Ahead of the Curve
           </h2>
           <p className="text-xl font-body mb-8 opacity-90">
-            Get weekly insights on AI, marketing automation, and growth strategies
-            delivered straight to your inbox.
+            Get weekly insights on AI, marketing automation, and growth strategies delivered straight to your inbox.
           </p>
 
           <div className="max-w-md mx-auto flex gap-4">
@@ -364,35 +450,118 @@ export default function BlogPage() {
             <div>
               <h3 className="text-2xl font-heading font-bold mb-4">Postino.</h3>
               <p className="font-body text-gray-300 mb-4">
-                Where growth meets AI innovation. Helping SMEs achieve measurable success
-                through expert marketing and intelligent automation.
+                Where growth meets AI innovation. Helping SMEs achieve measurable success through expert marketing and intelligent automation.
               </p>
             </div>
             <div>
               <h4 className="font-heading font-semibold mb-4">Services</h4>
               <ul className="space-y-2 font-body text-gray-300">
-                <li><Link href="/growth-marketing" className="hover:text-white transition-colors">Growth Marketing</Link></li>
-                <li><Link href="/ai-automation" className="hover:text-white transition-colors">AI & Automation</Link></li>
-                <li><Link href="/seo-services" className="hover:text-white transition-colors">SEO Services</Link></li>
-                <li><Link href="/content-strategy" className="hover:text-white transition-colors">Content Strategy</Link></li>
+                <li>
+                  <Link
+                    href="/growth-marketing"
+                    className="hover:text-white transition-colors"
+                  >
+                    Growth Marketing
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/ai-automation"
+                    className="hover:text-white transition-colors"
+                  >
+                    AI & Automation
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/seo-services"
+                    className="hover:text-white transition-colors"
+                  >
+                    SEO Services
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/content-strategy"
+                    className="hover:text-white transition-colors"
+                  >
+                    Content Strategy
+                  </Link>
+                </li>
               </ul>
             </div>
             <div>
               <h4 className="font-heading font-semibold mb-4">Company</h4>
               <ul className="space-y-2 font-body text-gray-300">
-                <li><Link href="/about" className="hover:text-white transition-colors">About Us</Link></li>
-                <li><Link href="/case-studies" className="hover:text-white transition-colors">Case Studies</Link></li>
-                <li><Link href="/blog" className="hover:text-white transition-colors">Blog</Link></li>
-                <li><Link href="/contact" className="hover:text-white transition-colors">Contact</Link></li>
+                <li>
+                  <Link
+                    href="/about"
+                    className="hover:text-white transition-colors"
+                  >
+                    About Us
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/case-studies"
+                    className="hover:text-white transition-colors"
+                  >
+                    Case Studies
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/blog"
+                    className="hover:text-white transition-colors"
+                  >
+                    Blog
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/contact"
+                    className="hover:text-white transition-colors"
+                  >
+                    Contact
+                  </Link>
+                </li>
               </ul>
             </div>
             <div>
               <h4 className="font-heading font-semibold mb-4">Get Started</h4>
               <ul className="space-y-2 font-body text-gray-300">
-                <li><Link href="/growth-consultation" className="hover:text-white transition-colors">Growth Strategy Session</Link></li>
-                <li><Link href="/ai-automation-demo" className="hover:text-white transition-colors">Automation Demo</Link></li>
-                <li><Link href="/resources" className="hover:text-white transition-colors">Resources</Link></li>
-                <li><Link href="/pricing" className="hover:text-white transition-colors">Pricing</Link></li>
+                <li>
+                  <Link
+                    href="/growth-consultation"
+                    className="hover:text-white transition-colors"
+                  >
+                    Growth Strategy Session
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/ai-automation-demo"
+                    className="hover:text-white transition-colors"
+                  >
+                    Automation Demo
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/resources"
+                    className="hover:text-white transition-colors"
+                  >
+                    Resources
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/pricing"
+                    className="hover:text-white transition-colors"
+                  >
+                    Pricing
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>
@@ -407,5 +576,5 @@ export default function BlogPage() {
         </div>
       </footer>
     </div>
-  )
+  );
 }

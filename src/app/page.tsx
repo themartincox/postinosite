@@ -1,10 +1,18 @@
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { ArrowRight, BarChart3, Brain, Users, Zap, Target, Lightbulb } from "lucide-react"
-import Link from "next/link"
-import ParticleNetwork from "@/components/ParticleNetwork"
-import EnhancedServiceCards from "@/components/EnhancedServiceCards"
-import Navigation from "@/components/Navigation"
+import EnhancedServiceCards from "@/components/EnhancedServiceCards";
+import Navigation from "@/components/Navigation";
+import ParticleNetwork from "@/components/ParticleNetwork";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  ArrowRight,
+  BarChart3,
+  Brain,
+  Lightbulb,
+  Target,
+  Users,
+  Zap,
+} from "lucide-react";
+import Link from "next/link";
 
 export default function HomePage() {
   return (
@@ -27,21 +35,36 @@ export default function HomePage() {
               <span className="text-coral-red">AI Innovation</span>
             </h1>
             <p className="text-xl lg:text-2xl font-body mb-8 max-w-4xl mx-auto leading-relaxed">
-              Postino seamlessly blends expert marketing strategies with cutting-edge AI automation
-              to help SMEs grow smarter, faster, and more efficiently than ever before.
+              Postino seamlessly blends expert marketing strategies with
+              cutting-edge AI automation to help SMEs grow smarter, faster, and
+              more efficiently than ever before.
             </p>
 
             {/* Dual-path CTAs */}
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12">
-              <Button asChild size="lg" className="bg-coral-red hover:bg-coral-red/90 text-white px-8 py-4 text-lg shadow-2xl">
+              <Button
+                asChild
+                size="lg"
+                className="bg-coral-red hover:bg-coral-red/90 text-white px-8 py-4 text-lg shadow-2xl"
+              >
                 <Link href="/growth-consultation">
                   Looking for Growth Support?
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-midnight-blue px-8 py-4 text-lg backdrop-blur-sm bg-white/5">
-                <Link href="/ai-automation-demo" className="text-white hover:text-midnight-blue">
-                  <span className="text-coral-red font-heading font-semibold">Exploring AI Automation?</span>
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="border-white text-white hover:bg-white hover:text-midnight-blue px-8 py-4 text-lg backdrop-blur-sm bg-white/5"
+              >
+                <Link
+                  href="/ai-automation-demo"
+                  className="text-white hover:text-midnight-blue"
+                >
+                  <span className="text-coral-red font-heading font-semibold">
+                    Exploring AI Automation?
+                  </span>
                   <Brain className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
@@ -51,15 +74,21 @@ export default function HomePage() {
             <div className="flex flex-wrap justify-center items-center gap-8 text-sm opacity-90">
               <div className="flex items-center backdrop-blur-sm bg-white/10 px-4 py-2 rounded-full">
                 <Users className="h-4 w-4 mr-2" />
-                <span className="font-heading font-medium">50+ SMEs Transformed</span>
+                <span className="font-heading font-medium">
+                  50+ SMEs Transformed
+                </span>
               </div>
               <div className="flex items-center backdrop-blur-sm bg-white/10 px-4 py-2 rounded-full">
                 <BarChart3 className="h-4 w-4 mr-2" />
-                <span className="font-heading font-medium">300% Average Growth</span>
+                <span className="font-heading font-medium">
+                  300% Average Growth
+                </span>
               </div>
               <div className="flex items-center backdrop-blur-sm bg-white/10 px-4 py-2 rounded-full">
                 <Zap className="h-4 w-4 mr-2" />
-                <span className="font-heading font-medium">40hrs/week Saved via AI</span>
+                <span className="font-heading font-medium">
+                  40hrs/week Saved via AI
+                </span>
               </div>
             </div>
           </div>
@@ -74,8 +103,8 @@ export default function HomePage() {
               Two Powerful Pillars, One Integrated Approach
             </h2>
             <p className="text-xl font-body text-gray-600 max-w-3xl mx-auto">
-              Most agencies focus on either marketing or technology. We excel at both,
-              creating synergies that amplify your results exponentially.
+              Most agencies focus on either marketing or technology. We excel at
+              both, creating synergies that amplify your results exponentially.
             </p>
           </div>
 
@@ -91,8 +120,9 @@ export default function HomePage() {
               Why SME Leaders Choose Postino
             </h2>
             <p className="text-xl font-body text-gray-600 max-w-3xl mx-auto">
-              We understand the unique challenges of growing businesses. Our integrated approach
-              delivers results that traditional agencies simply can't match.
+              We understand the unique challenges of growing businesses. Our
+              integrated approach delivers results that traditional agencies
+              simply can't match.
             </p>
           </div>
 
@@ -105,8 +135,8 @@ export default function HomePage() {
                 Human Expertise + AI Power
               </h3>
               <p className="font-body text-gray-600">
-                Strategic thinking and creative insights enhanced by intelligent automation
-                and data-driven optimization.
+                Strategic thinking and creative insights enhanced by intelligent
+                automation and data-driven optimization.
               </p>
             </div>
 
@@ -118,8 +148,8 @@ export default function HomePage() {
                 Measurable, Scalable Growth
               </h3>
               <p className="font-body text-gray-600">
-                Every strategy is designed for sustainable growth with clear metrics,
-                automated processes, and continuous optimization.
+                Every strategy is designed for sustainable growth with clear
+                metrics, automated processes, and continuous optimization.
               </p>
             </div>
 
@@ -152,45 +182,67 @@ export default function HomePage() {
             {/* Testimonial 1 */}
             <div className="text-center">
               <div className="w-16 h-16 bg-forest-green rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                <span className="text-xl font-heading font-bold text-white">SM</span>
+                <span className="text-xl font-heading font-bold text-white">
+                  SM
+                </span>
               </div>
               <blockquote className="font-heading text-gray-700 italic mb-4">
-                "Postino didn't just automate our processes—they transformed how we think about growth.
-                The combination of marketing expertise and AI implementation gave us capabilities we never thought possible."
+                "Postino didn't just automate our processes—they transformed how
+                we think about growth. The combination of marketing expertise
+                and AI implementation gave us capabilities we never thought
+                possible."
               </blockquote>
               <div>
-                <p className="font-heading font-semibold text-midnight-blue">Sarah Mitchell</p>
-                <p className="font-heading text-sm text-gray-500">CEO, Precision Components Ltd</p>
+                <p className="font-heading font-semibold text-midnight-blue">
+                  Sarah Mitchell
+                </p>
+                <p className="font-heading text-sm text-gray-500">
+                  CEO, Precision Components Ltd
+                </p>
               </div>
             </div>
 
             {/* Testimonial 2 */}
             <div className="text-center">
               <div className="w-16 h-16 bg-coral-red rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                <span className="text-xl font-heading font-bold text-white">JR</span>
+                <span className="text-xl font-heading font-bold text-white">
+                  JR
+                </span>
               </div>
               <blockquote className="font-heading text-gray-700 italic mb-4">
-                "425% more qualified leads and £2.3M additional revenue. But what impressed me most was how they
-                understood our industry and created solutions that actually fit how we work."
+                "425% more qualified leads and £2.3M additional revenue. But
+                what impressed me most was how they understood our industry and
+                created solutions that actually fit how we work."
               </blockquote>
               <div>
-                <p className="font-heading font-semibold text-midnight-blue">James Rodriguez</p>
-                <p className="font-heading text-sm text-gray-500">Managing Partner, Strategic Consulting Group</p>
+                <p className="font-heading font-semibold text-midnight-blue">
+                  James Rodriguez
+                </p>
+                <p className="font-heading text-sm text-gray-500">
+                  Managing Partner, Strategic Consulting Group
+                </p>
               </div>
             </div>
 
             {/* Testimonial 3 */}
             <div className="text-center">
               <div className="w-16 h-16 bg-midnight-blue rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                <span className="text-xl font-heading font-bold text-white">ET</span>
+                <span className="text-xl font-heading font-bold text-white">
+                  ET
+                </span>
               </div>
               <blockquote className="font-heading text-gray-700 italic mb-4">
-                "We've gone from struggling to sell online to having customers discover us organically.
-                The AI chatbot feels more helpful than most human support teams I've encountered."
+                "We've gone from struggling to sell online to having customers
+                discover us organically. The AI chatbot feels more helpful than
+                most human support teams I've encountered."
               </blockquote>
               <div>
-                <p className="font-heading font-semibold text-midnight-blue">Emma Thompson</p>
-                <p className="font-heading text-sm text-gray-500">Founder, Artisan Home Goods</p>
+                <p className="font-heading font-semibold text-midnight-blue">
+                  Emma Thompson
+                </p>
+                <p className="font-heading text-sm text-gray-500">
+                  Founder, Artisan Home Goods
+                </p>
               </div>
             </div>
           </div>
@@ -204,19 +256,33 @@ export default function HomePage() {
             Ready to Transform Your Business?
           </h2>
           <p className="text-xl font-body mb-8 opacity-90">
-            Join the growing number of SMEs who are achieving exceptional results
-            with our integrated marketing and AI approach.
+            Join the growing number of SMEs who are achieving exceptional
+            results with our integrated marketing and AI approach.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" className="bg-coral-red hover:bg-coral-red/90 text-white">
+            <Button
+              asChild
+              size="lg"
+              className="bg-coral-red hover:bg-coral-red/90 text-white"
+            >
               <Link href="/growth-consultation">
                 Book a Growth Strategy Session
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-            <Button asChild variant="outline" size="lg" className="border-white hover:bg-white hover:text-midnight-blue bg-white/5">
-              <Link href="/ai-automation-demo" className="text-coral-red hover:text-midnight-blue">
-                <span className="font-heading font-semibold">Request an Automation Demo</span>
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="border-white hover:bg-white hover:text-midnight-blue bg-white/5"
+            >
+              <Link
+                href="/ai-automation-demo"
+                className="text-coral-red hover:text-midnight-blue"
+              >
+                <span className="font-heading font-semibold">
+                  Request an Automation Demo
+                </span>
                 <Brain className="ml-2 h-5 w-5" />
               </Link>
             </Button>
@@ -231,41 +297,127 @@ export default function HomePage() {
             <div>
               <h3 className="text-2xl font-heading font-bold mb-4">Postino.</h3>
               <p className="font-body text-gray-300 mb-4">
-                Where growth meets AI innovation. Helping SMEs achieve measurable success
-                through expert marketing and intelligent automation.
+                Where growth meets AI innovation. Helping SMEs achieve
+                measurable success through expert marketing and intelligent
+                automation.
               </p>
             </div>
             <div>
               <h4 className="font-heading font-semibold mb-4">Services</h4>
               <ul className="space-y-2 font-body text-gray-300">
-                <li><Link href="/growth-marketing" className="hover:text-white transition-colors">Growth Marketing</Link></li>
-                <li><Link href="/ai-automation" className="hover:text-white transition-colors">AI & Automation</Link></li>
-                <li><Link href="/seo-services" className="hover:text-white transition-colors">SEO Services</Link></li>
-                <li><Link href="/content-strategy" className="hover:text-white transition-colors">Content Strategy</Link></li>
+                <li>
+                  <Link
+                    href="/growth-marketing"
+                    className="hover:text-white transition-colors"
+                  >
+                    Growth Marketing
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/ai-automation"
+                    className="hover:text-white transition-colors"
+                  >
+                    AI & Automation
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/seo-services"
+                    className="hover:text-white transition-colors"
+                  >
+                    SEO Services
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/content-strategy"
+                    className="hover:text-white transition-colors"
+                  >
+                    Content Strategy
+                  </Link>
+                </li>
               </ul>
             </div>
             <div>
               <h4 className="font-heading font-semibold mb-4">Company</h4>
               <ul className="space-y-2 font-body text-gray-300">
-                <li><Link href="/about" className="hover:text-white transition-colors">About Us</Link></li>
-                <li><Link href="/case-studies" className="hover:text-white transition-colors">Case Studies</Link></li>
-                <li><Link href="/blog" className="hover:text-white transition-colors">Blog</Link></li>
-                <li><Link href="/contact" className="hover:text-white transition-colors">Contact</Link></li>
+                <li>
+                  <Link
+                    href="/about"
+                    className="hover:text-white transition-colors"
+                  >
+                    About Us
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/case-studies"
+                    className="hover:text-white transition-colors"
+                  >
+                    Case Studies
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/blog"
+                    className="hover:text-white transition-colors"
+                  >
+                    Blog
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/contact"
+                    className="hover:text-white transition-colors"
+                  >
+                    Contact
+                  </Link>
+                </li>
               </ul>
             </div>
             <div>
               <h4 className="font-heading font-semibold mb-4">Get Started</h4>
               <ul className="space-y-2 font-body text-gray-300">
-                <li><Link href="/growth-consultation" className="hover:text-white transition-colors">Growth Strategy Session</Link></li>
-                <li><Link href="/ai-automation-demo" className="hover:text-white transition-colors">Automation Demo</Link></li>
-                <li><Link href="/resources" className="hover:text-white transition-colors">Resources</Link></li>
-                <li><Link href="/pricing" className="hover:text-white transition-colors">Pricing</Link></li>
+                <li>
+                  <Link
+                    href="/growth-consultation"
+                    className="hover:text-white transition-colors"
+                  >
+                    Growth Strategy Session
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/ai-automation-demo"
+                    className="hover:text-white transition-colors"
+                  >
+                    Automation Demo
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/resources"
+                    className="hover:text-white transition-colors"
+                  >
+                    Resources
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/pricing"
+                    className="hover:text-white transition-colors"
+                  >
+                    Pricing
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>
           <div className="border-t border-gray-700 mt-12 pt-8 text-center">
             <p className="font-body text-gray-400">
-              © 2025 Postino Ltd. Company No. 15378485. All rights reserved. | Empowering SME growth through intelligent marketing.
+              © 2025 Postino Ltd. Company No. 15378485. All rights reserved. |
+              Empowering SME growth through intelligent marketing.
             </p>
             <p className="font-body text-gray-500 text-sm mt-2">
               Registered Address: 1 Fisher Lane, Bingham, Nottingham, NG13 8BQ
@@ -274,5 +426,5 @@ export default function HomePage() {
         </div>
       </footer>
     </div>
-  )
+  );
 }

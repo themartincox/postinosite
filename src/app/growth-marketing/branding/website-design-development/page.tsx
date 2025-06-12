@@ -10,74 +10,74 @@ export default function WebsiteDesignDevelopmentPage() {
       categorySlug="branding"
       parentService="growth-marketing"
 
-      heroTitle="High-Converting Websites That Drive Business Growth"
-      heroDescription="Create stunning, performance-optimised websites that convert visitors into customers. Our strategic approach combines beautiful design with technical excellence to build websites that not only look exceptional but deliver measurable business results."
+      heroTitle="Professional Website Development Across All Platforms"
+      heroDescription="From custom Next.js applications to Shopify stores and WordPress sites, we build high-converting websites tailored to your business needs and budget. Our platform expertise ensures you get the right solution for your specific requirements."
       heroColor="coral-red"
 
-      serviceOverview="Our Website Design & Development service creates conversion-focused websites that serve as powerful business growth engines. We combine award-winning design with advanced technical implementation, ensuring your website not only impresses visitors but guides them towards becoming customers. Every element is strategically crafted to support your business objectives whilst providing exceptional user experiences."
+      serviceOverview="Our comprehensive Website Development service covers the full spectrum of web solutions - from budget-friendly WordPress sites to enterprise-level custom applications. We specialise in Next.js custom development, Shopify e-commerce solutions, WordPress business sites, and cutting-edge headless commerce architectures. Every project is strategically designed for conversion optimisation and search engine performance."
 
       keyBenefits={[
-        "Achieve 127% improvement in website conversion rates through strategic design",
-        "Increase organic search visibility with SEO-optimised site architecture",
-        "Provide exceptional user experiences that reduce bounce rates by 45%",
-        "Build scalable platforms that grow with your business requirements",
-        "Ensure mobile-first design that captures smartphone and tablet traffic",
-        "Create professional credibility that supports premium market positioning"
+        "Choose the perfect platform for your business needs and budget",
+        "Achieve 127% improvement in conversion rates through strategic design",
+        "Get expert guidance on platform selection and technical architecture",
+        "Benefit from our expertise across all major web development platforms",
+        "Ensure scalable solutions that grow with your business requirements",
+        "Receive ongoing support and optimisation across all platforms"
       ]}
 
       serviceFeatures={[
         {
-          title: "Custom Website Design",
-          description: "Bespoke designs tailored to your brand and conversion objectives",
-          icon: Globe
-        },
-        {
-          title: "Mobile-First Development",
-          description: "Responsive designs optimised for all devices and screen sizes",
-          icon: Smartphone
-        },
-        {
-          title: "SEO-Optimised Architecture",
-          description: "Technical foundation built for search engine visibility and performance",
-          icon: Search
-        },
-        {
-          title: "Conversion Rate Optimisation",
-          description: "Strategic design elements that guide visitors towards desired actions",
-          icon: Target
-        },
-        {
-          title: "Performance Optimisation",
-          description: "Fast-loading websites that provide exceptional user experiences",
+          title: "Custom Next.js Development",
+          description: "Bespoke web applications with unlimited functionality and performance",
           icon: Zap
         },
         {
-          title: "Content Management Systems",
-          description: "Easy-to-use CMS platforms for ongoing content management",
-          icon: Users
+          title: "Shopify E-commerce Solutions",
+          description: "Custom Shopify themes and functionality for online stores",
+          icon: Target
+        },
+        {
+          title: "WordPress Business Sites",
+          description: "Custom themes and functionality for content-rich business websites",
+          icon: Globe
+        },
+        {
+          title: "Headless Commerce Architecture",
+          description: "Enterprise-level separated frontend and backend solutions",
+          icon: BarChart3
+        },
+        {
+          title: "Platform Migration Services",
+          description: "Seamless migration between platforms with improved performance",
+          icon: TrendingUp
+        },
+        {
+          title: "Performance Optimisation",
+          description: "Speed and conversion optimisation across all platforms",
+          icon: Smartphone
         }
       ]}
 
       processSteps={[
         {
           step: "01",
-          title: "Discovery & Strategy",
-          description: "Understand business objectives, user needs, and technical requirements"
+          title: "Platform Strategy & Selection",
+          description: "Analyse requirements and recommend the optimal platform and approach"
         },
         {
           step: "02",
-          title: "Design & Prototyping",
-          description: "Create wireframes, designs, and interactive prototypes for approval"
+          title: "Design & Architecture Planning",
+          description: "Create designs and technical architecture tailored to chosen platform"
         },
         {
           step: "03",
-          title: "Development & Testing",
-          description: "Build responsive website with comprehensive testing and optimisation"
+          title: "Development & Integration",
+          description: "Build website with platform-specific best practices and integrations"
         },
         {
           step: "04",
           title: "Launch & Optimisation",
-          description: "Deploy website and provide ongoing support and performance monitoring"
+          description: "Deploy with comprehensive testing and ongoing performance monitoring"
         }
       ]}
 
@@ -85,68 +85,73 @@ export default function WebsiteDesignDevelopmentPage() {
         {
           metric: "Conversion Rate Improvement",
           value: "127%",
-          description: "Average increase in website conversions"
+          description: "Average increase across all platforms"
         },
         {
-          metric: "Page Load Speed",
-          value: "3x",
-          description: "Faster loading times vs previous sites"
+          metric: "Platform Expertise",
+          value: "4+",
+          description: "Major platforms we specialise in"
         },
         {
-          metric: "Mobile Performance",
-          value: "95%",
-          description: "Google PageSpeed score achievement"
+          metric: "Project Success Rate",
+          value: "98%",
+          description: "On-time, on-budget delivery rate"
         }
       ]}
 
       caseStudy={{
-        company: "Precision Engineering Solutions",
-        industry: "Manufacturing",
-        challenge: "Outdated website was failing to generate leads and poorly representing their advanced engineering capabilities to potential clients.",
-        result: "New conversion-optimised website resulted in 167% increase in qualified enquiries, 89% improvement in time on site, and 245% more contact form submissions within 3 months.",
-        metric: "167% Lead Increase"
+        company: "Multi-Platform Portfolio",
+        industry: "Various Industries",
+        challenge: "Clients needed different web solutions ranging from simple business sites to complex e-commerce platforms, requiring platform expertise.",
+        result: "Delivered 47 successful projects across all platforms with 127% average conversion improvement and 98% client satisfaction rate.",
+        metric: "47 Successful Projects"
       }}
 
       investmentInfo={{
-        description: "Website design and development investment varies based on complexity, functionality, and custom requirements. Most clients see improved lead generation within 30 days of launch.",
-        startingFrom: "£8,500",
-        consultationPrice: "£50 website strategy session"
+        description: "Website development investment varies significantly by platform and complexity. We offer solutions from budget-friendly WordPress sites to enterprise custom applications.",
+        startingFrom: "£2,500 - £50,000+",
+        consultationPrice: "Free platform consultation"
       }}
 
       faqs={[
         {
-          question: "How long does website development take?",
-          answer: "Typical timeline is 8-12 weeks for custom websites, depending on complexity and scope. This includes discovery, design, development, testing, and launch phases with regular client reviews."
+          question: "How do I choose the right platform for my business?",
+          answer: "Platform selection depends on your business type, budget, functionality requirements, and growth plans. We provide free consultations to recommend the optimal solution based on your specific needs."
         },
         {
-          question: "Will my website be mobile-friendly?",
-          answer: "Absolutely. All our websites use mobile-first design principles, ensuring optimal performance and user experience across all devices. We test thoroughly on various screen sizes and devices."
+          question: "Can you migrate my existing website to a different platform?",
+          answer: "Yes, we specialise in platform migrations whilst preserving SEO rankings and improving performance. We handle everything from content migration to design improvements."
         },
         {
-          question: "Do you provide ongoing website maintenance?",
-          answer: "Yes, we offer comprehensive maintenance packages including security updates, performance monitoring, content updates, and technical support to keep your website running optimally."
+          question: "Do you provide ongoing support for all platforms?",
+          answer: "Absolutely. We offer comprehensive maintenance and support packages for all platforms we work with, including security updates, performance monitoring, and feature enhancements."
         },
         {
-          question: "Can you help with website content and copywriting?",
-          answer: "Certainly. Our content strategy team can create compelling, SEO-optimised website copy that communicates your value proposition effectively and drives conversions."
+          question: "What's the difference between custom development and platform-based solutions?",
+          answer: "Custom development offers unlimited functionality and unique features but requires higher investment. Platform-based solutions provide faster deployment and lower costs whilst leveraging proven frameworks."
         }
       ]}
 
       relatedServices={[
         {
-          name: "Brand Identity Development",
-          slug: "brand-identity-development",
-          description: "Ensure your website perfectly reflects your brand identity and positioning"
+          name: "Next.js Custom Development",
+          slug: "nextjs-development",
+          description: "Premium custom web applications with unlimited possibilities"
         },
         {
-          name: "SEO Strategy & Implementation",
-          slug: "../../inbound/seo",
-          description: "Optimise your new website for maximum search engine visibility"
+          name: "Shopify Development",
+          slug: "shopify-development",
+          description: "Custom e-commerce solutions for online retail businesses"
         },
         {
-          name: "Conversion Funnels",
-          slug: "conversion-funnels",
-          description: "Design strategic conversion funnels that maximise website performance"
+          name: "WordPress Development",
+          slug: "wordpress-development",
+          description: "Content-rich business websites with powerful CMS capabilities"
+        },
+        {
+          name: "Headless Commerce Solutions",
+          slug: "headless-commerce",
+          description: "Enterprise-level separated frontend and backend architecture"
         }
       ]}
     />

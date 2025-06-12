@@ -1,55 +1,65 @@
-"use client"
+"use client";
 
-import { useState } from 'react'
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
-import { Mail, Phone, Calendar, CheckCircle, Send } from "lucide-react"
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { Calendar, CheckCircle, Mail, Phone, Send } from "lucide-react";
+import { useState } from "react";
 
 interface ContactFormProps {
-  type?: 'general' | 'growth-consultation' | 'ai-demo'
-  title?: string
-  description?: string
+  type?: "general" | "growth-consultation" | "ai-demo";
+  title?: string;
+  description?: string;
 }
 
 export default function ContactForm({
-  type = 'general',
+  type = "general",
   title = "Get In Touch",
-  description = "Send us a message and we'll get back to you within 24 hours."
+  description = "Send us a message and we'll get back to you within 24 hours.",
 }: ContactFormProps) {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    company: '',
-    phone: '',
-    revenue: '',
-    message: '',
-    preferredTime: '',
-    budget: '',
-    timeline: ''
-  })
+    name: "",
+    email: "",
+    company: "",
+    phone: "",
+    revenue: "",
+    message: "",
+    preferredTime: "",
+    budget: "",
+    timeline: "",
+  });
 
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
+    e.preventDefault();
+    setIsSubmitting(true);
 
     // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 2000))
+    await new Promise((resolve) => setTimeout(resolve, 2000));
 
-    setIsSubmitting(false)
-    setIsSubmitted(true)
-  }
+    setIsSubmitting(false);
+    setIsSubmitted(true);
+  };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
-    })
-  }
+      [e.target.name]: e.target.value,
+    });
+  };
 
   if (isSubmitted) {
     return (
@@ -62,41 +72,59 @@ export default function ContactForm({
             Thank You!
           </h3>
           <p className="text-gray-600 mb-6">
-            We've received your {type === 'growth-consultation' ? 'consultation request' : type === 'ai-demo' ? 'demo request' : 'message'} and will get back to you within 24 hours.
+            We've received your{" "}
+            {type === "growth-consultation"
+              ? "consultation request"
+              : type === "ai-demo"
+                ? "demo request"
+                : "message"}{" "}
+            and will get back to you within 24 hours.
           </p>
-          {type === 'growth-consultation' && (
+          {type === "growth-consultation" && (
             <p className="text-sm text-gray-500">
-              You'll receive a calendar link to book your £50 growth strategy session.
+              You'll receive a calendar link to book your £50 growth strategy
+              session.
             </p>
           )}
-          {type === 'ai-demo' && (
+          {type === "ai-demo" && (
             <p className="text-sm text-gray-500">
-              We'll send you a calendar link to schedule your personalized AI automation demo.
+              We'll send you a calendar link to schedule your personalized AI
+              automation demo.
             </p>
           )}
         </CardContent>
       </Card>
-    )
+    );
   }
 
   return (
     <Card className="max-w-2xl mx-auto">
-      <CardHeader className={`text-center ${
-        type === 'growth-consultation' ? 'bg-forest-green text-white' :
-        type === 'ai-demo' ? 'bg-coral-red text-white' :
-        'bg-midnight-blue text-white'
-      }`}>
+      <CardHeader
+        className={`text-center ${
+          type === "growth-consultation"
+            ? "bg-forest-green text-white"
+            : type === "ai-demo"
+              ? "bg-coral-red text-white"
+              : "bg-midnight-blue text-white"
+        }`}
+      >
         <CardTitle className="text-2xl font-heading">{title}</CardTitle>
-        <CardDescription className={`${
-          type === 'general' ? 'text-gray-100' : 'text-white/90'
-        }`}>
+        <CardDescription
+          className={`${
+            type === "general" ? "text-gray-100" : "text-white/90"
+          }`}
+        >
           {description}
         </CardDescription>
-        {type === 'growth-consultation' && (
-          <Badge className="bg-white/20 text-white mt-2">£50 Investment - Refunded on First Project</Badge>
+        {type === "growth-consultation" && (
+          <Badge className="bg-white/20 text-white mt-2">
+            £50 Investment - Refunded on First Project
+          </Badge>
         )}
-        {type === 'ai-demo' && (
-          <Badge className="bg-white/20 text-white mt-2">Free Personalized Demo</Badge>
+        {type === "ai-demo" && (
+          <Badge className="bg-white/20 text-white mt-2">
+            Free Personalized Demo
+          </Badge>
         )}
       </CardHeader>
 
@@ -105,7 +133,10 @@ export default function ContactForm({
           {/* Basic Information */}
           <div className="grid md:grid-cols-2 gap-4">
             <div>
-              <label htmlFor="name" className="block text-sm font-heading font-semibold text-midnight-blue mb-2">
+              <label
+                htmlFor="name"
+                className="block text-sm font-heading font-semibold text-midnight-blue mb-2"
+              >
                 Full Name *
               </label>
               <input
@@ -121,7 +152,10 @@ export default function ContactForm({
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-heading font-semibold text-midnight-blue mb-2">
+              <label
+                htmlFor="email"
+                className="block text-sm font-heading font-semibold text-midnight-blue mb-2"
+              >
                 Email Address *
               </label>
               <input
@@ -139,7 +173,10 @@ export default function ContactForm({
 
           <div className="grid md:grid-cols-2 gap-4">
             <div>
-              <label htmlFor="company" className="block text-sm font-heading font-semibold text-midnight-blue mb-2">
+              <label
+                htmlFor="company"
+                className="block text-sm font-heading font-semibold text-midnight-blue mb-2"
+              >
                 Company Name *
               </label>
               <input
@@ -155,7 +192,10 @@ export default function ContactForm({
             </div>
 
             <div>
-              <label htmlFor="phone" className="block text-sm font-heading font-semibold text-midnight-blue mb-2">
+              <label
+                htmlFor="phone"
+                className="block text-sm font-heading font-semibold text-midnight-blue mb-2"
+              >
                 Phone Number
               </label>
               <input
@@ -171,14 +211,19 @@ export default function ContactForm({
           </div>
 
           {/* Business-specific fields for consultation/demo */}
-          {(type === 'growth-consultation' || type === 'ai-demo') && (
+          {(type === "growth-consultation" || type === "ai-demo") && (
             <>
               <Separator />
               <div className="space-y-4">
-                <h4 className="font-heading font-semibold text-midnight-blue">Business Information</h4>
+                <h4 className="font-heading font-semibold text-midnight-blue">
+                  Business Information
+                </h4>
 
                 <div>
-                  <label htmlFor="revenue" className="block text-sm font-heading font-semibold text-midnight-blue mb-2">
+                  <label
+                    htmlFor="revenue"
+                    className="block text-sm font-heading font-semibold text-midnight-blue mb-2"
+                  >
                     Annual Revenue Range *
                   </label>
                   <select
@@ -198,9 +243,12 @@ export default function ContactForm({
                   </select>
                 </div>
 
-                {type === 'growth-consultation' && (
+                {type === "growth-consultation" && (
                   <div>
-                    <label htmlFor="budget" className="block text-sm font-heading font-semibold text-midnight-blue mb-2">
+                    <label
+                      htmlFor="budget"
+                      className="block text-sm font-heading font-semibold text-midnight-blue mb-2"
+                    >
                       Marketing Budget (Monthly)
                     </label>
                     <select
@@ -221,7 +269,10 @@ export default function ContactForm({
                 )}
 
                 <div>
-                  <label htmlFor="timeline" className="block text-sm font-heading font-semibold text-midnight-blue mb-2">
+                  <label
+                    htmlFor="timeline"
+                    className="block text-sm font-heading font-semibold text-midnight-blue mb-2"
+                  >
                     Project Timeline
                   </label>
                   <select
@@ -245,10 +296,16 @@ export default function ContactForm({
 
           {/* Message */}
           <div>
-            <label htmlFor="message" className="block text-sm font-heading font-semibold text-midnight-blue mb-2">
-              {type === 'growth-consultation' ? 'What are your biggest growth challenges?' :
-               type === 'ai-demo' ? 'What processes would you like to automate?' :
-               'Message'} *
+            <label
+              htmlFor="message"
+              className="block text-sm font-heading font-semibold text-midnight-blue mb-2"
+            >
+              {type === "growth-consultation"
+                ? "What are your biggest growth challenges?"
+                : type === "ai-demo"
+                  ? "What processes would you like to automate?"
+                  : "Message"}{" "}
+              *
             </label>
             <textarea
               id="message"
@@ -259,17 +316,22 @@ export default function ContactForm({
               rows={4}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-coral-red focus:border-transparent transition-all duration-200 resize-none"
               placeholder={
-                type === 'growth-consultation' ? 'Tell us about your current marketing challenges and growth goals...' :
-                type === 'ai-demo' ? 'Describe the manual processes you\'d like to automate...' :
-                'How can we help you?'
+                type === "growth-consultation"
+                  ? "Tell us about your current marketing challenges and growth goals..."
+                  : type === "ai-demo"
+                    ? "Describe the manual processes you'd like to automate..."
+                    : "How can we help you?"
               }
             />
           </div>
 
           {/* Preferred Contact Time for consultations/demos */}
-          {(type === 'growth-consultation' || type === 'ai-demo') && (
+          {(type === "growth-consultation" || type === "ai-demo") && (
             <div>
-              <label htmlFor="preferredTime" className="block text-sm font-heading font-semibold text-midnight-blue mb-2">
+              <label
+                htmlFor="preferredTime"
+                className="block text-sm font-heading font-semibold text-midnight-blue mb-2"
+              >
                 Preferred Contact Time
               </label>
               <select
@@ -293,9 +355,11 @@ export default function ContactForm({
             type="submit"
             disabled={isSubmitting}
             className={`w-full py-4 text-lg font-heading font-semibold transition-all duration-200 ${
-              type === 'growth-consultation' ? 'bg-forest-green hover:bg-forest-green/90' :
-              type === 'ai-demo' ? 'bg-coral-red hover:bg-coral-red/90' :
-              'bg-midnight-blue hover:bg-midnight-blue/90'
+              type === "growth-consultation"
+                ? "bg-forest-green hover:bg-forest-green/90"
+                : type === "ai-demo"
+                  ? "bg-coral-red hover:bg-coral-red/90"
+                  : "bg-midnight-blue hover:bg-midnight-blue/90"
             } text-white`}
           >
             {isSubmitting ? (
@@ -306,27 +370,35 @@ export default function ContactForm({
             ) : (
               <div className="flex items-center justify-center">
                 <Send className="h-5 w-5 mr-2" />
-                {type === 'growth-consultation' ? 'Book Growth Strategy Session' :
-                 type === 'ai-demo' ? 'Request AI Demo' :
-                 'Send Message'}
+                {type === "growth-consultation"
+                  ? "Book Growth Strategy Session"
+                  : type === "ai-demo"
+                    ? "Request AI Demo"
+                    : "Send Message"}
               </div>
             )}
           </Button>
 
           {/* Additional Info */}
           <div className="text-center text-sm text-gray-500">
-            {type === 'growth-consultation' && (
-              <p>After submitting, you'll receive a calendar link to book your paid consultation.</p>
+            {type === "growth-consultation" && (
+              <p>
+                After submitting, you'll receive a calendar link to book your
+                paid consultation.
+              </p>
             )}
-            {type === 'ai-demo' && (
-              <p>We'll contact you within 24 hours to schedule your personalized demo.</p>
+            {type === "ai-demo" && (
+              <p>
+                We'll contact you within 24 hours to schedule your personalized
+                demo.
+              </p>
             )}
-            {type === 'general' && (
+            {type === "general" && (
               <p>We typically respond within 24 hours during business days.</p>
             )}
           </div>
         </form>
       </CardContent>
     </Card>
-  )
+  );
 }
