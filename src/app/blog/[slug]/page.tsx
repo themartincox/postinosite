@@ -1,3 +1,12 @@
+// Generate static params for static export
+export async function generateStaticParams() {
+  return [
+    { slug: 'ai-marketing-automation' },
+    { slug: 'growth-strategies-2024' },
+    { slug: 'seo-optimization-guide' },
+  ];
+}
+
 import ContactForm from "@/components/ContactForm";
 import Navigation from "@/components/Navigation";
 import { Badge } from "@/components/ui/badge";
@@ -85,7 +94,7 @@ const getBlogPost = (slug: string) => {
       "Discover how small and medium enterprises are leveraging artificial intelligence to compete with industry giants and achieve unprecedented growth rates.",
     author: {
       name: "Martin",
-      bio: "Sarah is a growth strategy expert with over 10 years of experience helping SMEs scale through innovative marketing approaches.",
+      bio: "Martin is a growth strategy expert with over 10 years of experience helping SMEs scale through innovative marketing approaches.",
       avatar:
         "https://images.unsplash.com/photo-1494790108755-2616b612b1c4?w=150&h=150&fit=crop&crop=face",
     },

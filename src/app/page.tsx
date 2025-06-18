@@ -183,7 +183,7 @@ export default function HomePage() {
             <div className="text-center">
               <div className="w-16 h-16 bg-forest-green rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
                 <span className="text-xl font-heading font-bold text-white">
-                  SM
+                  S
                 </span>
               </div>
               <blockquote className="font-heading text-gray-700 italic mb-4">
@@ -194,10 +194,10 @@ export default function HomePage() {
               </blockquote>
               <div>
                 <p className="font-heading font-semibold text-midnight-blue">
-                  Martin
+                  Simon
                 </p>
                 <p className="font-heading text-sm text-gray-500">
-                  CEO, Precision Components Ltd
+                  CEO, Manufacturing Company
                 </p>
               </div>
             </div>
@@ -206,7 +206,7 @@ export default function HomePage() {
             <div className="text-center">
               <div className="w-16 h-16 bg-coral-red rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
                 <span className="text-xl font-heading font-bold text-white">
-                  JR
+                  J
                 </span>
               </div>
               <blockquote className="font-heading text-gray-700 italic mb-4">
@@ -216,10 +216,10 @@ export default function HomePage() {
               </blockquote>
               <div>
                 <p className="font-heading font-semibold text-midnight-blue">
-                  Martin
+                  Jessica
                 </p>
                 <p className="font-heading text-sm text-gray-500">
-                  Managing Partner, Strategic Consulting Group
+                  Managing Partner, Consulting Firm
                 </p>
               </div>
             </div>
@@ -228,7 +228,7 @@ export default function HomePage() {
             <div className="text-center">
               <div className="w-16 h-16 bg-midnight-blue rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
                 <span className="text-xl font-heading font-bold text-white">
-                  ET
+                  E
                 </span>
               </div>
               <blockquote className="font-heading text-gray-700 italic mb-4">
@@ -238,10 +238,10 @@ export default function HomePage() {
               </blockquote>
               <div>
                 <p className="font-heading font-semibold text-midnight-blue">
-                  Martin
+                  Emily
                 </p>
                 <p className="font-heading text-sm text-gray-500">
-                  Founder, Artisan Home Goods
+                  Founder, E-commerce Business
                 </p>
               </div>
             </div>

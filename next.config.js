@@ -8,6 +8,9 @@ const nextConfig = {
     // Disable TypeScript errors during build for deployment
     ignoreBuildErrors: true,
   },
+  output: 'export',
+  distDir: 'out',
+  trailingSlash: true,
   images: {
     unoptimized: true,
     domains: [
