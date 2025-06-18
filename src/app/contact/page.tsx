@@ -28,29 +28,26 @@ export default function ContactPage() {
     // Simulate form submission - replace with actual form handling
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
-    
+
     try {
       const response = await fetch("/", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams(formData as any).toString()
       });
-      
+
       if (response.ok) {
-            }
-  };
-      } else 
+        setShowSuccessMessage(true);
+      } else {
         throw new Error("Form submission failed");
+      }
     } catch (error) {
       console.error("Form submission error:", error);
       // Still show success message for UX, but log error
-          }
-  };
+      setShowSuccessMessage(true);
     } finally {
-
-    
-        }
-  };
+      setIsSubmitting(false);
+    }
   };
   return (
     <div className="flex flex-col min-h-screen">
