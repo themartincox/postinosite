@@ -85,6 +85,16 @@ export default function Navigation() {
           "border-2 border-coral-red text-coral-red hover:bg-coral-red hover:text-white",
       };
     }
+    if (pathname.startsWith("/industries")) {
+      return {
+        nav: "bg-gradient-to-br from-midnight-blue to-forest-green",
+        logo: "text-white",
+        links: "text-white/80",
+        activeLinks: "text-white",
+        contactBtn:
+          "border-2 border-coral-red text-coral-red hover:bg-coral-red hover:text-white",
+      };
+    }
 
     // Default colors for other pages
     return {
@@ -102,6 +112,7 @@ export default function Navigation() {
   const navigationItems = [
     { href: "/growth-marketing", label: "Growth Marketing" },
     { href: "/ai-automation", label: "AI & Automation" },
+    { href: "/industries", label: "Industries" },
     { href: "/ai-automation-hub", label: "AI Hub", special: true },
     { href: "/case-studies", label: "Case Studies" },
     { href: "/about", label: "About" },

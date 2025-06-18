@@ -108,7 +108,6 @@ export default function NewBlogPost() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-8">
-            {/* Post Content */}
             <Card>
               <CardHeader>
                 <CardTitle className="text-xl font-heading text-midnight-blue">
@@ -119,20 +118,17 @@ export default function NewBlogPost() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
-                {/* Title */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Post Title *
                   </label>
                   <Input
                     placeholder="Enter your blog post title..."
-                    value={formData.title}
-                    onChange={(e) => handleInputChange("title", e.target.value)}
+                    value=formData.title
+                    onChange=(e) => handleInputChange("title", e.target.value)
                     className="text-lg font-semibold"
                   />
                 </div>
-
-                {/* Slug */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     URL Slug
@@ -143,38 +139,34 @@ export default function NewBlogPost() {
                     </span>
                     <Input
                       placeholder="post-url-slug"
-                      value={formData.slug}
-                      onChange={(e) => handleInputChange("slug", e.target.value)}
+                      value=formData.slug
+                      onChange=(e) => handleInputChange("slug", e.target.value)
                     />
                   </div>
                 </div>
-
-                {/* Excerpt */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Excerpt *
                   </label>
                   <Textarea
                     placeholder="Write a brief excerpt that summarises your post..."
-                    value={formData.excerpt}
-                    onChange={(e) => handleInputChange("excerpt", e.target.value)}
-                    rows={3}
+                    value=formData.excerpt
+                    onChange=(e) => handleInputChange("excerpt", e.target.value)
+                    rows=3
                   />
                   <p className="text-xs text-gray-500 mt-1">
                     This will be shown in post previews and search results.
                   </p>
                 </div>
-
-                {/* Content */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Post Content *
                   </label>
                   <Textarea
                     placeholder="Write your blog post content here..."
-                    value={formData.content}
-                    onChange={(e) => handleInputChange("content", e.target.value)}
-                    rows={20}
+                    value=formData.content
+                    onChange=(e) => handleInputChange("content", e.target.value)
+                    rows=20
                     className="font-mono text-sm"
                   />
                   <div className="flex items-center gap-4 mt-2">
@@ -193,8 +185,6 @@ export default function NewBlogPost() {
                 </div>
               </CardContent>
             </Card>
-
-            {/* SEO Settings */}
             <Card>
               <CardHeader>
                 <CardTitle className="text-xl font-heading text-midnight-blue">
@@ -211,11 +201,10 @@ export default function NewBlogPost() {
                   </label>
                   <Input
                     placeholder="SEO-optimised title for search results..."
-                    value={formData.metaTitle}
-                    onChange={(e) => handleInputChange("metaTitle", e.target.value)}
+                    value=formData.metaTitle
+                    onChange=(e) => handleInputChange("metaTitle", e.target.value)
                   />
-                  <p className="text-xs text-gray-500 mt-1">
-                    {formData.metaTitle.length}/60 characters
+                  <p className="text-xs text-gray-500 mt-1">formData.metaTitle.length/60 characters
                   </p>
                 </div>
 
@@ -225,19 +214,17 @@ export default function NewBlogPost() {
                   </label>
                   <Textarea
                     placeholder="Brief description for search engine results..."
-                    value={formData.metaDescription}
-                    onChange={(e) => handleInputChange("metaDescription", e.target.value)}
-                    rows={3}
+                    value=formData.metaDescription
+                    onChange=(e) => handleInputChange("metaDescription", e.target.value)
+                    rows=3
                   />
-                  <p className="text-xs text-gray-500 mt-1">
-                    {formData.metaDescription.length}/160 characters
+                  <p className="text-xs text-gray-500 mt-1">formData.metaDescription.length/160 characters
                   </p>
                 </div>
               </CardContent>
             </Card>
           </div>
           <div className="space-y-6">
-            {/* Publish Settings */}
             <Card>
               <CardHeader>
                 <CardTitle className="text-lg font-heading text-midnight-blue">
@@ -250,8 +237,8 @@ export default function NewBlogPost() {
                     Status
                   </label>
                   <select
-                    value={formData.status}
-                    onChange={(e) => handleInputChange("status", e.target.value)}
+                    value=formData.status
+                    onChange=(e) => handleInputChange("status", e.target.value)
                     className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
                   >
                     <option value="draft">Draft</option>
@@ -265,19 +252,15 @@ export default function NewBlogPost() {
                     Author
                   </label>
                   <select
-                    value={formData.author}
-                    onChange={(e) => handleInputChange("author", e.target.value)}
+                    value=formData.author
+                    onChange=(e) => handleInputChange("author", e.target.value)
                     className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
-                  >
-                    {authors.map((author) => (
-                      <option key={author} value={author}>
-                        {author}
+                  >authors.map((author) => (
+                      <option key=authorvalue=author>author
                       </option>
-                    ))}
+                    ))
                   </select>
-                </div>
-
-                {formData.status === "scheduled" && (
+                </div>formData.status === "scheduled" && (
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Publish Date
@@ -288,13 +271,13 @@ export default function NewBlogPost() {
                       onChange={(e) => handleInputChange("publishDate", e.target.value)}
                     />
                   </div>
-                )}
+                )
 
                 <div className="flex items-center space-x-2">
                   <Checkbox
                     id="featured"
-                    checked={formData.featured}
-                    onCheckedChange={(checked) => handleInputChange("featured", checked as boolean)}
+                    checked=formData.featured
+                    onCheckedChange=(checked) => handleInputChange("featured", checked as boolean)
                   />
                   <label htmlFor="featured" className="text-sm font-medium text-gray-700">
                     Featured Post
@@ -313,8 +296,6 @@ export default function NewBlogPost() {
                 </div>
               </CardContent>
             </Card>
-
-            {/* Categories and Tags */}
             <Card>
               <CardHeader>
                 <CardTitle className="text-lg font-heading text-midnight-blue">
@@ -327,16 +308,15 @@ export default function NewBlogPost() {
                     Category
                   </label>
                   <select
-                    value={formData.category}
-                    onChange={(e) => handleInputChange("category", e.target.value)}
+                    value=formData.category
+                    onChange=(e) => handleInputChange("category", e.target.value)
                     className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
                   >
-                    <option value="">Select Category</option>
-                    {categories.map((category) => (
-                      <option key={category} value={category}>
+                    <option value="">Select Category</option>categories.map((category) => (
+                      <option key=categoryvalue={category}>
                         {category}
                       </option>
-                    ))}
+                    ))
                   </select>
                 </div>
 
@@ -346,8 +326,8 @@ export default function NewBlogPost() {
                   </label>
                   <Input
                     placeholder="Enter tags separated by commas..."
-                    value={formData.tags}
-                    onChange={(e) => handleInputChange("tags", e.target.value)}
+                    value=formData.tags
+                    onChange=(e) => handleInputChange("tags", e.target.value)
                   />
                   <p className="text-xs text-gray-500 mt-1">
                     Separate tags with commas (e.g., AI, Marketing, Growth)
@@ -355,8 +335,6 @@ export default function NewBlogPost() {
                 </div>
               </CardContent>
             </Card>
-
-            {/* Featured Image */}
             <Card>
               <CardHeader>
                 <CardTitle className="text-lg font-heading text-midnight-blue">
@@ -372,17 +350,15 @@ export default function NewBlogPost() {
                   <Button size="sm" variant="outline">
                     Choose File
                   </Button>
-                </div>
-
-                {formData.featuredImage && (
+                </div>formData.featuredImage && (
                   <div className="mt-4">
                     <img
-                      src={formData.featuredImage}
+                      src=formData.featuredImage
                       alt="Featured"
                       className="w-full h-32 object-cover rounded-lg"
                     />
                   </div>
-                )}
+                )
               </CardContent>
             </Card>
           </div>
