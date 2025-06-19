@@ -210,6 +210,7 @@ export default function DentalPracticesPage() {
                 >
                   <Link href="/contact">
                     Let's Talk!
+                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
               </div>
