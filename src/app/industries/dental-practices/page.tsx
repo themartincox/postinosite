@@ -130,7 +130,7 @@ const pricingTiers = [
     revenueShare: "7% Net New Revenue",
     description: "Complete digital transformation for ambitious, high-growth practices",
     features: [
-      "Custom Next.js development",
+      "Completely custom-coded development",
       "Advanced CRO funnel systems",
       "Competitor positioning pages",
       "Patient portal integration",
@@ -139,7 +139,7 @@ const pricingTiers = [
       "Membership system setup",
       "Priority support & account manager",
       "Quarterly strategy reviews",
-      "Performance optimization"
+      "Performance optimisation"
     ],
     popular: false,
     cta: "Transform Practice"
@@ -188,7 +188,7 @@ export default function DentalPracticesPage() {
                 <span className="text-cyan-300 block">Actually Generate Revenue</span>
               </h1>
               <p className="text-xl font-body mb-8 opacity-90">
-                Stop losing patients to competitors with outdated websites. Our specialized dental practice 
+                Stop losing patients to competitors with outdated websites. Our specialised dental practice 
                 websites are designed to convert visitors into booked appointments and grow your practice revenue.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
@@ -221,7 +221,7 @@ export default function DentalPracticesPage() {
                   {[
                     "Average 250% increase in qualified leads within 6 months",
                     "£75,000+ additional revenue in first 12 months (typical)",
-                    "Modern Next.js technology (not outdated WordPress)",
+                    "Custom-coded websites (not slow WordPress + plugins)",
                     "Revenue-sharing model - we succeed when you succeed",
                     "12-month partnership for guaranteed ROI"
                   ].map((stat, index) => (
@@ -245,8 +245,8 @@ export default function DentalPracticesPage() {
               Why Dental Practices Are Losing Patients Online
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-              87% of patients research dentists online before booking. If your website isn't converting visitors 
-              into appointments, you're losing patients to competitors every day.
+              Over 80% of patients use search engines to find healthcare providers before booking. If your website isn't converting visitors 
+              into appointments, you're losing patients to competitors every day. No drilling required to fix this problem!
             </p>
           </div>
 
@@ -255,11 +255,11 @@ export default function DentalPracticesPage() {
               <h3 className="text-2xl font-heading font-bold text-red-600 mb-6">The Problem:</h3>
               <ul className="space-y-4">
                 {[
-                  "Outdated WordPress sites that load slowly on mobile",
+                  "Outdated WordPress sites with countless plugins that constantly break",
                   "Generic templates that don't showcase your expertise", 
                   "No clear conversion path from visitor to booked appointment",
                   "Missing local SEO - invisible for 'dentist near me' searches",
-                  "No system to capture and nurture potential patients"
+                  "Constantly updating plugins and security patches"
                 ].map((problem, index) => (
                   <li key={index} className="flex items-start space-x-3">
                     <div className="w-2 h-2 bg-red-500 rounded-full mt-3 flex-shrink-0"></div>
@@ -272,11 +272,11 @@ export default function DentalPracticesPage() {
               <h3 className="text-2xl font-heading font-bold text-forest-green mb-6">Our Solution:</h3>
               <ul className="space-y-4">
                 {[
-                  "Modern Next.js websites that load in under 2 seconds",
+                  "Custom-coded websites that load in under 2 seconds",
                   "Dental-specific design showcasing treatments & results",
-                  "Conversion-optimized patient journey with clear CTAs", 
+                  "Conversion-optimised patient journey with clear CTAs", 
                   "Local SEO domination for your geographic area",
-                  "Automated systems that nurture leads into appointments"
+                  "Purpose-built code - exactly what your practice needs, nothing more"
                 ].map((solution, index) => (
                   <li key={index} className="flex items-start space-x-3">
                     <CheckCircle className="h-5 w-5 text-forest-green flex-shrink-0 mt-0.5" />
@@ -298,7 +298,7 @@ export default function DentalPracticesPage() {
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Every feature is designed with one goal: converting website visitors into booked appointments 
-              and growing your practice revenue.
+              and growing your practice revenue. Like a perfect root canal - precise, effective, and built to last.
             </p>
           </div>
 
@@ -331,6 +331,125 @@ export default function DentalPracticesPage() {
         </div>
       </section>
 
+      {/* AI & Future-Proofing Section */}
+      <section className="py-16 bg-gradient-to-br from-blue-50 to-cyan-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <Badge className="bg-blue-600 text-white mb-6 text-sm px-4 py-2">
+              🚀 Future-Ready Technology
+            </Badge>
+            <h2 className="text-3xl lg:text-4xl font-heading font-bold text-midnight-blue mb-4">
+              Built for Today's AI-Driven Search Landscape
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              While competitors cling to outdated WordPress solutions, we're building high-performance websites 
+              optimised for AI search, zero-click results, and tomorrow's digital landscape.
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-8">
+            <Card className="border-0 shadow-lg">
+              <CardHeader className="text-center">
+                <div className="w-16 h-16 bg-blue-600/10 rounded-full flex items-center justify-center text-blue-600 mx-auto mb-4">
+                  <Zap className="h-8 w-8" />
+                </div>
+                <CardTitle className="text-xl font-heading text-midnight-blue">
+                  Zero-Click Optimisation
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="text-center">
+                <p className="text-gray-600 mb-4">
+                  Optimised for Google's AI search features that answer patient questions directly in search results, 
+                  ensuring your practice appears prominently even when patients never click through.
+                </p>
+                <ul className="text-sm text-gray-700 space-y-2">
+                  <li>• Featured snippet optimisation</li>
+                  <li>• Schema markup for treatments</li>
+                  <li>• Local pack domination</li>
+                  <li>• Voice search optimisation</li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            <Card className="border-0 shadow-lg">
+              <CardHeader className="text-center">
+                <div className="w-16 h-16 bg-blue-600/10 rounded-full flex items-center justify-center text-blue-600 mx-auto mb-4">
+                  <TrendingUp className="h-8 w-8" />
+                </div>
+                <CardTitle className="text-xl font-heading text-midnight-blue">
+                  AI-Powered Performance
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="text-center">
+                <p className="text-gray-600 mb-4">
+                  Our custom-coded websites are built with AI integration in mind, delivering lightning-fast 
+                  performance that search engines and patients love.
+                </p>
+                <ul className="text-sm text-gray-700 space-y-2">
+                  <li>• Sub-2 second loading times</li>
+                  <li>• AI-optimised content structure</li>
+                  <li>• Automated patient insights</li>
+                  <li>• Predictive booking patterns</li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            <Card className="border-0 shadow-lg">
+              <CardHeader className="text-center">
+                <div className="w-16 h-16 bg-blue-600/10 rounded-full flex items-center justify-center text-blue-600 mx-auto mb-4">
+                  <Shield className="h-8 w-8" />
+                </div>
+                <CardTitle className="text-xl font-heading text-midnight-blue">
+                  Future-Proof Architecture
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="text-center">
+                <p className="text-gray-600 mb-4">
+                  While WordPress sites struggle with updates and security patches, our custom-built solutions 
+                  evolve seamlessly with changing technology and search algorithms.
+                </p>
+                <ul className="text-sm text-gray-700 space-y-2">
+                  <li>• No plugin dependencies</li>
+                  <li>• Automatic performance scaling</li>
+                  <li>• Search algorithm adaptability</li>
+                  <li>• Continuous optimisation</li>
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="text-center mt-12">
+            <div className="bg-white rounded-2xl p-8 shadow-lg max-w-4xl mx-auto">
+              <h3 className="text-2xl font-heading font-bold text-midnight-blue mb-4">
+                The WordPress Problem
+              </h3>
+              <div className="grid md:grid-cols-2 gap-8">
+                <div>
+                  <h4 className="font-semibold text-red-600 mb-3">What Competitors Are Stuck With:</h4>
+                  <ul className="text-sm text-gray-700 space-y-2 text-left">
+                    <li>• Constant plugin updates breaking functionality</li>
+                    <li>• Slow loading times hurting search rankings</li>
+                    <li>• Security vulnerabilities requiring patches</li>
+                    <li>• Generic templates that all look the same</li>
+                    <li>• Limited customisation for dental-specific needs</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-forest-green mb-3">What You Get Instead:</h4>
+                  <ul className="text-sm text-gray-700 space-y-2 text-left">
+                    <li>• Purpose-built code for dental practices</li>
+                    <li>• Lightning-fast performance every time</li>
+                    <li>• Zero maintenance headaches</li>
+                    <li>• Completely unique, branded design</li>
+                    <li>• Built specifically for your practice needs</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Pricing Section */}
       <section id="pricing" className="py-16 bg-soft-gray">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -339,11 +458,11 @@ export default function DentalPracticesPage() {
               Growth-Focused Packages for Dental Practices
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-6">
-              Choose your growth package. All include 12-month partnership, modern technology, 
+              Choose your growth package. All include 12-month partnership, custom-coded technology, 
               and revenue-sharing alignment.
             </p>
             <Badge className="bg-blue-600 text-white px-4 py-2 text-sm">
-              🎯 12-Month Minimum • Revenue Share Model • Modern Next.js Technology
+              🎯 12-Month Minimum • Revenue Share Model • Custom-Coded Technology
             </Badge>
           </div>
 
@@ -506,7 +625,7 @@ export default function DentalPracticesPage() {
             <div>
               <h3 className="text-2xl font-heading font-bold mb-4">Postino.</h3>
               <p className="font-body text-gray-300 mb-4">
-                Revenue-focused websites for dental practices. Modern technology, proven results, 
+                Revenue-focused websites for dental practices. Custom-coded technology, proven results, 
                 and partnership-based growth.
               </p>
             </div>
