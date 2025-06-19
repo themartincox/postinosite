@@ -1,5 +1,6 @@
 "use client";
 
+import type { Metadata } from "next";
 import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -128,10 +129,10 @@ export default function ContactPage() {
                 <p className="text-gray-700 mb-2">
                   Call us on{" "}
                   <Link
-                    href="tel:+4407432039801"
+                    href="tel:08007723291"
                     className="text-coral-red hover:underline font-semibold"
                   >
-                    +44 20 1234 5678
+                    08007723291
                   </Link>
                   , and our friendly team will discuss how we can best help you.
                 </p>
@@ -343,7 +344,7 @@ export default function ContactPage() {
                   Nottingham, NG13 8BQ
                 </p>
                 <p className="text-coral-red font-semibold mb-1">
-                  +44 20 1234 5678
+                  08007723291
                 </p>
                 <p className="text-gray-600">hello@postino.cc</p>
                 <Link
@@ -369,7 +370,7 @@ export default function ContactPage() {
                   Serving Clients Worldwide
                 </p>
                 <p className="text-coral-red font-semibold mb-1">
-                  +44 20 1234 5678
+                  08007723291
                 </p>
                 <p className="text-gray-600 mb-3">hello@postino.cc</p>
                 <Link

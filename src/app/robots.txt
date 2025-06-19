@@ -1,0 +1,20 @@
+User-agent: *
+Allow: /
+
+# High crawl rate for important pages
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://postino.cc/sitemap.xml
+
+# Block specific paths if needed
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /api/
+
+# Allow important resources
+Allow: /api/og
+Allow: /_next/static/
+Allow: /_next/image

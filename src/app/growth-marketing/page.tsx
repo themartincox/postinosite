@@ -1,5 +1,48 @@
+import type { Metadata } from "next";
 import Navigation from "@/components/Navigation";
 import { Badge } from "@/components/ui/badge";
+
+export const metadata: Metadata = {
+  title: "Growth Marketing Services Nottingham | Expert Marketing Agency",
+  description: "Professional growth marketing services in Nottingham. AI-enhanced SEO, content strategy, conversion optimization & brand development. Proven results for SMEs across Nottinghamshire. Get your free consultation today.",
+  keywords: "growth marketing Nottingham, marketing agency Nottingham, SEO services Nottingham, digital marketing Nottinghamshire, conversion rate optimization, content marketing East Midlands, brand development UK, marketing automation Nottingham",
+  authors: [{ name: "Postino Marketing Agency" }],
+  publisher: "Postino Ltd",
+  alternates: {
+    canonical: '/growth-marketing'
+  },
+  openGraph: {
+    title: "Growth Marketing Services Nottingham | Postino Agency",
+    description: "Transform your Nottingham business with expert growth marketing. AI-enhanced SEO, content strategy, and conversion optimization. Serving SMEs across Nottinghamshire with proven results.",
+    type: "website",
+    locale: "en_GB",
+    url: 'https://postino.cc/growth-marketing',
+    siteName: 'Postino',
+    images: [
+      {
+        url: 'https://postino.cc/og-growth-marketing.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Growth Marketing Services Nottingham - Postino Agency'
+      }
+    ]
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Growth Marketing Services Nottingham | Postino",
+    description: "Expert growth marketing for Nottingham SMEs. AI-enhanced SEO, content strategy & conversion optimization. Proven results across Nottinghamshire.",
+    images: ['https://postino.cc/og-growth-marketing.jpg']
+  },
+  other: {
+    'geo.region': 'GB-NTT',
+    'geo.placename': 'Nottingham',
+    'geo.position': '52.9548;-1.1581',
+    'ICBM': '52.9548, -1.1581',
+    'business:contact_data:locality': 'Nottingham',
+    'business:contact_data:region': 'Nottinghamshire',
+    'business:contact_data:country_name': 'United Kingdom'
+  }
+};
 import { Button } from "@/components/ui/button";
 import {
   Card,

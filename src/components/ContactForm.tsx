@@ -205,7 +205,7 @@ export default function ContactForm({
                 value={formData.phone}
                 onChange={handleInputChange}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-coral-red focus:border-transparent transition-all duration-200"
-                placeholder="+44 20 1234 5678"
+                placeholder="08007723291"
               />
             </div>
           </div>

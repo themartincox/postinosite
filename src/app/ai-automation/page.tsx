@@ -1,4 +1,47 @@
+import type { Metadata } from "next";
 import Navigation from "@/components/Navigation";
+
+export const metadata: Metadata = {
+  title: "AI Automation Services Nottingham | Business Process Automation",
+  description: "Transform your Nottingham business with AI automation. Intelligent chatbots, predictive analytics, workflow automation & custom AI solutions. Serving SMEs across Nottinghamshire with 90% efficiency improvements.",
+  keywords: "AI automation Nottingham, business automation Nottinghamshire, intelligent chatbots, predictive analytics East Midlands, workflow automation UK, AI agency Nottingham, machine learning solutions, process automation",
+  authors: [{ name: "Postino AI Automation Specialists" }],
+  publisher: "Postino Ltd",
+  alternates: {
+    canonical: '/ai-automation'
+  },
+  openGraph: {
+    title: "AI Automation Services Nottingham | Postino Agency",
+    description: "Leading AI automation agency in Nottingham. Intelligent chatbots, predictive analytics & custom AI solutions. 90% efficiency improvements for Nottinghamshire SMEs.",
+    type: "website",
+    locale: "en_GB",
+    url: 'https://postino.cc/ai-automation',
+    siteName: 'Postino',
+    images: [
+      {
+        url: 'https://postino.cc/og-ai-automation.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'AI Automation Services Nottingham - Postino Agency'
+      }
+    ]
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AI Automation Services Nottingham | Postino",
+    description: "Transform your business with AI automation. Intelligent chatbots, predictive analytics & workflow automation for Nottingham SMEs.",
+    images: ['https://postino.cc/og-ai-automation.jpg']
+  },
+  other: {
+    'geo.region': 'GB-NTT',
+    'geo.placename': 'Nottingham',
+    'geo.position': '52.9548;-1.1581',
+    'ICBM': '52.9548, -1.1581',
+    'business:contact_data:locality': 'Nottingham',
+    'business:contact_data:region': 'Nottinghamshire',
+    'business:contact_data:country_name': 'United Kingdom'
+  }
+};
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
