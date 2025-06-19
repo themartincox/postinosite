@@ -16,8 +16,14 @@ export default function ParticleNetwork() {
   const particlesRef = useRef<Particle[]>([]);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const animationIdRef = useRef<number>();
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isClient) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -184,7 +190,13 @@ export default function ParticleNetwork() {
         cancelAnimationFrame(animationIdRef.current);
       }
     };
-  }, [mousePos]);
+  }, [isClient, mousePos]);
+
+  if (!isClient) {
+    return (
+      <div className="absolute inset-0 bg-gradient-to-br from-midnight-blue/20 via-forest-green/10 to-coral-red/20" />
+    );
+  }
 
   return (
     <canvas

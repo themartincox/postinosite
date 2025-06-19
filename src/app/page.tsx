@@ -16,7 +16,6 @@ import dynamic from "next/dynamic";
 
 // Lazy load ParticleNetwork to prevent blocking LCP
 const ParticleNetwork = dynamic(() => import("@/components/ParticleNetwork"), {
-  ssr: false,
   loading: () => (
     <div className="absolute inset-0 bg-gradient-to-br from-midnight-blue/20 via-forest-green/10 to-coral-red/20" />
   ),
