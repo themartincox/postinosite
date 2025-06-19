@@ -1,11 +1,9 @@
 [build]
-  command = "bun run build"
+  command = "bun run build && mkdir -p dist && cp -r .next/* dist/ 2>/dev/null || true"
+  publish = "dist"
 
 [build.environment]
   NEXT_TELEMETRY_DISABLED = "1"
-
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
 
 [[headers]]
   for = "/*"
