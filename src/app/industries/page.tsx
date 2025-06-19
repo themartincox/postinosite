@@ -25,8 +25,12 @@ import {
   Sparkles,
   Building,
   MapPin,
+  Mail,
+  MessageCircle,
+  Phone,
 } from "lucide-react";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 
 const industries = [
   {
@@ -258,6 +262,33 @@ const qualifyingQuestions = [
 ];
 
 export default function IndustriesPage() {
+  const [stickyContactVisible, setStickyContactVisible] = useState(false);
+  const [contactOptionsOpen, setContactOptionsOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Show sticky contact when user scrolls past business stages section
+      const businessStagesSection = document.getElementById('business-stages');
+      const industriesSection = document.getElementById('industries-section');
+      
+      if (businessStagesSection && industriesSection) {
+        const businessStagesBottom = businessStagesSection.offsetTop + businessStagesSection.offsetHeight;
+        const industriesBottom = industriesSection.offsetTop + industriesSection.offsetHeight;
+        const scrollPosition = window.scrollY + window.innerHeight;
+        
+        // Show when past business stages, hide when past industries section
+        if (window.scrollY > businessStagesBottom && scrollPosition < industriesBottom + 200) {
+          setStickyContactVisible(true);
+        } else {
+          setStickyContactVisible(false);
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Navigation */}
@@ -316,7 +347,7 @@ export default function IndustriesPage() {
       </section>
 
       {/* Business Stages Overview */}
-      <section className="py-16 bg-soft-gray">
+      <section id="business-stages" className="py-16 bg-soft-gray">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-heading font-bold text-midnight-blue mb-4">
@@ -368,8 +399,89 @@ export default function IndustriesPage() {
         </div>
       </section>
 
+      {/* Sticky Contact Button */}
+      {stickyContactVisible && (
+        <div className="fixed bottom-8 right-8 z-50">
+          <div className="relative">
+            {/* Contact Options Dropdown */}
+            {contactOptionsOpen && (
+              <div className="absolute bottom-16 right-0 bg-white rounded-2xl shadow-2xl border border-gray-200 p-4 min-w-[280px]">
+                <h3 className="font-heading font-bold text-midnight-blue mb-4">Get In Touch</h3>
+                <div className="space-y-3">
+                  <a
+                    href="mailto:hello@postino.co.uk?subject=Website Enquiry&body=Hi, I'm interested in learning more about your industry-specific websites. Please get in touch."
+                    className="flex items-center space-x-3 p-3 rounded-lg border border-gray-200 hover:border-blue-600 hover:bg-blue-50 transition-all group"
+                  >
+                    <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white group-hover:bg-blue-700">
+                      <Mail className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <div className="font-semibold text-midnight-blue">Email Us</div>
+                      <div className="text-sm text-gray-600">hello@postino.co.uk</div>
+                    </div>
+                  </a>
+                  
+                  <a
+                    href="https://wa.me/447432039801?text=Hi! I'm interested in learning more about your industry-specific websites. Can we chat?"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center space-x-3 p-3 rounded-lg border border-gray-200 hover:border-green-600 hover:bg-green-50 transition-all group"
+                  >
+                    <div className="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center text-white group-hover:bg-green-700">
+                      <MessageCircle className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <div className="font-semibold text-midnight-blue">WhatsApp</div>
+                      <div className="text-sm text-gray-600">Quick response</div>
+                    </div>
+                  </a>
+
+                  <a
+                    href="tel:+447432039801"
+                    className="flex items-center space-x-3 p-3 rounded-lg border border-gray-200 hover:border-purple-600 hover:bg-purple-50 transition-all group"
+                  >
+                    <div className="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center text-white group-hover:bg-purple-700">
+                      <Phone className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <div className="font-semibold text-midnight-blue">Call Us</div>
+                      <div className="text-sm text-gray-600">+44 74 3203 9801</div>
+                    </div>
+                  </a>
+                </div>
+                <div className="mt-4 pt-4 border-t border-gray-200">
+                  <p className="text-xs text-gray-500 text-center">
+                    Ready to discuss your project? We typically respond within 2 hours.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {/* Main Contact Button */}
+            <button
+              onClick={() => setContactOptionsOpen(!contactOptionsOpen)}
+              className="group bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-full p-4 shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 flex items-center space-x-3"
+            >
+              <MessageCircle className="h-6 w-6" />
+              <span className="font-heading font-semibold">Contact Us</span>
+              <div className={`transform transition-transform duration-200 ${contactOptionsOpen ? 'rotate-180' : ''}`}>
+                <ArrowRight className="h-4 w-4 rotate-90" />
+              </div>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Overlay to close contact options */}
+      {contactOptionsOpen && (
+        <div 
+          className="fixed inset-0 z-40" 
+          onClick={() => setContactOptionsOpen(false)}
+        />
+      )}
+
       {/* Industries Grid */}
-      <section className="py-16 bg-white">
+      <section id="industries-section" className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-heading font-bold text-midnight-blue mb-4">
