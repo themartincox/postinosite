@@ -15,6 +15,27 @@ const nextConfig = {
   // Experimental features for performance
   experimental: {
     optimizePackageImports: ['lucide-react', 'framer-motion'],
+    optimizeCss: true,
+    webVitalsAttribution: ['CLS', 'LCP'],
+  },
+  // Bundle analyzer and optimization
+  webpack: (config, { dev, isServer }) => {
+    if (!dev && !isServer) {
+      // Optimize chunks for better caching
+      config.optimization.splitChunks = {
+        chunks: 'all',
+        cacheGroups: {
+          framework: {
+            chunks: 'all',
+            name: 'framework',
+            test: /(?<!node_modules.*)[\\/]node_modules[\\/](react|react-dom|scheduler|prop-types|use-subscription)[\\/]/,
+            priority: 40,
+            enforce: true,
+          },
+        },
+      };
+    }
+    return config;
   },
   images: {
     formats: ['image/webp', 'image/avif'],
