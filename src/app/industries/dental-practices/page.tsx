@@ -34,9 +34,9 @@ const dentalFeatures = [
     category: "Patient Acquisition",
     icon: <Target className="h-6 w-6" />,
     features: [
-      "Local SEO optimization for 'dentist near me' searches",
-      "Google Business Profile optimization",
-      "Zero-click search optimization",
+      "Local SEO optimisation for 'dentist near me' searches",
+      "Google Business Profile optimisation",
+      "Zero-click search optimisation",
       "Treatment-specific landing pages",
       "Before & after photo galleries",
       "Patient testimonial integration"
@@ -63,7 +63,7 @@ const dentalFeatures = [
       "Revenue tracking & analytics",
       "Patient portal integration",
       "Review management system",
-      "Social proof optimization"
+      "Social proof optimisation"
     ]
   },
   {
@@ -188,7 +188,7 @@ export default function DentalPracticesPage() {
                 <span className="text-cyan-300 block">Actually Generate Revenue</span>
               </h1>
               <p className="text-xl font-body mb-8 opacity-90">
-                Stop losing patients to competitors with outdated websites. Our specialised dental practice 
+                Stop losing patients to competitors because of outdated websites. Our specialised dental practice 
                 websites are designed to convert visitors into booked appointments and grow your practice revenue.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
@@ -206,10 +206,10 @@ export default function DentalPracticesPage() {
                   asChild
                   size="lg"
                   variant="outline"
-                  className="border-white text-white hover:bg-white hover:text-blue-600"
+                  className="border-white text-blue hover:bg-blue hover:text-white-600"
                 >
                   <Link href="/contact">
-                    Get Revenue Forecast
+                    Let's Talk!
                   </Link>
                 </Button>
               </div>
@@ -219,11 +219,11 @@ export default function DentalPracticesPage() {
                 <h3 className="text-2xl font-heading font-bold mb-6">Proven Results for Dental Practices</h3>
                 <div className="space-y-4">
                   {[
-                    "Average 250% increase in qualified leads within 6 months",
-                    "£75,000+ additional revenue in first 12 months (typical)",
+                    "Average 250% increase in qualified leads within 3 months",
+                    "£75,000+ additional revenue in first 6 months (typical)",
                     "Custom-coded websites (not slow WordPress + plugins)",
-                    "Revenue-sharing model - we succeed when you succeed",
-                    "12-month partnership for guaranteed ROI"
+                    "Revenue-sharing model - we succeed when you thrive",
+                    "12-month partnership to maximise your ROI!"
                   ].map((stat, index) => (
                     <div key={index} className="flex items-center space-x-3">
                       <CheckCircle className="h-5 w-5 text-cyan-300 flex-shrink-0" />
@@ -246,7 +246,7 @@ export default function DentalPracticesPage() {
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
               Over 80% of patients use search engines to find healthcare providers before booking. If your website isn't converting visitors 
-              into appointments, you're losing patients to competitors every day. No drilling required to fix this problem!
+              into appointments, you're losing patients to competitors every day!
             </p>
           </div>
 
@@ -342,7 +342,7 @@ export default function DentalPracticesPage() {
               Built for Today's AI-Driven Search Landscape
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              While competitors cling to outdated WordPress solutions, we're building high-performance websites 
+              While competitors cling to yesterday's solutions, we're building high-performance websites 
               optimised for AI search, zero-click results, and tomorrow's digital landscape.
             </p>
           </div>
@@ -688,7 +688,7 @@ export default function DentalPracticesPage() {
           </h2>
           <p className="text-xl mb-8 opacity-90">
             Join dental practices across the UK that have increased their patient bookings by 250%+ 
-            and added £75,000+ in annual revenue with our proven growth system.
+            and added £275,000+ in annual revenue with our proven growth system.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
             <Button
