@@ -26,26 +26,31 @@ export default function ContactPage() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission - replace with actual form handling
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
 
     try {
+      // Convert FormData to URLSearchParams for Netlify
+      const params = new URLSearchParams();
+      for (const [key, value] of formData.entries()) {
+        params.append(key, value.toString());
+      }
+
       const response = await fetch("/", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams(formData as any).toString()
+        body: params.toString()
       });
 
       if (response.ok) {
         setShowSuccessMessage(true);
+        form.reset();
       } else {
         throw new Error("Form submission failed");
       }
     } catch (error) {
       console.error("Form submission error:", error);
-      // Still show success message for UX, but log error
-      setShowSuccessMessage(true);
+      alert("There was an error submitting your form. Please try again or contact us directly at hello@postino.cc");
     } finally {
       setIsSubmitting(false);
     }
