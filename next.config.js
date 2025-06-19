@@ -8,11 +8,19 @@ const nextConfig = {
     // Disable TypeScript errors during build for deployment
     ignoreBuildErrors: true,
   },
-  output: 'export',
-  distDir: 'out',
-  trailingSlash: true,
+  // Performance optimizations
+  swcMinify: true,
+  compress: true,
+  poweredByHeader: false,
+  reactStrictMode: true,
+  // Experimental features for performance
+  experimental: {
+    optimizePackageImports: ['lucide-react', 'framer-motion'],
+  },
   images: {
-    unoptimized: true,
+    formats: ['image/webp', 'image/avif'],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     domains: [
       "source.unsplash.com",
       "images.unsplash.com",

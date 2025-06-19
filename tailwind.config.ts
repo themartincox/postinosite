@@ -63,6 +63,12 @@ export default {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)'
       },
+      fontFamily: {
+        'heading': ['var(--font-crimson)', 'serif'],
+        'body': ['var(--font-inter)', 'sans-serif'],
+        'sans': ['var(--font-inter)', 'sans-serif'],
+        'serif': ['var(--font-crimson)', 'serif'],
+      },
       container: {
       center: true,
       padding: {

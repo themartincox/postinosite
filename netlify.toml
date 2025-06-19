@@ -1,6 +1,5 @@
 [build]
   command = "bun run build"
-  publish = "out"
 
 [build.environment]
   NEXT_TELEMETRY_DISABLED = "1"
@@ -11,8 +10,3 @@
     X-Frame-Options = "DENY"
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
