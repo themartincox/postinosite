@@ -89,8 +89,8 @@ const pricingTiers = [
     revenueShare: "3% Net New Revenue",
     description: "Perfect for single-location practices establishing their digital presence",
     features: [
-      "Single location SEO optimization",
-      "Professional mobile-optimized website",
+      "Single location SEO optimisation",
+      "Professional mobile-optimised website",
       "Google Business Profile setup",
       "Basic appointment booking system",
       "Review management (1 platform)",
@@ -548,33 +548,133 @@ export default function DentalPracticesPage() {
         </div>
       </section>
 
-      {/* ROI Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl lg:text-4xl font-heading font-bold text-midnight-blue mb-8">
-            Real ROI for Dental Practices
-          </h2>
-          <div className="bg-gradient-to-br from-blue-600 to-cyan-600 text-white rounded-2xl p-8 mb-8">
-            <h3 className="text-2xl font-heading font-bold mb-6">Typical Premium Package Client (18 Months)</h3>
-            <div className="grid md:grid-cols-3 gap-6 text-center">
-              <div>
-                <div className="text-3xl font-bold mb-2">£37,000</div>
-                <div className="text-sm opacity-90">Setup + Monthly Fees</div>
+      {/* Attract - Inform - Convert Section */}
+      <section className="py-16 bg-midnight-blue text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl lg:text-4xl font-heading font-bold mb-4">
+              Our Proven 3-Step Growth Formula
+            </h2>
+            <p className="text-xl opacity-90 max-w-3xl mx-auto">
+              Every successful dental practice website follows the same principle: Attract → Inform → Convert. 
+              We've perfected this formula to turn website visitors into loyal patients.
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-8">
+            {/* Attract */}
+            <div className="text-center">
+              <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Target className="h-10 w-10 text-white" />
               </div>
-              <div>
-                <div className="text-3xl font-bold mb-2">£21,000</div>
-                <div className="text-sm opacity-90">Revenue Share (typical)</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold mb-2">£300,000</div>
-                <div className="text-sm opacity-90">Additional Practice Revenue</div>
-              </div>
+              <h3 className="text-2xl font-heading font-bold mb-4">
+                1. ATTRACT
+              </h3>
+              <p className="text-lg opacity-90 mb-6">
+                Get found by patients actively searching for dental services in your area
+              </p>
+              <ul className="text-left space-y-3 opacity-90">
+                <li className="flex items-start space-x-3">
+                  <CheckCircle className="h-5 w-5 text-cyan-300 flex-shrink-0 mt-0.5" />
+                  <span>Dominate 'dentist near me' searches</span>
+                </li>
+                <li className="flex items-start space-x-3">
+                  <CheckCircle className="h-5 w-5 text-cyan-300 flex-shrink-0 mt-0.5" />
+                  <span>Zero-click search optimisation</span>
+                </li>
+                <li className="flex items-start space-x-3">
+                  <CheckCircle className="h-5 w-5 text-cyan-300 flex-shrink-0 mt-0.5" />
+                  <span>Google Business Profile mastery</span>
+                </li>
+                <li className="flex items-start space-x-3">
+                  <CheckCircle className="h-5 w-5 text-cyan-300 flex-shrink-0 mt-0.5" />
+                  <span>Treatment-specific landing pages</span>
+                </li>
+              </ul>
             </div>
-            <div className="mt-6 pt-6 border-t border-white/20">
-              <div className="text-lg">
-                <strong>Total Investment:</strong> £58,000 • <strong>Client Revenue Increase:</strong> £300,000
+
+            {/* Inform */}
+            <div className="text-center">
+              <div className="w-20 h-20 bg-cyan-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Heart className="h-10 w-10 text-white" />
               </div>
-              <div className="text-xl font-bold mt-2">ROI: 517%</div>
+              <h3 className="text-2xl font-heading font-bold mb-4">
+                2. INFORM
+              </h3>
+              <p className="text-lg opacity-90 mb-6">
+                Build trust and showcase expertise with compelling, educational content
+              </p>
+              <ul className="text-left space-y-3 opacity-90">
+                <li className="flex items-start space-x-3">
+                  <CheckCircle className="h-5 w-5 text-cyan-300 flex-shrink-0 mt-0.5" />
+                  <span>Before & after treatment galleries</span>
+                </li>
+                <li className="flex items-start space-x-3">
+                  <CheckCircle className="h-5 w-5 text-cyan-300 flex-shrink-0 mt-0.5" />
+                  <span>Patient testimonials & reviews</span>
+                </li>
+                <li className="flex items-start space-x-3">
+                  <CheckCircle className="h-5 w-5 text-cyan-300 flex-shrink-0 mt-0.5" />
+                  <span>Treatment cost calculators</span>
+                </li>
+                <li className="flex items-start space-x-3">
+                  <CheckCircle className="h-5 w-5 text-cyan-300 flex-shrink-0 mt-0.5" />
+                  <span>Educational blog content</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Convert */}
+            <div className="text-center">
+              <div className="w-20 h-20 bg-forest-green rounded-full flex items-center justify-center mx-auto mb-6">
+                <Calendar className="h-10 w-10 text-white" />
+              </div>
+              <h3 className="text-2xl font-heading font-bold mb-4">
+                3. CONVERT
+              </h3>
+              <p className="text-lg opacity-90 mb-6">
+                Turn interested visitors into booked appointments with seamless booking systems
+              </p>
+              <ul className="text-left space-y-3 opacity-90">
+                <li className="flex items-start space-x-3">
+                  <CheckCircle className="h-5 w-5 text-cyan-300 flex-shrink-0 mt-0.5" />
+                  <span>One-click appointment booking</span>
+                </li>
+                <li className="flex items-start space-x-3">
+                  <CheckCircle className="h-5 w-5 text-cyan-300 flex-shrink-0 mt-0.5" />
+                  <span>WhatsApp instant messaging</span>
+                </li>
+                <li className="flex items-start space-x-3">
+                  <CheckCircle className="h-5 w-5 text-cyan-300 flex-shrink-0 mt-0.5" />
+                  <span>Emergency contact systems</span>
+                </li>
+                <li className="flex items-start space-x-3">
+                  <CheckCircle className="h-5 w-5 text-cyan-300 flex-shrink-0 mt-0.5" />
+                  <span>Automated follow-up sequences</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="text-center mt-12">
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 max-w-4xl mx-auto">
+              <h3 className="text-2xl font-heading font-bold mb-4">
+                The Result: More Patients, More Revenue
+              </h3>
+              <div className="grid md:grid-cols-3 gap-6 text-center">
+                <div>
+                  <div className="text-3xl font-bold mb-2 text-cyan-300">250%+</div>
+                  <div className="text-sm opacity-90">Increase in qualified leads</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold mb-2 text-cyan-300">£75,000+</div>
+                  <div className="text-sm opacity-90">Additional annual revenue</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold mb-2 text-cyan-300">6 months</div>
+                  <div className="text-sm opacity-90">To see full ROI</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
