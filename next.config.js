@@ -9,7 +9,6 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   // Performance optimizations
-  swcMinify: true,
   compress: true,
   poweredByHeader: false,
   reactStrictMode: true,
