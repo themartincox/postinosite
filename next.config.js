@@ -15,7 +15,6 @@ const nextConfig = {
   // Experimental features for performance
   experimental: {
     optimizePackageImports: ['lucide-react', 'framer-motion'],
-    optimizeCss: true,
     webVitalsAttribution: ['CLS', 'LCP'],
   },
   // Bundle analyzer and optimization
