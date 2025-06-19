@@ -15,6 +15,7 @@ export default function ParticleNetwork() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const animationIdRef = useRef<number>();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -32,10 +33,11 @@ export default function ParticleNetwork() {
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
-    // Initialize particles
+    // Initialize particles with reduced count for performance
     const initParticles = () => {
       const newParticles: Particle[] = [];
-      const particleCount = 80;
+      // Reduced from 80 to 50 particles for better performance
+      const particleCount = 50;
 
       for (let i = 0; i < particleCount; i++) {
         const category =
@@ -48,8 +50,8 @@ export default function ParticleNetwork() {
           id: `particle-${i}`,
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 2,
-          vy: (Math.random() - 0.5) * 2,
+          vx: (Math.random() - 0.5) * 1.5, // Reduced velocity for smoother animation
+          vy: (Math.random() - 0.5) * 1.5,
           category,
           size: category === "synergy" ? 3 : 2,
         });
@@ -60,84 +62,81 @@ export default function ParticleNetwork() {
 
     initParticles();
 
-    // Mouse move handler
+    // Mouse move handler with throttling
+    let lastMouseUpdate = 0;
     const handleMouseMove = (e: MouseEvent) => {
+      const now = Date.now();
+      if (now - lastMouseUpdate < 16) return; // ~60fps throttling
+
       const rect = canvas.getBoundingClientRect();
       setMousePos({
         x: e.clientX - rect.left,
         y: e.clientY - rect.top,
       });
+      lastMouseUpdate = now;
     };
 
-    canvas.addEventListener("mousemove", handleMouseMove);
+    canvas.addEventListener("mousemove", handleMouseMove, { passive: true });
 
-    // Animation loop
+    // Optimized animation loop
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Update particles directly in the ref
+      // Update particles with simplified physics
       for (const particle of particlesRef.current) {
-        // Mouse interaction
+        // Simplified mouse interaction
         const dx = mousePos.x - particle.x;
         const dy = mousePos.y - particle.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
-        if (distance < 150) {
-          const force = (150 - distance) / 150;
-          particle.vx += (dx / distance) * force * 0.01;
-          particle.vy += (dy / distance) * force * 0.01;
+        if (distance < 120) { // Reduced interaction radius
+          const force = (120 - distance) / 120;
+          particle.vx += (dx / distance) * force * 0.005; // Reduced force
+          particle.vy += (dy / distance) * force * 0.005;
         }
 
         // Update position
         particle.x += particle.vx;
         particle.y += particle.vy;
 
-        // Boundary check
-        if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1;
-        if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1;
+        // Boundary check with damping
+        if (particle.x < 0 || particle.x > canvas.width) {
+          particle.vx *= -0.9;
+          particle.x = Math.max(0, Math.min(canvas.width, particle.x));
+        }
+        if (particle.y < 0 || particle.y > canvas.height) {
+          particle.vy *= -0.9;
+          particle.y = Math.max(0, Math.min(canvas.height, particle.y));
+        }
 
-        // Keep in bounds
-        particle.x = Math.max(0, Math.min(canvas.width, particle.x));
-        particle.y = Math.max(0, Math.min(canvas.height, particle.y));
+        // Add slight damping for stability
+        particle.vx *= 0.999;
+        particle.vy *= 0.999;
       }
 
-      // Draw connections
+      // Optimized connection drawing with reduced distance
       for (let i = 0; i < particlesRef.current.length; i++) {
         const particle = particlesRef.current[i];
-        for (let j = i + 1; j < particlesRef.current.length; j++) {
+        // Only check every 3rd particle for connections to reduce calculations
+        if (i % 3 !== 0) continue;
+
+        for (let j = i + 3; j < particlesRef.current.length; j += 2) {
           const otherParticle = particlesRef.current[j];
           const dx = particle.x - otherParticle.x;
           const dy = particle.y - otherParticle.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
 
-          if (distance < 100) {
-            ctx.strokeStyle = `rgba(255, 255, 255, ${0.2 * (1 - distance / 100)})`;
+          if (distance < 80) { // Reduced connection distance
+            const alpha = 0.15 * (1 - distance / 80);
+
+            ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
             ctx.lineWidth = 1;
 
-            // Color based on particle types
-            ctx.beginPath();
-            if (
-              particle.category === "growth" &&
-              otherParticle.category === "ai"
-            ) {
-              ctx.strokeStyle = `rgba(255, 107, 74, ${0.3 * (1 - distance / 100)})`;
-            } else if (
-              particle.category === "growth" &&
-              otherParticle.category === "growth"
-            ) {
-              ctx.strokeStyle = `rgba(52, 168, 138, ${0.2 * (1 - distance / 100)})`;
-            } else if (
-              particle.category === "ai" &&
-              otherParticle.category === "ai"
-            ) {
-              ctx.strokeStyle = `rgba(30, 58, 138, ${0.2 * (1 - distance / 100)})`;
-            } else if (
-              particle.category === "synergy" ||
-              otherParticle.category === "synergy"
-            ) {
-              ctx.strokeStyle = `rgba(255, 107, 74, ${0.4 * (1 - distance / 100)})`;
-              ctx.lineWidth = 2;
+            // Simplified color logic
+            if (particle.category === "synergy" || otherParticle.category === "synergy") {
+              ctx.strokeStyle = `rgba(255, 107, 74, ${alpha * 1.5})`;
             }
 
+            ctx.beginPath();
             ctx.moveTo(particle.x, particle.y);
             ctx.lineTo(otherParticle.x, otherParticle.y);
             ctx.stroke();
@@ -145,15 +144,15 @@ export default function ParticleNetwork() {
         }
       }
 
-      // Draw particles
+      // Draw particles with simplified effects
       for (const particle of particlesRef.current) {
         let color = "rgba(255, 255, 255, 0.8)";
         if (particle.category === "growth") {
-          color = "rgba(52, 168, 138, 0.9)"; // forest-green
+          color = "rgba(52, 168, 138, 0.9)";
         } else if (particle.category === "ai") {
-          color = "rgba(30, 58, 138, 0.9)"; // midnight-blue
+          color = "rgba(30, 58, 138, 0.9)";
         } else if (particle.category === "synergy") {
-          color = "rgba(255, 107, 74, 1)"; // coral-red
+          color = "rgba(255, 107, 74, 1)";
         }
 
         ctx.fillStyle = color;
@@ -161,30 +160,36 @@ export default function ParticleNetwork() {
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
         ctx.fill();
 
-        // Add glow effect for synergy particles
+        // Simplified glow effect only for synergy particles
         if (particle.category === "synergy") {
           ctx.shadowColor = color;
-          ctx.shadowBlur = 10;
+          ctx.shadowBlur = 8;
           ctx.fill();
           ctx.shadowBlur = 0;
         }
       }
 
-      requestAnimationFrame(animate);
+      animationIdRef.current = requestAnimationFrame(animate);
     };
 
-    animate();
+    // Delay initial animation to not block render
+    setTimeout(() => {
+      animate();
+    }, 100);
 
     return () => {
       window.removeEventListener("resize", resizeCanvas);
       canvas.removeEventListener("mousemove", handleMouseMove);
+      if (animationIdRef.current) {
+        cancelAnimationFrame(animationIdRef.current);
+      }
     };
   }, [mousePos]);
 
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 w-full h-full pointer-events-none"
+      className="absolute inset-0 w-full h-full pointer-events-none opacity-0 animate-in fade-in duration-1000"
       style={{ background: "transparent" }}
     />
   );

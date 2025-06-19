@@ -1,6 +1,5 @@
 import EnhancedServiceCards from "@/components/EnhancedServiceCards";
 import Navigation from "@/components/Navigation";
-import ParticleNetwork from "@/components/ParticleNetwork";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,6 +12,15 @@ import {
   Zap,
 } from "lucide-react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+
+// Lazy load ParticleNetwork to prevent blocking LCP
+const ParticleNetwork = dynamic(() => import("@/components/ParticleNetwork"), {
+  ssr: false,
+  loading: () => (
+    <div className="absolute inset-0 bg-gradient-to-br from-midnight-blue/20 via-forest-green/10 to-coral-red/20" />
+  ),
+});
 
 export default function HomePage() {
   return (
