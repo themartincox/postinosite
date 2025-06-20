@@ -1,3 +1,5 @@
+"use client";
+
 import Navigation from "@/components/Navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -10,200 +12,324 @@ import {
 } from "@/components/ui/card";
 import {
   ArrowRight,
-  Calendar,
   CheckCircle,
-  FileText,
   Heart,
-  Lock,
-  Shield,
-  Stethoscope,
+  Calculator,
+  FileText,
+  Activity,
+  Sparkles,
+  Building,
+  MapPin,
+  Mail,
+  MessageCircle,
+  Phone,
   Users,
-  Zap,
 } from "lucide-react";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 
 const industries = [
   {
-    title: "Dental Practice Websites",
-    slug: "dental-practices",
-    icon: "🦷",
-    description: "Specialized websites designed to attract new patients and streamline dental practice operations.",
-    features: [
-      "Online appointment booking",
-      "Patient portal access",
-      "Treatment showcase galleries",
-      "Insurance information systems",
-      "GDPR-compliant data handling",
-      "Patient testimonials & reviews"
-    ],
-    price: "From £2,500",
-    popular: false,
-    color: "from-blue-500 to-cyan-500"
+    name: "Dental Practices",
+    icon: <Heart className="h-8 w-8" />,
+    description: "Convert website visitors into booked appointments and grow your practice revenue",
+    badge: "Most Popular",
+    badgeColor: "bg-blue-600",
+    href: "/industries/dental-practices",
+    tiers: {
+      starter: {
+        title: "Solo Practice",
+        price: "£3,500",
+        monthly: "£750/month + 3%",
+        description: "Single-location practice establishing digital presence"
+      },
+      professional: {
+        title: "Established Practice",
+        price: "£6,000",
+        monthly: "£1,000/month + 5%",
+        description: "Growing practice with multiple services/locations"
+      },
+      premium: {
+        title: "Ambitious Growth",
+        price: "£10,000",
+        monthly: "£1,500/month + 7%",
+        description: "Multi-location expansion and market domination"
+      }
+    },
+    features: ["Treatment calculators", "Before/after galleries", "Online booking", "Patient portals"],
+    results: "Average 250% increase in leads within 6 months"
   },
   {
-    title: "Medical Practice Websites",
-    slug: "medical-practices",
-    icon: "🩺",
-    description: "Professional medical websites that build trust and make healthcare accessible to patients.",
-    features: [
-      "Multi-doctor practice layouts",
-      "Service speciality pages",
-      "Patient education resources",
-      "Online consultation booking",
-      "Medical credentials showcase",
-      "Insurance & payment information"
-    ],
-    price: "From £3,000",
-    popular: true,
-    color: "from-emerald-500 to-teal-500"
+    name: "Medical Practices",
+    icon: <Activity className="h-8 w-8" />,
+    description: "GDPR-compliant websites that build trust and attract patients",
+    badge: "High ROI",
+    badgeColor: "bg-forest-green",
+    href: "/industries/medical-practices",
+    tiers: {
+      starter: {
+        title: "Solo Practitioner",
+        price: "£3,500",
+        monthly: "£750/month + 3%",
+        description: "Individual doctor or small clinic"
+      },
+      professional: {
+        title: "Multi-Doctor Practice",
+        price: "£6,000",
+        monthly: "£1,000/month + 5%",
+        description: "Established practice with multiple specialities"
+      },
+      premium: {
+        title: "Healthcare Group",
+        price: "£10,000",
+        monthly: "£1,500/month + 7%",
+        description: "Multi-location healthcare organisation"
+      }
+    },
+    features: ["Multi-doctor layouts", "Online consultations", "Patient education", "Secure portals"],
+    results: "£100k+ additional revenue typical in year 1"
   },
   {
-    title: "Accounting Practice Websites",
-    slug: "accounting-practices",
-    icon: "📊",
-    description: "Professional accounting websites that demonstrate expertise and attract quality clients.",
-    features: [
-      "Service portfolio displays",
-      "Client resource centres",
-      "Tax deadline calendars",
-      "Secure client portals",
-      "Professional credentials",
-      "Industry-specific case studies"
-    ],
-    price: "From £2,200",
-    popular: false,
-    color: "from-purple-500 to-indigo-500"
+    name: "Accounting Practices",
+    icon: <Calculator className="h-8 w-8" />,
+    description: "Professional websites that demonstrate expertise and attract quality clients",
+    badge: null,
+    badgeColor: "",
+    href: "/industries/accounting-practices",
+    tiers: {
+      starter: {
+        title: "Solo Accountant",
+        price: "£2,500",
+        monthly: "£500/month + 3%",
+        description: "Individual practitioner or small office"
+      },
+      professional: {
+        title: "Established Firm",
+        price: "£4,000",
+        monthly: "£750/month + 5%",
+        description: "Multi-partner firm with specialist services"
+      },
+      premium: {
+        title: "Regional Firm",
+        price: "£7,500",
+        monthly: "£1,200/month + 7%",
+        description: "Multi-office firm targeting regional growth"
+      }
+    },
+    features: ["Client portals", "Tax calendars", "Service showcases", "Document management"],
+    results: "Average 40% increase in high-value client enquiries"
   },
   {
-    title: "Physical Therapy Websites",
-    slug: "physical-therapy",
-    icon: "🏃‍♂️",
-    description: "Specialized websites for chiropractors, physiotherapists, and rehabilitation clinics.",
-    features: [
-      "Treatment modality showcases",
-      "Exercise & rehabilitation guides",
-      "Injury assessment tools",
-      "Insurance coverage information",
-      "Therapist qualification displays",
-      "Patient progress tracking"
-    ],
-    price: "From £2,400",
-    popular: false,
-    color: "from-orange-500 to-red-500"
+    name: "Legal Practices",
+    icon: <FileText className="h-8 w-8" />,
+    description: "Professional legal websites that build trust and convert consultations",
+    badge: null,
+    badgeColor: "",
+    href: "/industries/legal-practices",
+    tiers: {
+      starter: {
+        title: "Solo Solicitor",
+        price: "£2,800",
+        monthly: "£550/month + 3%",
+        description: "Individual solicitor or small practice"
+      },
+      professional: {
+        title: "Established Firm",
+        price: "£4,500",
+        monthly: "£800/month + 5%",
+        description: "Multi-solicitor firm with specialities"
+      },
+      premium: {
+        title: "Regional Firm",
+        price: "£8,000",
+        monthly: "£1,300/month + 7%",
+        description: "Multi-office firm with ambitious growth plans"
+      }
+    },
+    features: ["Case study libraries", "Consultation booking", "Document portals", "Legal resources"],
+    results: "Average 60% increase in consultation bookings"
   },
   {
-    title: "Cosmetic Clinic Websites",
-    slug: "cosmetic-clinics",
-    icon: "✨",
-    description: "Elegant websites for aesthetic clinics that showcase transformations and build confidence.",
-    features: [
-      "Before/after photo galleries",
-      "Treatment procedure explanations",
-      "Consultation booking systems",
-      "Pricing transparency tools",
-      "Practitioner certification displays",
-      "Patient safety information"
-    ],
-    price: "From £3,500",
-    popular: false,
-    color: "from-pink-500 to-rose-500"
+    name: "Cosmetic Clinics",
+    icon: <Sparkles className="h-8 w-8" />,
+    description: "Premium websites for aesthetic procedures that convert consultations",
+    badge: "Premium",
+    badgeColor: "bg-purple-600",
+    href: "/industries/cosmetic-clinics",
+    tiers: {
+      starter: {
+        title: "Single Clinic",
+        price: "£4,000",
+        monthly: "£800/month + 3%",
+        description: "Independent aesthetic clinic or practitioner"
+      },
+      professional: {
+        title: "Established Clinic",
+        price: "£7,000",
+        monthly: "£1,200/month + 5%",
+        description: "Multi-treatment clinic with growth ambitions"
+      },
+      premium: {
+        title: "Clinic Group",
+        price: "£12,000",
+        monthly: "£2,000/month + 7%",
+        description: "Multi-location aesthetic group"
+      }
+    },
+    features: ["Treatment galleries", "Consultation booking", "Financing calculators", "Patient stories"],
+    results: "ROI typically exceeds 500% within 18 months"
+  },
+  {
+    name: "Physical Therapy",
+    icon: <Users className="h-8 w-8" />,
+    description: "Specialised websites for physiotherapy and rehabilitation clinics",
+    badge: null,
+    badgeColor: "",
+    href: "/industries/physical-therapy",
+    tiers: {
+      starter: {
+        title: "Solo Therapist",
+        price: "£2,400",
+        monthly: "£480/month + 3%",
+        description: "Individual therapist or small clinic"
+      },
+      professional: {
+        title: "Multi-Therapist Clinic",
+        price: "£3,800",
+        monthly: "£700/month + 5%",
+        description: "Established clinic with multiple therapists"
+      },
+      premium: {
+        title: "Rehabilitation Centre",
+        price: "£6,500",
+        monthly: "£1,100/month + 7%",
+        description: "Multi-location rehabilitation organisation"
+      }
+    },
+    features: ["Exercise libraries", "Progress tracking", "Insurance integration", "Appointment booking"],
+    results: "Average 80% increase in new patient referrals"
   }
 ];
 
-const coreFeatures = [
+const businessStages = [
   {
-    icon: <Shield className="h-6 w-6" />,
-    title: "GDPR Compliant",
-    description: "Full compliance with healthcare data protection regulations and patient privacy requirements."
+    icon: <Users className="h-8 w-8" />,
+    title: "Solo/Small Business",
+    description: "Individual practitioners or small teams establishing their digital presence",
+    priceRange: "£2,400 - £4,000",
+    features: ["Professional website", "Basic booking system", "Local SEO", "Review management"],
+    ideal: "Solo practitioners, small offices, new businesses"
   },
   {
-    icon: <Stethoscope className="h-6 w-6" />,
-    title: "Industry Expertise",
-    description: "Deep understanding of healthcare and professional service industry requirements and best practices."
+    icon: <Building className="h-8 w-8" />,
+    title: "Established Local Business",
+    description: "Growing businesses with multiple services or team members",
+    priceRange: "£3,800 - £7,000",
+    features: ["Advanced features", "Multi-service showcases", "Team profiles", "CRM integration"],
+    ideal: "Multi-partner firms, established practices, growing teams"
   },
   {
-    icon: <Calendar className="h-6 w-6" />,
-    title: "Booking Integration",
-    description: "Seamless appointment booking systems integrated with your existing practice management software."
-  },
-  {
-    icon: <Lock className="h-6 w-6" />,
-    title: "Secure Patient Portals",
-    description: "Encrypted patient portals for secure document sharing and communication."
-  },
-  {
-    icon: <Users className="h-6 w-6" />,
-    title: "Multi-Practitioner Support",
-    description: "Websites designed to showcase multiple practitioners and their individual specialities."
-  },
-  {
-    icon: <Zap className="h-6 w-6" />,
-    title: "Performance Optimized",
-    description: "Fast-loading websites that provide excellent user experience on all devices."
+    icon: <MapPin className="h-8 w-8" />,
+    title: "Ambitious Growth Business",
+    description: "Multi-location businesses targeting regional expansion",
+    priceRange: "£6,500 - £12,000",
+    features: ["Multi-location support", "Advanced automation", "Competitive positioning", "Growth analytics"],
+    ideal: "Multi-location businesses, regional expansion, market leaders"
   }
 ];
 
-const testimonials = [
+const qualifyingQuestions = [
   {
-    name: "Dr. Sarah",
-    industry: "Dental Practice",
-    quote: "Our new website has increased online bookings by 300%. The patient portal has transformed how we manage appointments.",
-    rating: 5
+    question: "Are you looking to significantly grow your business revenue?",
+    context: "Our revenue-sharing model means we only succeed when you do"
   },
   {
-    name: "James",
-    industry: "Physiotherapy Clinic",
-    quote: "The exercise library feature has been incredible for patient engagement. Our retention rates have improved significantly.",
-    rating: 5
+    question: "Do you want to dominate local search in your area?",
+    context: "We specialise in local SEO and zero-click optimisation"
   },
   {
-    name: "Emma",
-    industry: "Accounting Practice",
-    quote: "The secure client portal has streamlined our document sharing process. Our clients love the convenience.",
-    rating: 5
+    question: "Are you frustrated with WordPress maintenance and updates?",
+    context: "Our custom-coded solutions eliminate plugin headaches"
+  },
+  {
+    question: "Can you commit to a 12-month growth partnership?",
+    context: "Real results take time - we're not looking for quick wins"
   }
 ];
 
 export default function IndustriesPage() {
+  const [stickyContactVisible, setStickyContactVisible] = useState(false);
+  const [contactOptionsOpen, setContactOptionsOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const businessStagesSection = document.getElementById('business-stages');
+      const industriesSection = document.getElementById('industries-section');
+
+      if (businessStagesSection && industriesSection) {
+        const businessStagesBottom = businessStagesSection.offsetTop + businessStagesSection.offsetHeight;
+        const industriesBottom = industriesSection.offsetTop + industriesSection.offsetHeight;
+        const scrollPosition = window.scrollY + window.innerHeight;
+
+        if (window.scrollY > businessStagesBottom && scrollPosition < industriesBottom + 200) {
+          setStickyContactVisible(true);
+        } else {
+          setStickyContactVisible(false);
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Navigation */}
       <Navigation />
 
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-midnight-blue to-forest-green text-white py-20">
+      <section className="bg-gradient-to-br from-midnight-blue to-blue-800 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <Badge className="bg-coral-red text-white mb-6 text-sm px-4 py-2">
-              Industry-Specialized Websites
-            </Badge>
-            <h1 className="text-4xl lg:text-6xl font-heading font-bold mb-6">
-              Professional Websites for
-              <span className="text-coral-red block">Healthcare & Services</span>
+          <div className="text-center mb-12">
+            <h1 className="text-4xl lg:text-5xl font-heading font-bold mb-6">
+              Revenue-Focused Websites for
+              <span className="text-cyan-300 block">Ambitious Businesses</span>
             </h1>
-            <p className="text-xl font-body mb-8 max-w-3xl mx-auto opacity-90">
-              Specialized website packages designed specifically for healthcare practices and professional services.
-              Built with industry compliance, patient booking systems, and conversion optimization.
+            <p className="text-xl font-body mb-8 opacity-90 max-w-3xl mx-auto">
+              Stop losing clients to competitors with outdated websites. Our industry-specialised
+              solutions are designed to convert visitors into appointments and grow your business revenue.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Badge className="bg-white/20 text-white mb-8 text-sm px-6 py-3">
+              🎯 12-Month Partnership • Revenue Share Model • Custom-Coded Technology
+            </Badge>
+          </div>
+
+          <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 max-w-4xl mx-auto">
+            <h2 className="text-2xl font-heading font-bold mb-6 text-center">
+              Is This Right for Your Business?
+            </h2>
+            <div className="grid md:grid-cols-2 gap-6">
+              {qualifyingQuestions.map((item, index) => (
+                <div key={index} className="flex items-start space-x-3">
+                  <CheckCircle className="h-5 w-5 text-cyan-300 flex-shrink-0 mt-1" />
+                  <div>
+                    <p className="font-semibold mb-1">{item.question}</p>
+                    <p className="text-sm opacity-80">{item.context}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="text-center mt-8">
+              <p className="text-lg mb-4">
+                If you answered "yes" to most of these, we're perfect partners.
+              </p>
               <Button
                 asChild
                 size="lg"
-                className="bg-coral-red hover:bg-coral-red/90 text-white"
-              >
-                <Link href="#packages">
-                  View Industry Packages
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="border-white text-white hover:bg-white hover:text-midnight-blue"
+                className="bg-blue-600 hover:bg-blue-700 text-white"
               >
                 <Link href="/contact">
-                  Get Custom Quote
+                  Get Your Revenue Forecast
+                  <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
             </div>
@@ -211,34 +337,51 @@ export default function IndustriesPage() {
         </div>
       </section>
 
-      {/* Why Choose Industry-Specific */}
-      <section className="py-16 bg-soft-gray">
+      <section id="business-stages" className="py-16 bg-soft-gray">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-heading font-bold text-midnight-blue mb-4">
-              Why Industry-Specific Matters
+              Which Business Stage Are You?
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Generic websites don't understand your unique challenges. Our industry-specific packages include
-              specialized features, compliance requirements, and conversion strategies tailored to your profession.
+              We work with businesses at every stage of growth. From solo practitioners
+              establishing their presence to multi-location businesses dominating their markets.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {coreFeatures.map((feature, index) => (
+          <div className="grid lg:grid-cols-3 gap-8">
+            {businessStages.map((stage, index) => (
               <Card key={index} className="border-0 shadow-lg hover:shadow-xl transition-shadow">
-                <CardHeader>
-                  <div className="w-12 h-12 bg-coral-red/10 rounded-lg flex items-center justify-center text-coral-red mb-4">
-                    {feature.icon}
+                <CardHeader className="text-center">
+                  <div className="w-16 h-16 bg-blue-600/10 rounded-full flex items-center justify-center text-blue-600 mx-auto mb-4">
+                    {stage.icon}
                   </div>
-                  <CardTitle className="text-xl font-heading text-midnight-blue">
-                    {feature.title}
+                  <CardTitle className="text-2xl font-heading text-midnight-blue mb-2">
+                    {stage.title}
                   </CardTitle>
+                  <div className="text-xl font-bold text-blue-600 mb-4">
+                    {stage.priceRange}
+                  </div>
+                  <CardDescription className="text-gray-600">
+                    {stage.description}
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-600 font-body">
-                    {feature.description}
-                  </p>
+                  <div className="mb-6">
+                    <h4 className="font-semibold text-midnight-blue mb-3">Key Features:</h4>
+                    <ul className="space-y-2">
+                      {stage.features.map((feature, featureIndex) => (
+                        <li key={featureIndex} className="flex items-center space-x-2">
+                          <CheckCircle className="h-4 w-4 text-forest-green flex-shrink-0" />
+                          <span className="text-gray-700 text-sm">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="bg-blue-50 rounded-lg p-3">
+                    <p className="text-sm font-semibold text-blue-800 mb-1">Ideal for:</p>
+                    <p className="text-sm text-blue-700">{stage.ideal}</p>
+                  </div>
                 </CardContent>
               </Card>
             ))}
@@ -246,15 +389,92 @@ export default function IndustriesPage() {
         </div>
       </section>
 
-      {/* Industry Packages */}
-      <section id="packages" className="py-16 bg-white">
+      {stickyContactVisible && (
+        <div className="fixed bottom-8 right-8 z-50">
+          <div className="relative">
+            {contactOptionsOpen && (
+              <div className="absolute bottom-16 right-0 bg-white rounded-2xl shadow-2xl border border-gray-200 p-4 min-w-[280px]">
+                <h3 className="font-heading font-bold text-midnight-blue mb-4">Get In Touch</h3>
+                <div className="space-y-3">
+                  <a
+                    href="mailto:hello@postino.co.uk?subject=Website Enquiry&body=Hi, I'm interested in learning more about your industry-specific websites. Please get in touch."
+                    className="flex items-center space-x-3 p-3 rounded-lg border border-gray-200 hover:border-blue-600 hover:bg-blue-50 transition-all group"
+                  >
+                    <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white group-hover:bg-blue-700">
+                      <Mail className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <div className="font-semibold text-midnight-blue">Email Us</div>
+                      <div className="text-sm text-gray-600">hello@postino.co.uk</div>
+                    </div>
+                  </a>
+
+                  <a
+                    href="https://wa.me/447432039801?text=Hi! I'm interested in learning more about your industry-specific websites. Can we chat?"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center space-x-3 p-3 rounded-lg border border-gray-200 hover:border-green-600 hover:bg-green-50 transition-all group"
+                  >
+                    <div className="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center text-white group-hover:bg-green-700">
+                      <MessageCircle className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <div className="font-semibold text-midnight-blue">WhatsApp</div>
+                      <div className="text-sm text-gray-600">Quick response</div>
+                    </div>
+                  </a>
+
+                  <a
+                    href="tel:+447432039801"
+                    className="flex items-center space-x-3 p-3 rounded-lg border border-gray-200 hover:border-purple-600 hover:bg-purple-50 transition-all group"
+                  >
+                    <div className="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center text-white group-hover:bg-purple-700">
+                      <Phone className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <div className="font-semibold text-midnight-blue">Call Us</div>
+                      <div className="text-sm text-gray-600">+44 74 3203 9801</div>
+                    </div>
+                  </a>
+                </div>
+                <div className="mt-4 pt-4 border-t border-gray-200">
+                  <p className="text-xs text-gray-500 text-center">
+                    Ready to discuss your project? We typically respond within 2 hours.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            <button
+              onClick={() => setContactOptionsOpen(!contactOptionsOpen)}
+              className="group bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-full p-4 shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 flex items-center space-x-3"
+            >
+              <MessageCircle className="h-6 w-6" />
+              <span className="font-heading font-semibold">Contact Us</span>
+              <div className={`transform transition-transform duration-200 ${contactOptionsOpen ? 'rotate-180' : ''}`}>
+                <ArrowRight className="h-4 w-4 rotate-90" />
+              </div>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {contactOptionsOpen && (
+        <div
+          className="fixed inset-0 z-40"
+          onClick={() => setContactOptionsOpen(false)}
+        />
+      )}
+
+      <section id="industries-section" className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-heading font-bold text-midnight-blue mb-4">
-              Choose Your Industry Package
+              Choose Your Industry
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Each package includes industry-specific features, compliance requirements, and proven conversion strategies.
+              Industry-specific websites with tailored features, compliance requirements,
+              and proven conversion strategies for your profession.
             </p>
           </div>
 
@@ -262,61 +482,88 @@ export default function IndustriesPage() {
             {industries.map((industry, index) => (
               <Card
                 key={index}
-                className={`relative overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-300 ${
-                  industry.popular ? 'ring-2 ring-coral-red' : ''
-                }`}
+                className="relative border-0 shadow-lg hover:shadow-2xl transition-all duration-300 group"
               >
-                {industry.popular && (
-                  <div className="absolute top-0 right-0 bg-coral-red text-white px-3 py-1 text-sm font-semibold">
-                    Most Popular
+                {industry.badge && (
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
+                    <Badge className={`${industry.badgeColor} text-white px-4 py-2`}>
+                      {industry.badge}
+                    </Badge>
                   </div>
                 )}
 
-                <div className={`h-2 bg-gradient-to-r ${industry.color}`} />
-
-                <CardHeader className="text-center pb-4">
-                  <div className="text-4xl mb-4">{industry.icon}</div>
-                  <CardTitle className="text-xl font-heading text-midnight-blue mb-2">
-                    {industry.title}
+                <CardHeader className="text-center pb-4 pt-8">
+                  <div className="w-16 h-16 bg-blue-600/10 rounded-full flex items-center justify-center text-blue-600 mx-auto mb-4">
+                    {industry.icon}
+                  </div>
+                  <CardTitle className="text-2xl font-heading text-midnight-blue mb-4">
+                    {industry.name}
                   </CardTitle>
-                  <CardDescription className="text-gray-600 mb-4">
+                  <CardDescription className="text-gray-600 mb-6">
                     {industry.description}
                   </CardDescription>
-                  <div className="text-2xl font-bold text-coral-red">
-                    {industry.price}
+
+                  <div className="space-y-3 text-left">
+                    <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                      <div>
+                        <div className="font-semibold text-sm text-gray-800">{industry.tiers.starter.title}</div>
+                        <div className="text-xs text-gray-500">{industry.tiers.starter.description}</div>
+                      </div>
+                      <div className="text-right">
+                        <div className="font-bold text-blue-600">{industry.tiers.starter.price}</div>
+                        <div className="text-xs text-gray-500">{industry.tiers.starter.monthly}</div>
+                      </div>
+                    </div>
+                    <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                      <div>
+                        <div className="font-semibold text-sm text-gray-800">{industry.tiers.professional.title}</div>
+                        <div className="text-xs text-gray-500">{industry.tiers.professional.description}</div>
+                      </div>
+                      <div className="text-right">
+                        <div className="font-bold text-blue-600">{industry.tiers.professional.price}</div>
+                        <div className="text-xs text-gray-500">{industry.tiers.professional.monthly}</div>
+                      </div>
+                    </div>
+                    <div className="flex justify-between items-center py-2">
+                      <div>
+                        <div className="font-semibold text-sm text-gray-800">{industry.tiers.premium.title}</div>
+                        <div className="text-xs text-gray-500">{industry.tiers.premium.description}</div>
+                      </div>
+                      <div className="text-right">
+                        <div className="font-bold text-blue-600">{industry.tiers.premium.price}</div>
+                        <div className="text-xs text-gray-500">{industry.tiers.premium.monthly}</div>
+                      </div>
+                    </div>
                   </div>
                 </CardHeader>
 
                 <CardContent>
-                  <ul className="space-y-3 mb-6">
-                    {industry.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className="flex items-start space-x-3">
-                        <CheckCircle className="h-5 w-5 text-forest-green flex-shrink-0 mt-0.5" />
-                        <span className="text-gray-700 font-body text-sm">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div className="space-y-3">
-                    <Button
-                      asChild
-                      className="w-full bg-midnight-blue hover:bg-midnight-blue/90 text-white"
-                    >
-                      <Link href={`/industries/${industry.slug}`}>
-                        Learn More
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </Link>
-                    </Button>
-                    <Button
-                      asChild
-                      variant="outline"
-                      className="w-full border-coral-red text-coral-red hover:bg-coral-red hover:text-white"
-                    >
-                      <Link href="/contact">
-                        Get Quote
-                      </Link>
-                    </Button>
+                  <div className="mb-6">
+                    <h4 className="font-semibold text-midnight-blue mb-3">Key Features:</h4>
+                    <ul className="space-y-2">
+                      {industry.features.map((feature, featureIndex) => (
+                        <li key={featureIndex} className="flex items-center space-x-2">
+                          <CheckCircle className="h-4 w-4 text-forest-green flex-shrink-0" />
+                          <span className="text-gray-700 text-sm">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
+
+                  <div className="bg-blue-50 rounded-lg p-4 mb-6">
+                    <p className="text-sm font-semibold text-blue-800 mb-1">Typical Results:</p>
+                    <p className="text-sm text-blue-700">{industry.results}</p>
+                  </div>
+
+                  <Button
+                    asChild
+                    className="w-full bg-midnight-blue hover:bg-midnight-blue/90 text-white group-hover:bg-blue-600 transition-colors"
+                  >
+                    <Link href={industry.href}>
+                      View {industry.name} Details
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
                 </CardContent>
               </Card>
             ))}
@@ -324,179 +571,103 @@ export default function IndustriesPage() {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-16 bg-midnight-blue text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-heading font-bold mb-4">
-              What Our Clients Say
-            </h2>
-            <p className="text-xl opacity-90">
-              See how our industry-specific websites have transformed practices across the UK.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <Card key={index} className="bg-white/10 backdrop-blur-sm border-white/20">
-                <CardHeader>
-                  <div className="flex items-center space-x-1 mb-2">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <span key={i} className="text-yellow-400 text-lg">★</span>
-                    ))}
-                  </div>
-                  <CardDescription className="text-white/90 italic">
-                    "{testimonial.quote}"
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div>
-                    <p className="font-semibold text-white">{testimonial.name}</p>
-                    <p className="text-white/70 text-sm">{testimonial.industry}</p>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Process Overview */}
-      <section className="py-16 bg-soft-gray">
+      <section className="py-16 bg-gradient-to-br from-blue-50 to-cyan-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-heading font-bold text-midnight-blue mb-4">
-              Our Specialized Process
+              Why Industry Specialisation Matters
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              We understand that healthcare and professional service websites require special attention to compliance,
-              patient experience, and industry-specific functionality.
+              Generic web agencies create generic results. We understand the unique challenges,
+              regulations, and customer behaviour patterns in your industry.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-4 gap-8">
-            {[
-              {
-                step: "01",
-                title: "Industry Analysis",
-                description: "We analyze your specific industry requirements, compliance needs, and target patient demographics."
-              },
-              {
-                step: "02",
-                title: "Compliance Review",
-                description: "Ensure full GDPR compliance and industry-specific regulations are met throughout the design process."
-              },
-              {
-                step: "03",
-                title: "Custom Development",
-                description: "Build your website with industry-specific features like booking systems and patient portals."
-              },
-              {
-                step: "04",
-                title: "Launch & Support",
-                description: "Launch your website with comprehensive training and ongoing support for your practice management."
-              }
-            ].map((step, index) => (
-              <div key={index} className="text-center">
-                <div className="w-16 h-16 bg-coral-red text-white rounded-full flex items-center justify-center text-xl font-bold mb-4 mx-auto">
-                  {step.step}
-                </div>
-                <h3 className="text-xl font-heading font-semibold text-midnight-blue mb-2">
-                  {step.title}
-                </h3>
-                <p className="text-gray-600 font-body">
-                  {step.description}
-                </p>
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h3 className="text-2xl font-heading font-bold text-red-600 mb-6">Generic Agencies:</h3>
+              <ul className="space-y-4">
+                {[
+                  "One-size-fits-all website templates",
+                  "No understanding of industry regulations",
+                  "Generic booking systems that don't integrate",
+                  "Copy that could apply to any business",
+                  "No knowledge of customer decision-making patterns"
+                ].map((problem, index) => (
+                  <li key={index} className="flex items-start space-x-3">
+                    <div className="w-2 h-2 bg-red-500 rounded-full mt-3 flex-shrink-0"></div>
+                    <span className="text-gray-700">{problem}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-2xl font-heading font-bold text-forest-green mb-6">Our Approach:</h3>
+              <ul className="space-y-4">
+                {[
+                  "Industry-specific design and functionality",
+                  "Full compliance and regulatory requirements built-in",
+                  "Integrated systems that work with your existing software",
+                  "Copy written specifically for your customer demographic",
+                  "Deep understanding of what drives bookings in your field"
+                ].map((solution, index) => (
+                  <li key={index} className="flex items-start space-x-3">
+                    <CheckCircle className="h-5 w-5 text-forest-green flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-700">{solution}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <div className="text-center mt-12">
+            <div className="bg-white rounded-2xl p-8 shadow-lg max-w-4xl mx-auto">
+              <h3 className="text-2xl font-heading font-bold text-midnight-blue mb-4">
+                Ready to Work with Industry Specialists?
+              </h3>
+              <p className="text-lg text-gray-600 mb-6">
+                Get a free audit of your current website and discover exactly how we'd
+                improve it for your specific industry and business stage.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button
+                  asChild
+                  size="lg"
+                  className="bg-blue-600 hover:bg-blue-700 text-white"
+                >
+                  <Link href="/contact">
+                    Get Free Website Audit
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Link>
+                </Button>
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="border-midnight-blue text-midnight-blue hover:bg-midnight-blue hover:text-white"
+                >
+                  <Link href="/growth-consultation">
+                    Book Strategy Call
+                  </Link>
+                </Button>
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-16 bg-coral-red text-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl lg:text-4xl font-heading font-bold mb-4">
-            Ready to Transform Your Practice?
-          </h2>
-          <p className="text-xl mb-8 opacity-90">
-            Get a custom quote for your industry-specific website package.
-            We'll analyze your needs and recommend the perfect solution.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              asChild
-              size="lg"
-              className="bg-white text-coral-red hover:bg-gray-100"
-            >
-              <Link href="/contact">
-                Get Custom Quote
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-            <Button
-              asChild
-              size="lg"
-              variant="outline"
-              className="border-white text-white hover:bg-white hover:text-coral-red"
-            >
-              <Link href="/growth-consultation">
-                Book Strategy Call
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
       <footer className="bg-charcoal text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
               <h3 className="text-2xl font-heading font-bold mb-4">Postino.</h3>
               <p className="font-body text-gray-300 mb-4">
-                Where growth meets AI innovation. Helping SMEs achieve measurable success through expert marketing and intelligent automation.
+                Industry-specialised websites for ambitious businesses.
+                Custom-coded solutions with revenue-sharing partnerships.
               </p>
             </div>
             <div>
-              <h4 className="font-heading font-semibold mb-4">Services</h4>
-              <ul className="space-y-2 font-body text-gray-300">
-                <li>
-                  <Link
-                    href="/growth-marketing"
-                    className="hover:text-white transition-colors"
-                  >
-                    Growth Marketing
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/ai-automation"
-                    className="hover:text-white transition-colors"
-                  >
-                    AI & Automation
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/industries"
-                    className="hover:text-white transition-colors"
-                  >
-                    Industry Websites
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/content-strategy"
-                    className="hover:text-white transition-colors"
-                  >
-                    Content Strategy
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-heading font-semibold mb-4">Industries</h4>
+              <h4 className="font-heading font-semibold mb-4">Healthcare</h4>
               <ul className="space-y-2 font-body text-gray-300">
                 <li>
                   <Link
@@ -516,10 +687,31 @@ export default function IndustriesPage() {
                 </li>
                 <li>
                   <Link
+                    href="/industries/cosmetic-clinics"
+                    className="hover:text-white transition-colors"
+                  >
+                    Cosmetic Clinics
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-heading font-semibold mb-4">Professional Services</h4>
+              <ul className="space-y-2 font-body text-gray-300">
+                <li>
+                  <Link
                     href="/industries/accounting-practices"
                     className="hover:text-white transition-colors"
                   >
                     Accounting Practices
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/industries/legal-practices"
+                    className="hover:text-white transition-colors"
+                  >
+                    Legal Practices
                   </Link>
                 </li>
                 <li>
@@ -537,34 +729,26 @@ export default function IndustriesPage() {
               <ul className="space-y-2 font-body text-gray-300">
                 <li>
                   <Link
-                    href="/growth-consultation"
-                    className="hover:text-white transition-colors"
-                  >
-                    Growth Strategy Session
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/ai-automation-demo"
-                    className="hover:text-white transition-colors"
-                  >
-                    Automation Demo
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/resources"
-                    className="hover:text-white transition-colors"
-                  >
-                    Resources
-                  </Link>
-                </li>
-                <li>
-                  <Link
                     href="/contact"
                     className="hover:text-white transition-colors"
                   >
-                    Contact Us
+                    Get Free Audit
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/growth-consultation"
+                    className="hover:text-white transition-colors"
+                  >
+                    Book Strategy Call
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="tel:+4407432039801"
+                    className="hover:text-white transition-colors"
+                  >
+                    +44 74 3203 9801
                   </Link>
                 </li>
               </ul>
@@ -572,10 +756,7 @@ export default function IndustriesPage() {
           </div>
           <div className="border-t border-gray-700 mt-12 pt-8 text-center">
             <p className="font-body text-gray-400">
-              © 2025 Postino Ltd. Company No. 15378485. All rights reserved. | Empowering SME growth through intelligent marketing.
-            </p>
-            <p className="font-body text-gray-500 text-sm mt-2">
-              Registered Address: 1 Fisher Lane, Bingham, Nottingham, NG13 8BQ
+              © 2025 Postino Ltd. Company No. 15378485. All rights reserved. | Revenue-focused websites for ambitious businesses.
             </p>
           </div>
         </div>

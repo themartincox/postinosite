@@ -4,6 +4,77 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Blog Content Styles */
+.content-styles {
+  @apply text-gray-800 leading-relaxed;
+}
+
+.content-styles h1,
+.content-styles h2,
+.content-styles h3,
+.content-styles h4,
+.content-styles h5,
+.content-styles h6 {
+  @apply font-heading font-bold text-midnight-blue mt-8 mb-4;
+}
+
+.content-styles h1 {
+  @apply text-3xl;
+}
+
+.content-styles h2 {
+  @apply text-2xl;
+}
+
+.content-styles h3 {
+  @apply text-xl;
+}
+
+.content-styles p {
+  @apply mb-6 leading-relaxed;
+}
+
+.content-styles ul,
+.content-styles ol {
+  @apply mb-6 ml-6;
+}
+
+.content-styles li {
+  @apply mb-2;
+}
+
+.content-styles ul li {
+  @apply list-disc;
+}
+
+.content-styles ol li {
+  @apply list-decimal;
+}
+
+.content-styles blockquote {
+  @apply border-l-4 border-coral-red bg-coral-red/5 pl-6 py-4 my-8 italic;
+}
+
+.content-styles blockquote p {
+  @apply mb-0 text-gray-700;
+}
+
+.content-styles strong {
+  @apply font-semibold text-midnight-blue;
+}
+
+.content-styles code {
+  @apply bg-gray-100 px-2 py-1 rounded text-sm font-mono;
+}
+
+.content-styles pre {
+  @apply bg-gray-900 text-gray-100 p-4 rounded-lg my-6 overflow-x-auto;
+}
+
+.content-styles pre code {
+  @apply bg-transparent px-0 py-0;
+}
+
 @layer base {
   :root {
     /* Postino Brand Colors */

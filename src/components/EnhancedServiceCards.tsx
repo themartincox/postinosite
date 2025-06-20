@@ -142,7 +142,7 @@ export default function EnhancedServiceCards() {
               <div className="absolute inset-0 pointer-events-none">
                 {Array.from({ length: 8 }, (_, i) => (
                   <motion.div
-                    key={`growth-particle-${Math.random()}-${i}`}
+                    key={`growth-particle-${i}`}
                     className="absolute w-2 h-2 bg-forest-green rounded-full"
                     initial={{
                       x: Math.random() * 400,
@@ -253,7 +253,7 @@ export default function EnhancedServiceCards() {
               <div className="absolute inset-0 pointer-events-none">
                 {Array.from({ length: 8 }, (_, i) => (
                   <motion.div
-                    key={`ai-particle-${Math.random()}-${i}`}
+                    key={`ai-particle-${i}`}
                     className="absolute w-2 h-2 bg-coral-red rounded-full"
                     initial={{
                       x: Math.random() * 400,

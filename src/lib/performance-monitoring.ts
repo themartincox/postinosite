@@ -63,16 +63,21 @@ function getMetricRating(name: string, value: number): 'good' | 'needs-improveme
 // Initialize Core Web Vitals monitoring
 export async function initPerformanceMonitoring() {
   try {
-    // Dynamic import to avoid affecting initial page load
-    const { onCLS, onFCP, onFID, onLCP, onTTFB, onINP } = await import('web-vitals')
+    // Check if we're in the browser
+    if (typeof window === 'undefined') {
+      return;
+    }
 
-    // Track all Core Web Vitals
-    onFCP(sendToGoogleAnalytics)
-    onLCP(sendToGoogleAnalytics)
-    onFID(sendToGoogleAnalytics)
-    onCLS(sendToGoogleAnalytics)
-    onTTFB(sendToGoogleAnalytics)
-    onINP(sendToGoogleAnalytics)
+    // Dynamic import to avoid affecting initial page load
+    const webVitals = await import('web-vitals');
+
+    // Check if the functions exist before calling them
+    if (webVitals.onFCP) webVitals.onFCP(sendToGoogleAnalytics);
+    if (webVitals.onLCP) webVitals.onLCP(sendToGoogleAnalytics);
+    if (webVitals.onFID) webVitals.onFID(sendToGoogleAnalytics);
+    if (webVitals.onCLS) webVitals.onCLS(sendToGoogleAnalytics);
+    if (webVitals.onTTFB) webVitals.onTTFB(sendToGoogleAnalytics);
+    if (webVitals.onINP) webVitals.onINP(sendToGoogleAnalytics);
 
     console.log('✅ Performance monitoring initialized')
   } catch (error) {

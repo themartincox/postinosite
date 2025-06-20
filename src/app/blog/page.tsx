@@ -1,158 +1,113 @@
-const blogPosts = [
-  {
-    id: 1,
-    title: "The Future of SME Growth: How AI is Revolutionising Marketing in 2024",
-    slug: "ai-marketing-automation",
-    excerpt: "Discover how small and medium enterprises are leveraging artificial intelligence to compete with industry giants and achieve unprecedented growth rates.",
-    category: "AI & Marketing",
-    author: "Martin",
-    date: "2024-06-01",
-    readTime: "8 min read",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=300&fit=crop",
-    featured: true,
-  },
-  {
-    id: 2,
-    title: "Creating Seamless B2B User Experiences That Convert",
-    slug: "seamless-b2b-user-experiences",
-    excerpt: "Discover how to create B2B user experiences that guide real people toward confident decisions and drive meaningful conversions.",
-    category: "User Experience",
-    author: "Martin",
-    date: "2024-06-15",
-    readTime: "7 min read",
-    image: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=600&h=300&fit=crop",
-    featured: false,
-  },
-  {
-    id: 3,
-    title: "Mastering Thought Leadership Content on LinkedIn",
-    slug: "thought-leadership-content-linkedin",
-    excerpt: "Learn how to create authentic thought leadership content that builds trust, drives engagement, and generates real business results on LinkedIn.",
-    category: "Content Strategy",
-    author: "Martin",
-    date: "2024-06-10",
-    readTime: "6 min read",
-    image: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=600&h=300&fit=crop",
-    featured: false,
-  },
-  {
-    id: 4,
-    title: "The Complete Guide to SEO Topic Clusters and Content Mapping",
-    slug: "seo-topic-clusters-content-mapping",
-    excerpt: "Learn how to organize your content into strategic topic clusters that build topical authority and drive higher search rankings.",
-    category: "SEO",
-    author: "Martin",
-    date: "2024-06-05",
-    readTime: "8 min read",
-    image: "https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=600&h=300&fit=crop",
-    featured: false,
-  },
-  {
-    id: 5,
-    title: "Content Calendar Systems That Actually Work",
-    slug: "content-calendar-systems",
-    excerpt: "Discover how to build content calendars that drive consistent results through strategic planning and systematic execution.",
-    category: "Content Strategy",
-    author: "Martin",
-    date: "2024-05-28",
-    readTime: "7 min read",
-    image: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=600&h=300&fit=crop",
-    featured: false,
-  },
-  {
-    id: 6,
-    title: "Google Marketing Live 2025: The AI Search Revolution",
-    slug: "google-marketing-live-2025",
-    excerpt: "Discover the massive implications of Google Marketing Live 2025 and learn how to prepare your marketing strategy for the AI-first future.",
-    category: "AI & Marketing",
-    author: "Martin",
-    date: "2024-05-25",
-    readTime: "9 min read",
-    image: "https://images.unsplash.com/photo-1573804633927-bfcbcd909acd?w=600&h=300&fit=crop",
-    featured: false,
-  },
-  {
-    id: 7,
-    title: "Mastering GA4's Cross-Network Channel Attribution",
-    slug: "ga4-cross-network-attribution",
-    excerpt: "Learn how to understand and optimize GA4's Cross-Network channel for better attribution and campaign performance insights.",
-    category: "Analytics",
-    author: "Martin",
-    date: "2024-05-22",
-    readTime: "8 min read",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=300&fit=crop",
-    featured: false,
-  },
-  {
-    id: 8,
-    title: "Planning B2B Marketing Campaigns That Actually Work",
-    slug: "b2b-marketing-campaigns",
-    excerpt: "Discover how to plan B2B marketing campaigns that balance immediate conversions with long-term brand building for sustainable growth.",
-    category: "Campaign Strategy",
-    author: "Martin",
-    date: "2024-05-18",
-    readTime: "9 min read",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=300&fit=crop",
-    featured: false,
-  },
-  {
-    id: 9,
-    title: "Navigating AI-Powered Search: Beyond Traditional SEO",
-    slug: "ai-powered-search-beyond-seo",
-    excerpt: "Learn how to adapt your search strategy for the AI era by embracing total search optimization across all discovery channels.",
-    category: "SEO",
-    author: "Martin",
-    date: "2024-05-15",
-    readTime: "8 min read",
-    image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=600&h=300&fit=crop",
-    featured: false,
-  },
-  {
-    id: 10,
-    title: "Data-Driven Storytelling: Cutting Through Content Noise",
-    slug: "data-driven-storytelling",
-    excerpt: "Learn how to create breakthrough content by combining data insights with authentic storytelling that cuts through AI-generated noise.",
-    category: "Content Strategy",
-    author: "Martin",
-    date: "2024-05-30",
-    readTime: "7 min read",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=300&fit=crop",
-    featured: false,
-  },
-  {
-    id: 11,
-    title: "Server-Side Tracking: Solving Modern Data Collection Challenges",
-    slug: "server-side-tracking",
-    excerpt: "Discover how server-side tracking can improve your data accuracy by 20-30% while maintaining compliance with privacy regulations.",
-    category: "Marketing Technology",
-    author: "Martin",
-    date: "2024-05-12",
-    readTime: "8 min read",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=300&fit=crop",
-    featured: false,
-  },
-  {
-    id: 12,
-    title: "Conversion APIs: The Future of Campaign Performance",
-    slug: "conversion-apis-future",
-    excerpt: "Learn how Conversion APIs can improve your campaign performance by 20-30% while future-proofing your tracking in the post-cookie era.",
-    category: "Marketing Technology",
-    author: "Martin",
-    date: "2024-05-08",
-    readTime: "8 min read",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=300&fit=crop",
-    featured: false,
-  },
-  {
-    id: 13,
-    title: "Zero-Click Search: The New SEO Reality",
-    slug: "zero-click-search-reality",
-    excerpt: "Learn how to adapt your SEO strategy for the zero-click search era by focusing on visibility, authority, and brand building over traffic generation.",
-    category: "SEO",
-    author: "Martin",
-    date: "2024-05-05",
-    readTime: "8 min read",
-    image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=600&h=300&fit=crop",
-    featured: false,
-  },
-];
+import { getAllBlogPosts } from "@/lib/blog-data";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
+import Image from "next/image";
+
+export default function BlogPage() {
+  const posts = getAllBlogPosts();
+  const featuredPost = posts[0];
+  const otherPosts = posts.slice(1);
+
+  return (
+    <div className="min-h-screen bg-white">
+      {/* Header */}
+      <div className="bg-soft-gray py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h1 className="text-4xl lg:text-5xl font-heading font-bold text-midnight-blue mb-4">
+              Postino Insights
+            </h1>
+            <p className="text-xl font-body text-gray-600 max-w-3xl mx-auto">
+              Expert insights on marketing strategy, AI automation, and growth tactics for modern businesses.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        {/* Featured Post */}
+        {featuredPost && (
+          <div className="mb-16">
+            <h2 className="text-2xl font-heading font-bold text-midnight-blue mb-8">Featured Article</h2>
+            <Card className="overflow-hidden border-0 shadow-xl">
+              <div className="md:flex">
+                <div className="md:w-1/2">
+                  <Image
+                    src={featuredPost.image}
+                    alt={featuredPost.title}
+                    width={600}
+                    height={400}
+                    className="w-full h-64 md:h-full object-cover"
+                  />
+                </div>
+                <div className="md:w-1/2 p-8">
+                  <Badge className="mb-4 bg-coral-red/10 text-coral-red">
+                    {featuredPost.category}
+                  </Badge>
+                  <h3 className="text-2xl lg:text-3xl font-heading font-bold text-midnight-blue mb-4">
+                    {featuredPost.title}
+                  </h3>
+                  <p className="text-gray-600 mb-6 leading-relaxed">
+                    {featuredPost.excerpt}
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <div className="text-sm text-gray-500">
+                      <span className="font-medium">{featuredPost.author}</span> • {featuredPost.date} • {featuredPost.readTime}
+                    </div>
+                    <Link
+                      href={`/blog/${featuredPost.slug}`}
+                      className="text-coral-red hover:text-coral-red/80 font-heading font-semibold"
+                    >
+                      Read Article →
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </div>
+        )}
+
+        {/* Other Posts Grid */}
+        <div>
+          <h2 className="text-2xl font-heading font-bold text-midnight-blue mb-8">Latest Articles</h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {otherPosts.map((post) => (
+              <Card key={post.id} className="overflow-hidden border-0 shadow-lg hover:shadow-xl transition-shadow group">
+                <div className="relative">
+                  <Image
+                    src={post.image}
+                    alt={post.title}
+                    width={400}
+                    height={250}
+                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <Badge className="absolute top-4 left-4 bg-white/90 text-midnight-blue">
+                    {post.category}
+                  </Badge>
+                </div>
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-heading font-bold text-midnight-blue mb-3 group-hover:text-coral-red transition-colors">
+                    {post.title}
+                  </h3>
+                  <p className="text-gray-600 mb-4 text-sm leading-relaxed">
+                    {post.excerpt}
+                  </p>
+                  <div className="flex items-center justify-between text-sm text-gray-500">
+                    <span>{post.date} • {post.readTime}</span>
+                    <Link
+                      href={`/blog/${post.slug}`}
+                      className="text-coral-red hover:text-coral-red/80 font-heading font-semibold"
+                    >
+                      Read →
+                    </Link>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

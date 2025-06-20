@@ -39,11 +39,11 @@ export default function ParticleNetwork() {
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
-    // Initialize particles with reduced count for performance
+    // Initialize particles with optimized count for visual impact
     const initParticles = () => {
       const newParticles: Particle[] = [];
-      // Reduced from 80 to 50 particles for better performance
-      const particleCount = 50;
+      // Optimized particle count for visual appeal and performance
+      const particleCount = 65;
 
       for (let i = 0; i < particleCount; i++) {
         const category =
@@ -178,10 +178,8 @@ export default function ParticleNetwork() {
       animationIdRef.current = requestAnimationFrame(animate);
     };
 
-    // Delay initial animation to not block render
-    setTimeout(() => {
-      animate();
-    }, 100);
+    // Start animation immediately
+    animate();
 
     return () => {
       window.removeEventListener("resize", resizeCanvas);
@@ -194,14 +192,14 @@ export default function ParticleNetwork() {
 
   if (!isClient) {
     return (
-      <div className="absolute inset-0 bg-gradient-to-br from-midnight-blue/20 via-forest-green/10 to-coral-red/20" />
+      <div className="absolute inset-0 bg-gradient-to-br from-midnight-blue/5 via-forest-green/5 to-coral-red/5" />
     );
   }
 
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 w-full h-full pointer-events-none opacity-0 animate-in fade-in duration-1000"
+      className="absolute inset-0 w-full h-full pointer-events-none"
       style={{ background: "transparent" }}
     />
   );

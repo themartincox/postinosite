@@ -79,11 +79,11 @@ const dentalFeatures = [
 
 const pricingTiers = [
   {
-    name: "Starter Practice",
-    price: "£2,500",
-    setup: "£500 setup",
-    monthly: "£99/month",
-    description: "Perfect for single-practitioner dental practices",
+    name: "Solo Practice",
+    price: "£3,500",
+    setup: "",
+    monthly: "£750/month + 3%",
+    description: "Single-location practice establishing digital presence",
     features: [
       "5-page professional website",
       "Online appointment booking",
@@ -98,11 +98,11 @@ const pricingTiers = [
     cta: "Get Started"
   },
   {
-    name: "Professional Practice",
-    price: "£4,200",
-    setup: "£800 setup",
-    monthly: "£149/month",
-    description: "Comprehensive solution for multi-practitioner dental practices",
+    name: "Established Practice",
+    price: "£6,000",
+    setup: "",
+    monthly: "£1,000/month + 5%",
+    description: "Growing practice with multiple services/locations",
     features: [
       "10-page custom website",
       "Advanced booking system",
@@ -119,11 +119,11 @@ const pricingTiers = [
     cta: "Most Popular"
   },
   {
-    name: "Premium Practice",
-    price: "£6,500",
-    setup: "£1,200 setup",
-    monthly: "£199/month",
-    description: "Enterprise solution for large dental practices and clinics",
+    name: "Ambitious Growth",
+    price: "£10,000",
+    setup: "",
+    monthly: "£1,500/month + 7%",
+    description: "Multi-location expansion and market domination",
     features: [
       "Unlimited pages",
       "Multi-location support",
@@ -153,15 +153,15 @@ export default function DentalPracticesPage() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <Badge className="bg-white/20 text-white mb-6 text-sm px-4 py-2">
-                🦷 Dental Practice Websites
+                🎯 Revenue-Focused Dental Websites
               </Badge>
               <h1 className="text-4xl lg:text-5xl font-heading font-bold mb-6">
                 Dental Practice Websites That
                 <span className="text-cyan-300 block">Attract New Patients</span>
               </h1>
               <p className="text-xl font-body mb-8 opacity-90">
-                Specialized websites designed specifically for dental practices. Increase patient bookings,
-                streamline operations, and build trust with GDPR-compliant, professional websites.
+                Revenue-focused websites with our partnership approach. We only succeed when you do -
+                that's why our pricing includes revenue sharing to ensure maximum growth for your practice.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button
@@ -191,7 +191,7 @@ export default function DentalPracticesPage() {
                 <h3 className="text-2xl font-heading font-bold mb-6">Why Dental Practices Choose Us</h3>
                 <div className="space-y-4">
                   {[
-                    "300% average increase in online bookings",
+                    "Average 250% increase in leads within 6 months",
                     "GDPR compliant patient data handling",
                     "Integrated appointment booking systems",
                     "Treatment showcase galleries",
@@ -259,8 +259,8 @@ export default function DentalPracticesPage() {
               Dental Practice Website Packages
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Choose the perfect package for your dental practice. All packages include professional design,
-              mobile optimization, and ongoing support.
+              Revenue-sharing partnerships that align our success with yours. All packages include professional design,
+              mobile optimization, ongoing support, and growth-focused optimization.
             </p>
           </div>
 
@@ -289,7 +289,7 @@ export default function DentalPracticesPage() {
                       {tier.price}
                     </div>
                     <div className="text-sm text-gray-500">
-                      {tier.setup} • {tier.monthly}
+                      {tier.setup ? `${tier.setup} • ${tier.monthly}` : tier.monthly}
                     </div>
                   </div>
                   <CardDescription className="text-gray-600">
@@ -334,8 +334,8 @@ export default function DentalPracticesPage() {
             Ready to Transform Your Dental Practice?
           </h2>
           <p className="text-xl mb-8 opacity-90">
-            Join hundreds of dental practices across the UK that have increased their patient bookings
-            and streamlined their operations with our specialized websites.
+            Join dental practices achieving an average 250% increase in leads within 6 months
+            through our revenue-focused partnership approach.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
@@ -369,7 +369,7 @@ export default function DentalPracticesPage() {
             <div>
               <h3 className="text-2xl font-heading font-bold mb-4">Postino.</h3>
               <p className="font-body text-gray-300 mb-4">
-                Specialized websites for dental practices. GDPR compliant, patient-focused, and designed to grow your practice.
+                Revenue-focused websites for dental practices. Partnership approach with growth optimization and GDPR compliance built-in.
               </p>
             </div>
             <div>
@@ -462,7 +462,7 @@ export default function DentalPracticesPage() {
           </div>
           <div className="border-t border-gray-700 mt-12 pt-8 text-center">
             <p className="font-body text-gray-400">
-              © 2025 Postino Ltd. Company No. 15378485. All rights reserved. | Specialized websites for dental practices.
+              © 2025 Postino Ltd. Company No. 15378485. All rights reserved. | Revenue-focused websites for dental practices.
             </p>
           </div>
         </div>
