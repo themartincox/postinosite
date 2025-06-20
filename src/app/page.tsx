@@ -40,6 +40,8 @@ export default function HomePage() {
               Where Growth Meets
               <br />
               <span className="text-coral-red">AI Innovation</span>
+              <br />
+              <span className="text-sm opacity-80">🚀 Now with Turbopack & Hot Reload!</span>
             </h1>
             <p className="text-xl lg:text-2xl font-body mb-8 max-w-4xl mx-auto leading-relaxed">
               Postino seamlessly blends expert marketing strategies with
