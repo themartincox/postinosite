@@ -12,22 +12,22 @@ const headlines: HeadlineStep[] = [
   {
     text: "We're Postino. We Deliver",
     highlight: "Exceptional Growth",
-    color: "text-coral-red"
+    color: "text-orange-200"
   },
   {
     text: "We're Postino. We Deliver",
     highlight: "AI-Powered Results",
-    color: "text-forest-green"
+    color: "text-emerald-200"
   },
   {
     text: "We're Postino. We Deliver",
     highlight: "Strategic Innovation",
-    color: "text-blue-600"
+    color: "text-cyan-200"
   },
   {
     text: "We're Postino. We Deliver",
     highlight: "Sustainable Success",
-    color: "text-purple-600"
+    color: "text-violet-200"
   }
 ];
 
@@ -49,8 +49,8 @@ export default function MorphingHeadlines() {
     <div className="relative morphing-container">
       {/* Simplified headline container */}
       <h1 className="text-6xl lg:text-9xl font-heading font-bold mb-6 text-center">
-        <span className="block text-white">{currentHeadline.text}</span>
-        <span className={`block transition-colors duration-1000 ${currentHeadline.color}`}>
+        <span className="block text-white drop-shadow-lg">{currentHeadline.text}</span>
+        <span className={`block transition-colors duration-1000 ${currentHeadline.color} drop-shadow-lg`} style={{textShadow: '2px 2px 4px rgba(0,0,0,0.5)'}}>
           {currentHeadline.highlight}
         </span>
       </h1>
@@ -78,10 +78,10 @@ export default function MorphingHeadlines() {
           position: absolute;
           inset: 0;
           background: ${
-            currentIndex === 0 ? 'linear-gradient(to right, rgba(239, 68, 68, 0.1), rgba(251, 146, 60, 0.1))' :
-            currentIndex === 1 ? 'linear-gradient(to right, rgba(16, 185, 129, 0.1), rgba(52, 211, 153, 0.1))' :
-            currentIndex === 2 ? 'linear-gradient(to right, rgba(37, 99, 235, 0.1), rgba(56, 189, 248, 0.1))' :
-            'linear-gradient(to right, rgba(147, 51, 234, 0.1), rgba(236, 72, 153, 0.1))'
+            currentIndex === 0 ? 'linear-gradient(to right, rgba(254, 215, 170, 0.15), rgba(251, 146, 60, 0.15))' :
+            currentIndex === 1 ? 'linear-gradient(to right, rgba(167, 243, 208, 0.15), rgba(52, 211, 153, 0.15))' :
+            currentIndex === 2 ? 'linear-gradient(to right, rgba(165, 243, 252, 0.15), rgba(56, 189, 248, 0.15))' :
+            'linear-gradient(to right, rgba(221, 214, 254, 0.15), rgba(196, 181, 253, 0.15))'
           };
           border-radius: 1rem;
           filter: blur(3rem);

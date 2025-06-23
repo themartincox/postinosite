@@ -37,13 +37,15 @@ export default function BlogPage() {
             <Card className="overflow-hidden border-0 shadow-xl">
               <div className="md:flex">
                 <div className="md:w-1/2">
-                  <Image
-                    src={featuredPost.image}
-                    alt={featuredPost.title}
-                    width={600}
-                    height={400}
-                    className="w-full h-64 md:h-full object-cover"
-                  />
+                  <Link href={`/blog/${featuredPost.slug}`} className="block">
+                    <Image
+                      src={featuredPost.image}
+                      alt={featuredPost.title}
+                      width={600}
+                      height={400}
+                      className="w-full h-64 md:h-full object-cover hover:scale-105 transition-transform duration-300"
+                    />
+                  </Link>
                 </div>
                 <div className="md:w-1/2 p-8">
                   <Badge className="mb-4 bg-coral-red/10 text-coral-red">
@@ -78,22 +80,26 @@ export default function BlogPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {otherPosts.map((post) => (
               <Card key={post.id} className="overflow-hidden border-0 shadow-lg hover:shadow-xl transition-shadow group">
-                <div className="relative">
-                  <Image
-                    src={post.image}
-                    alt={post.title}
-                    width={400}
-                    height={250}
-                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <Badge className="absolute top-4 left-4 bg-white/90 text-midnight-blue">
-                    {post.category}
-                  </Badge>
-                </div>
+                <Link href={`/blog/${post.slug}`} className="block">
+                  <div className="relative">
+                    <Image
+                      src={post.image}
+                      alt={post.title}
+                      width={400}
+                      height={250}
+                      className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <Badge className="absolute top-4 left-4 bg-white/90 text-midnight-blue">
+                      {post.category}
+                    </Badge>
+                  </div>
+                </Link>
                 <CardContent className="p-6">
-                  <h3 className="text-xl font-heading font-bold text-midnight-blue mb-3 group-hover:text-coral-red transition-colors">
-                    {post.title}
-                  </h3>
+                  <Link href={`/blog/${post.slug}`}>
+                    <h3 className="text-xl font-heading font-bold text-midnight-blue mb-3 group-hover:text-coral-red transition-colors cursor-pointer">
+                      {post.title}
+                    </h3>
+                  </Link>
                   <p className="text-gray-600 mb-4 text-sm leading-relaxed">
                     {post.excerpt}
                   </p>
