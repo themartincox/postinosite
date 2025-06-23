@@ -64,7 +64,7 @@ export default {
         sm: 'calc(var(--radius) - 4px)'
       },
       fontFamily: {
-        'heading': ['var(--font-crimson)', 'serif'],
+        'heading': ['var(--font-inter)', 'sans-serif'],
         'body': ['var(--font-inter)', 'sans-serif'],
         'sans': ['var(--font-inter)', 'sans-serif'],
         'serif': ['var(--font-crimson)', 'serif'],
