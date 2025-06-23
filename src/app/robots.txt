@@ -1,20 +1,22 @@
-User-agent: *
-Allow: /
+import type { MetadataRoute } from 'next'
 
-# High crawl rate for important pages
-User-agent: Googlebot
-Allow: /
-Crawl-delay: 1
+export const dynamic = 'force-static'
 
-# Sitemap location
-Sitemap: https://postino.cc/sitemap.xml
-
-# Block specific paths if needed
-Disallow: /admin/
-Disallow: /_next/
-Disallow: /api/
-
-# Allow important resources
-Allow: /api/og
-Allow: /_next/static/
-Allow: /_next/image
+export default function robots(): MetadataRoute.Robots {
+  return {
+    rules: [
+      {
+        userAgent: '*',
+        allow: '/',
+        disallow: ['/admin/', '/_next/', '/api/'],
+      },
+      {
+        userAgent: 'Googlebot',
+        allow: '/',
+        disallow: ['/admin/', '/_next/', '/api/'],
+        crawlDelay: 1,
+      },
+    ],
+    sitemap: 'https://postino.cc/sitemap.xml',
+  }
+}

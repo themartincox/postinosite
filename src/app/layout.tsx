@@ -1,61 +1,60 @@
 import type { Metadata } from "next";
 import { Inter, Crimson_Text } from "next/font/google";
-import Script from "next/script";
 import "./globals.css";
-import ClientBody from "./ClientBody";
+import Script from "next/script";
 
+// More aggressive font optimization
 const inter = Inter({
-  variable: "--font-inter",
   subsets: ["latin"],
+  variable: "--font-inter",
   display: "swap",
   preload: true,
+  fallback: ["system-ui", "arial"],
+  // Only load weights we actually use
+  weight: ["400", "500", "600", "700"],
 });
 
 const crimsonText = Crimson_Text({
-  variable: "--font-crimson",
-  subsets: ["latin"],
   weight: ["400", "600"],
-  style: ["normal", "italic"],
+  subsets: ["latin"],
+  variable: "--font-crimson",
   display: "swap",
   preload: true,
+  fallback: ["Georgia", "serif"],
 });
 
 export const metadata: Metadata = {
-  title: {
-    default: "Postino - AI Marketing Agency Nottingham | Growth Marketing & Automation",
-    template: "%s | Postino - Nottingham AI Marketing Agency"
-  },
-  description:
-    "Leading AI-driven marketing agency in Nottingham, UK. Expert growth marketing, automation & web design for SMEs across Nottinghamshire. Located in Bingham, serving the East Midlands with proven results. Call 08007723291.",
-  keywords:
-    "marketing agency Nottingham, AI marketing Nottinghamshire, growth agency Nottingham, web design Nottingham, SEO services Nottingham, digital marketing East Midlands, marketing automation UK, AI agency Nottingham, business automation Nottinghamshire, SME marketing Bingham",
-  authors: [{ name: "Postino Ltd" }],
-  creator: "Postino Ltd",
-  publisher: "Postino Ltd",
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
-  metadataBase: new URL('https://postino.cc'),
+  title: "Postino - Where Growth Meets AI Innovation | Marketing & Automation Agency",
+  description: "Expert marketing strategies with cutting-edge AI automation to help SMEs grow smarter, faster, and more efficiently. Based in Nottingham, serving UK businesses.",
+  keywords: "marketing agency, AI automation, SME growth, Nottingham, digital marketing, business automation",
+  authors: [{ name: "Postino" }],
+  creator: "Postino",
+  publisher: "Postino",
+  metadataBase: new URL("https://postino.cc"),
   alternates: {
-    canonical: '/',
+    canonical: "https://postino.cc",
   },
   openGraph: {
     title: "Postino - Where Growth Meets AI Innovation",
-    description:
-      "Transform your SME with our integrated marketing and AI automation approach. Expert strategies, intelligent systems, measurable results.",
+    description: "Expert marketing strategies with cutting-edge AI automation to help SMEs grow smarter, faster, and more efficiently.",
+    url: "https://postino.cc",
+    siteName: "Postino",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Postino - Marketing & AI Automation Agency",
+      },
+    ],
+    locale: "en_GB",
     type: "website",
-    locale: "en_US",
-    url: 'https://postino.cc',
-    siteName: 'Postino',
   },
   twitter: {
     card: "summary_large_image",
-    title: "Postino - AI-Driven Marketing & Growth Agency",
-    description:
-      "Expert marketing strategies powered by intelligent automation. Helping SMEs achieve exceptional growth.",
-    creator: "@PostinoAgency",
+    title: "Postino - Where Growth Meets AI Innovation",
+    description: "Expert marketing strategies with cutting-edge AI automation to help SMEs grow smarter, faster, and more efficiently.",
+    images: ["/og-image.jpg"],
   },
   robots: {
     index: true,
@@ -63,190 +62,102 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
   },
   verification: {
-    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || 'google-site-verification-pending',
-    yandex: 'yandex-verification-code', // Add your Yandex verification code
-  },
-};
-
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": ["Organization", "LocalBusiness", "MarketingAgency"],
-  name: "Postino Ltd",
-  alternateName: ["Postino", "Postino Marketing Agency"],
-  description:
-    "Leading AI-driven marketing and growth agency in Nottingham, UK. Specializing in growth marketing, AI automation, and web design for SMEs across Nottinghamshire and the East Midlands.",
-  url: "https://postino.cc",
-  logo: "https://postino.cc/logo.png",
-  image: "https://postino.cc/postino-office-nottingham.jpg",
-  foundingDate: "2024",
-  slogan: "Where Growth Meets AI Innovation",
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "1 Fisher Lane",
-    addressLocality: "Bingham",
-    addressRegion: "Nottingham",
-    postalCode: "NG13 8BQ",
-    addressCountry: "GB",
-  },
-  geo: {
-    "@type": "GeoCoordinates",
-    latitude: "52.9548",
-    longitude: "-1.1581"
-  },
-  contactPoint: [
-    {
-      "@type": "ContactPoint",
-      telephone: "08007723291",
-      contactType: "customer service",
-      email: "hello@postino.cc",
-      availableLanguage: "English",
-      areaServed: ["Nottingham", "Nottinghamshire", "East Midlands", "United Kingdom"]
-    },
-    {
-      "@type": "ContactPoint",
-      telephone: "+44 7432039801",
-      contactType: "customer service",
-      contactOption: "WhatsApp",
-      availableLanguage: "English"
-    }
-  ],
-  sameAs: [
-    "https://postino.cc",
-  ],
-  serviceArea: [
-    {
-      "@type": "Place",
-      name: "Nottingham",
-    },
-    {
-      "@type": "Place",
-      name: "Nottinghamshire",
-    },
-    {
-      "@type": "Place",
-      name: "East Midlands",
-    },
-    {
-      "@type": "Place",
-      name: "United Kingdom",
-    }
-  ],
-  makesOffer: [
-    {
-      "@type": "Offer",
-      name: "Free Marketing Consultation",
-      description: "Complimentary 30-minute consultation for SMEs",
-      url: "https://postino.cc/growth-consultation"
-    }
-  ],
-  hasOfferCatalog: {
-    "@type": "OfferCatalog",
-    name: "Marketing and AI Services",
-    itemListElement: [
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: "Growth Marketing Services",
-          description:
-            "Expert marketing strategies including SEO, content marketing, email marketing, and conversion optimization.",
-        },
-      },
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: "AI & Automation Solutions",
-          description:
-            "Intelligent business process automation, data analysis, and custom AI integrations.",
-        },
-      },
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: "SEO Services",
-          description:
-            "AI-enhanced search engine optimization with proven methodologies and measurable results.",
-        },
-      },
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: "Content Strategy",
-          description:
-            "Strategic content planning and creation that drives engagement and conversions.",
-        },
-      },
-    ],
-  },
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "4.9",
-    reviewCount: "47",
+    google: "google-site-verification-token",
   },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
-  const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
-
+}) {
   return (
-    <html lang="en" className={`${inter.variable} ${crimsonText.variable}`}>
+    <html lang="en-GB" className={`${inter.variable} ${crimsonText.variable}`}>
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-        <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#1e3a8a" />
+        {/* Critical CSS - inline to prevent render blocking */}
+        <style dangerouslySetInnerHTML={{
+          __html: `
+            /* Critical above-the-fold styles */
+            body {
+              font-family: var(--font-inter), system-ui, arial, sans-serif;
+              background: #ffffff;
+              color: #111827;
+              margin: 0;
+              line-height: 1.5;
+            }
+            .hero-gradient {
+              background: linear-gradient(135deg, #1e3a8a 0%, #047857 100%);
+            }
+            /* Prevent layout shifts */
+            .morphing-container {
+              min-height: clamp(300px, 25vw, 500px);
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              padding: 2rem 0;
+            }
+            /* Optimize animations */
+            .will-change-transform {
+              will-change: transform, opacity;
+            }
+            @media (prefers-reduced-motion: reduce) {
+              * { animation-duration: 0.01ms !important; }
+            }
+          `
+        }} />
 
-        {/* Structured Data */}
-        <script
-          type="application/ld+json"
-          // biome-ignore lint/security/noDangerouslySetInnerHtml: Required for structured data
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        {/* DNS prefetch only for critical resources */}
+        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+
+        {/* Preconnect for critical third-party origins */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+
+        {/* Favicon and app icons */}
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="manifest" href="/site.webmanifest" />
+
+        {/* Performance hints */}
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+      </head>
+      <body className="antialiased min-h-screen bg-white text-gray-900">
+        {children}
+
+        {/* GTM - Load after page content with reduced priority */}
+        <Script
+          id="gtm-script"
+          strategy="lazyOnload"
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+              })(window,document,'script','dataLayer','${process.env.NEXT_PUBLIC_GTM_ID}');
+            `,
+          }}
         />
 
-        {/* Google Tag Manager */}
-        {gtmId && (
-          <Script
-            id="gtm-script"
-            strategy="afterInteractive"
-            dangerouslySetInnerHTML={{
-              __html: `
-                (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-                })(window,document,'script','dataLayer','${gtmId}');
-              `,
-            }}
+        {/* GTM noscript fallback */}
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GTM_ID}`}
+            height="0"
+            width="0"
+            style={{ display: 'none', visibility: 'hidden' }}
           />
-        )}
-      </head>
-      <body suppressHydrationWarning className="antialiased">
-        {/* Google Tag Manager (noscript) */}
-        {gtmId && (
-          <noscript>
-            <iframe
-              src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
-              height="0"
-              width="0"
-              style={{ display: 'none', visibility: 'hidden' }}
-              title="Google Tag Manager"
-            />
-          </noscript>
-        )}
-        <ClientBody>{children}</ClientBody>
+        </noscript>
       </body>
     </html>
   );

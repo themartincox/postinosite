@@ -9,6 +9,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import {
   ArrowRight,
   Calendar,
   CheckCircle,
@@ -146,6 +154,33 @@ export default function DentalPracticesPage() {
     <div className="flex flex-col min-h-screen">
       {/* Navigation */}
       <Navigation />
+
+      {/* Breadcrumb Navigation */}
+      <div className="bg-white border-b border-gray-200 py-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/" className="text-gray-500 hover:text-midnight-blue">
+                  Home
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/industries" className="text-gray-500 hover:text-midnight-blue">
+                  Industries
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage className="text-midnight-blue font-semibold">
+                  Dental Practices
+                </BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </div>
+      </div>
 
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-blue-600 to-cyan-600 text-white py-20">
@@ -402,7 +437,7 @@ export default function DentalPracticesPage() {
               </ul>
             </div>
             <div>
-              <h4 className="font-heading font-semibold mb-4">Industries</h4>
+              <h4 className="font-heading font-semibold mb-4">Healthcare</h4>
               <ul className="space-y-2 font-body text-gray-300">
                 <li>
                   <Link
@@ -422,10 +457,10 @@ export default function DentalPracticesPage() {
                 </li>
                 <li>
                   <Link
-                    href="/industries/accounting-practices"
+                    href="/industries/cosmetic-clinics"
                     className="hover:text-white transition-colors"
                   >
-                    Accounting Practices
+                    Cosmetic Clinics
                   </Link>
                 </li>
               </ul>

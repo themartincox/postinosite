@@ -1,206 +1,149 @@
 "use client";
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useMemo } from "react";
 
 interface Particle {
   x: number;
   y: number;
   vx: number;
   vy: number;
-  category: "growth" | "ai" | "synergy";
   size: number;
-  id: string;
+  opacity: number;
 }
 
 export default function ParticleNetwork() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const particlesRef = useRef<Particle[]>([]);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const animationIdRef = useRef<number>();
-  const [isClient, setIsClient] = useState(false);
+
+  // Optimized particle configuration
+  const config = useMemo(() => ({
+    particleCount: 50, // Reduced from typical 100+ for better performance
+    maxDistance: 150,
+    speed: 0.5,
+    particleSize: 2,
+    lineOpacity: 0.15,
+    particleOpacity: 0.6,
+  }), []);
 
   useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  useEffect(() => {
-    if (!isClient) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    // Set canvas size
+    let animationFrame: number;
+    let particles: Particle[] = [];
+
     const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width * window.devicePixelRatio;
+      canvas.height = rect.height * window.devicePixelRatio;
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+      canvas.style.width = rect.width + "px";
+      canvas.style.height = rect.height + "px";
     };
 
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
+    const createParticles = () => {
+      particles = [];
+      const rect = canvas.getBoundingClientRect();
 
-    // Initialize particles with optimized count for visual impact
-    const initParticles = () => {
-      const newParticles: Particle[] = [];
-      // Optimized particle count for visual appeal and performance
-      const particleCount = 65;
-
-      for (let i = 0; i < particleCount; i++) {
-        const category =
-          Math.random() < 0.3
-            ? "growth"
-            : Math.random() < 0.6
-              ? "ai"
-              : "synergy";
-        newParticles.push({
-          id: `particle-${i}`,
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 1.5, // Reduced velocity for smoother animation
-          vy: (Math.random() - 0.5) * 1.5,
-          category,
-          size: category === "synergy" ? 3 : 2,
+      for (let i = 0; i < config.particleCount; i++) {
+        particles.push({
+          x: Math.random() * rect.width,
+          y: Math.random() * rect.height,
+          vx: (Math.random() - 0.5) * config.speed,
+          vy: (Math.random() - 0.5) * config.speed,
+          size: Math.random() * config.particleSize + 1,
+          opacity: Math.random() * config.particleOpacity + 0.2,
         });
       }
-
-      particlesRef.current = newParticles;
     };
 
-    initParticles();
-
-    // Mouse move handler with throttling
-    let lastMouseUpdate = 0;
-    const handleMouseMove = (e: MouseEvent) => {
-      const now = Date.now();
-      if (now - lastMouseUpdate < 16) return; // ~60fps throttling
-
+    const updateParticles = () => {
       const rect = canvas.getBoundingClientRect();
-      setMousePos({
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-      });
-      lastMouseUpdate = now;
-    };
 
-    canvas.addEventListener("mousemove", handleMouseMove, { passive: true });
-
-    // Optimized animation loop
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Update particles with simplified physics
-      for (const particle of particlesRef.current) {
-        // Simplified mouse interaction
-        const dx = mousePos.x - particle.x;
-        const dy = mousePos.y - particle.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        if (distance < 120) { // Reduced interaction radius
-          const force = (120 - distance) / 120;
-          particle.vx += (dx / distance) * force * 0.005; // Reduced force
-          particle.vy += (dy / distance) * force * 0.005;
-        }
-
-        // Update position
+      particles.forEach((particle) => {
         particle.x += particle.vx;
         particle.y += particle.vy;
 
-        // Boundary check with damping
-        if (particle.x < 0 || particle.x > canvas.width) {
-          particle.vx *= -0.9;
-          particle.x = Math.max(0, Math.min(canvas.width, particle.x));
-        }
-        if (particle.y < 0 || particle.y > canvas.height) {
-          particle.vy *= -0.9;
-          particle.y = Math.max(0, Math.min(canvas.height, particle.y));
-        }
+        // Boundary checks with gentle bounce
+        if (particle.x <= 0 || particle.x >= rect.width) particle.vx *= -1;
+        if (particle.y <= 0 || particle.y >= rect.height) particle.vy *= -1;
 
-        // Add slight damping for stability
-        particle.vx *= 0.999;
-        particle.vy *= 0.999;
-      }
+        // Keep particles in bounds
+        particle.x = Math.max(0, Math.min(rect.width, particle.x));
+        particle.y = Math.max(0, Math.min(rect.height, particle.y));
+      });
+    };
 
-      // Optimized connection drawing with reduced distance
-      for (let i = 0; i < particlesRef.current.length; i++) {
-        const particle = particlesRef.current[i];
-        // Only check every 3rd particle for connections to reduce calculations
-        if (i % 3 !== 0) continue;
-
-        for (let j = i + 3; j < particlesRef.current.length; j += 2) {
-          const otherParticle = particlesRef.current[j];
-          const dx = particle.x - otherParticle.x;
-          const dy = particle.y - otherParticle.y;
+    const drawConnections = () => {
+      // Optimized connection drawing with reduced calculations
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
           const distance = Math.sqrt(dx * dx + dy * dy);
 
-          if (distance < 80) { // Reduced connection distance
-            const alpha = 0.15 * (1 - distance / 80);
+          if (distance < config.maxDistance) {
+            const opacity = (1 - distance / config.maxDistance) * config.lineOpacity;
 
-            ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
-            ctx.lineWidth = 1;
-
-            // Simplified color logic
-            if (particle.category === "synergy" || otherParticle.category === "synergy") {
-              ctx.strokeStyle = `rgba(255, 107, 74, ${alpha * 1.5})`;
-            }
-
+            ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
+            ctx.lineWidth = 0.5;
             ctx.beginPath();
-            ctx.moveTo(particle.x, particle.y);
-            ctx.lineTo(otherParticle.x, otherParticle.y);
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
             ctx.stroke();
           }
         }
       }
+    };
 
-      // Draw particles with simplified effects
-      for (const particle of particlesRef.current) {
-        let color = "rgba(255, 255, 255, 0.8)";
-        if (particle.category === "growth") {
-          color = "rgba(52, 168, 138, 0.9)";
-        } else if (particle.category === "ai") {
-          color = "rgba(30, 58, 138, 0.9)";
-        } else if (particle.category === "synergy") {
-          color = "rgba(255, 107, 74, 1)";
-        }
-
-        ctx.fillStyle = color;
+    const drawParticles = () => {
+      particles.forEach((particle) => {
+        ctx.fillStyle = `rgba(255, 255, 255, ${particle.opacity})`;
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
         ctx.fill();
-
-        // Simplified glow effect only for synergy particles
-        if (particle.category === "synergy") {
-          ctx.shadowColor = color;
-          ctx.shadowBlur = 8;
-          ctx.fill();
-          ctx.shadowBlur = 0;
-        }
-      }
-
-      animationIdRef.current = requestAnimationFrame(animate);
+      });
     };
 
-    // Start animation immediately
+    const animate = () => {
+      const rect = canvas.getBoundingClientRect();
+      ctx.clearRect(0, 0, rect.width, rect.height);
+
+      updateParticles();
+      drawConnections();
+      drawParticles();
+
+      animationFrame = requestAnimationFrame(animate);
+    };
+
+    const handleResize = () => {
+      resizeCanvas();
+      createParticles();
+    };
+
+    // Initialize
+    resizeCanvas();
+    createParticles();
     animate();
 
-    return () => {
-      window.removeEventListener("resize", resizeCanvas);
-      canvas.removeEventListener("mousemove", handleMouseMove);
-      if (animationIdRef.current) {
-        cancelAnimationFrame(animationIdRef.current);
-      }
-    };
-  }, [isClient, mousePos]);
+    // Event listeners
+    window.addEventListener("resize", handleResize);
 
-  if (!isClient) {
-    return (
-      <div className="absolute inset-0 bg-gradient-to-br from-midnight-blue/5 via-forest-green/5 to-coral-red/5" />
-    );
-  }
+    return () => {
+      cancelAnimationFrame(animationFrame);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [config]);
 
   return (
     <canvas
       ref={canvasRef}
       className="absolute inset-0 w-full h-full pointer-events-none"
-      style={{ background: "transparent" }}
+      style={{
+        background: "transparent",
+        willChange: "transform",
+      }}
     />
   );
 }

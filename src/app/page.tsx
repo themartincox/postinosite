@@ -1,5 +1,6 @@
 import EnhancedServiceCards from "@/components/EnhancedServiceCards";
 import Navigation from "@/components/Navigation";
+import ParticleNetwork from "@/components/ParticleNetwork";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,10 +15,26 @@ import {
 import Link from "next/link";
 import dynamic from "next/dynamic";
 
-// Lazy load ParticleNetwork to prevent blocking LCP
-const ParticleNetwork = dynamic(() => import("@/components/ParticleNetwork"), {
+// Optimized dynamic imports with minimal loading states
+const MorphingHeadlines = dynamic(() => import("@/components/MorphingHeadlines"), {
   loading: () => (
-    <div className="absolute inset-0 bg-gradient-to-br from-midnight-blue/5 via-forest-green/5 to-coral-red/5" />
+    <div className="morphing-container">
+      <h1 className="text-6xl lg:text-9xl font-heading font-bold mb-6 text-white text-center">
+        We're Postino. We Deliver
+      </h1>
+    </div>
+  ),
+});
+
+// Simplified AI Demo with lighter fallback
+const AIDemo = dynamic(() => import("@/components/AIDemo"), {
+  loading: () => (
+    <div className="h-96 bg-gradient-to-br from-midnight-blue/10 to-blue-50 rounded-2xl flex items-center justify-center">
+      <div className="text-center">
+        <Brain className="h-8 w-8 text-blue-600 mx-auto mb-2" />
+        <p className="text-gray-600 text-sm">Loading AI Demo...</p>
+      </div>
+    </div>
   ),
 });
 
@@ -29,18 +46,13 @@ export default function HomePage() {
 
       {/* Hero Section */}
       <section className="hero-gradient text-white py-20 lg:py-32 relative overflow-hidden">
-        {/* Particle Network Background */}
-        <div className="absolute inset-0">
-          <ParticleNetwork />
-        </div>
+        {/* Optimized Particle Network */}
+        <ParticleNetwork />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center">
-            <h1 className="text-4xl lg:text-6xl font-heading font-bold mb-6">
-              Where Growth Meets
-              <br />
-              <span className="text-coral-red">AI Innovation</span>
-            </h1>
+            <MorphingHeadlines />
+
             <p className="text-xl lg:text-2xl font-body mb-8 max-w-4xl mx-auto leading-relaxed">
               Postino seamlessly blends expert marketing strategies with
               cutting-edge AI automation to help SMEs grow smarter, faster, and
@@ -76,28 +88,6 @@ export default function HomePage() {
                 </Link>
               </Button>
             </div>
-
-            {/* Trust indicators */}
-            <div className="flex flex-wrap justify-center items-center gap-8 text-sm opacity-90">
-              <div className="flex items-center backdrop-blur-sm bg-white/10 px-4 py-2 rounded-full">
-                <Users className="h-4 w-4 mr-2" />
-                <span className="font-heading font-medium">
-                  50+ SMEs Transformed
-                </span>
-              </div>
-              <div className="flex items-center backdrop-blur-sm bg-white/10 px-4 py-2 rounded-full">
-                <BarChart3 className="h-4 w-4 mr-2" />
-                <span className="font-heading font-medium">
-                  300% Average Growth
-                </span>
-              </div>
-              <div className="flex items-center backdrop-blur-sm bg-white/10 px-4 py-2 rounded-full">
-                <Zap className="h-4 w-4 mr-2" />
-                <span className="font-heading font-medium">
-                  40hrs/week Saved via AI
-                </span>
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -109,7 +99,7 @@ export default function HomePage() {
             <h2 className="text-3xl lg:text-4xl font-heading font-bold text-midnight-blue mb-4">
               Two Powerful Pillars, One Integrated Approach
             </h2>
-            <p className="text-xl font-body text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl font-body text-gray-600 max-w-3xl mx-auto mb-12">
               Most agencies focus on either marketing or technology. We excel at
               both, creating synergies that amplify your results exponentially.
             </p>
@@ -143,7 +133,7 @@ export default function HomePage() {
               </h3>
               <p className="font-body text-gray-600">
                 Strategic thinking and creative insights enhanced by intelligent
-                automation and data-driven optimization.
+                automation and data-driven optimisation.
               </p>
             </div>
 
@@ -156,7 +146,7 @@ export default function HomePage() {
               </h3>
               <p className="font-body text-gray-600">
                 Every strategy is designed for sustainable growth with clear
-                metrics, automated processes, and continuous optimization.
+                metrics, automated processes, and continuous optimisation.
               </p>
             </div>
 
@@ -172,6 +162,28 @@ export default function HomePage() {
                 and working together to achieve extraordinary results.
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* AI Demo Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <Badge className="bg-gradient-to-r from-blue-600 to-purple-600 text-white mb-6 text-sm px-4 py-2">
+              🤖 AI Technology in Action
+            </Badge>
+            <h2 className="text-3xl lg:text-4xl font-heading font-bold text-midnight-blue mb-4">
+              See Our AI Intelligence at Work
+            </h2>
+            <p className="text-xl font-body text-gray-600 max-w-3xl mx-auto">
+              Watch how our AI analyses websites in real-time, identifying opportunities
+              and delivering actionable insights that drive measurable growth.
+            </p>
+          </div>
+
+          <div className="max-w-5xl mx-auto">
+            <AIDemo />
           </div>
         </div>
       </section>
@@ -300,7 +312,7 @@ export default function HomePage() {
       {/* Footer */}
       <footer className="bg-charcoal text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-5 gap-6">
             <div>
               <h3 className="text-2xl font-heading font-bold mb-4">Postino.</h3>
               <p className="font-body text-gray-300 mb-4">
@@ -342,6 +354,43 @@ export default function HomePage() {
                     className="hover:text-white transition-colors"
                   >
                     Content Strategy
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-heading font-semibold mb-4">Industries</h4>
+              <ul className="space-y-2 font-body text-gray-300">
+                <li>
+                  <Link
+                    href="/industries/dental-practices"
+                    className="hover:text-white transition-colors"
+                  >
+                    Dental Practices
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/industries/medical-practices"
+                    className="hover:text-white transition-colors"
+                  >
+                    Medical Practices
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/industries/cosmetic-clinics"
+                    className="hover:text-white transition-colors"
+                  >
+                    Cosmetic Clinics
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/industries"
+                    className="hover:text-white transition-colors"
+                  >
+                    View All Industries
                   </Link>
                 </li>
               </ul>

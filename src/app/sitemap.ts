@@ -1,5 +1,7 @@
 import type { MetadataRoute } from 'next'
 
+export const dynamic = 'force-static'
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://postino.cc'
 
@@ -26,6 +28,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/growth-marketing/branding/brand-identity-development',
     '/growth-marketing/branding/collateral-design',
     '/growth-marketing/branding/website-design-development',
+    '/growth-marketing/branding/website-design-development/nextjs-development',
+    '/growth-marketing/branding/website-design-development/shopify-development',
+    '/growth-marketing/branding/website-design-development/wordpress-development',
+    '/growth-marketing/branding/website-design-development/headless-commerce',
     '/growth-marketing/branding/conversion-funnels',
     '/growth-marketing/strategy',
     '/growth-marketing/strategy/research-market-analysis',
@@ -63,12 +69,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Industries
     '/industries',
     '/industries/dental-practices',
+    '/industries/medical-practices',
+    '/industries/cosmetic-clinics',
   ]
 
   return routes.map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
-    changeFrequency: route === '' ? 'daily' : 'weekly',
-    priority: route === '' ? 1 : route.includes('/growth-marketing') || route.includes('/ai-automation') ? 0.8 : 0.6,
+    changeFrequency: route === '' ? 'daily' : route.includes('/industries') ? 'weekly' : 'weekly',
+    priority: route === ''
+      ? 1
+      : route.includes('/growth-marketing') || route.includes('/ai-automation') || route.includes('/industries')
+      ? 0.8
+      : route === '/contact' || route === '/growth-consultation'
+      ? 0.9
+      : 0.6,
   }))
 }

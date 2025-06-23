@@ -11,6 +11,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import {
   ArrowRight,
   CheckCircle,
   Heart,
@@ -286,6 +294,27 @@ export default function IndustriesPage() {
   return (
     <div className="flex flex-col min-h-screen">
       <Navigation />
+
+      {/* Breadcrumb Navigation */}
+      <div className="bg-white border-b border-gray-200 py-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/" className="text-gray-500 hover:text-midnight-blue">
+                  Home
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage className="text-midnight-blue font-semibold">
+                  Industries
+                </BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </div>
+      </div>
 
       <section className="bg-gradient-to-br from-midnight-blue to-blue-800 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
