@@ -10,22 +10,22 @@ interface HeadlineStep {
 
 const headlines: HeadlineStep[] = [
   {
-    text: "We're Postino. We Deliver",
+    text: "",
     highlight: "Exceptional Growth",
     color: "text-orange-200"
   },
   {
-    text: "We're Postino. We Deliver",
+    text: "",
     highlight: "AI-Powered Results",
     color: "text-emerald-200"
   },
   {
-    text: "We're Postino. We Deliver",
+    text: "",
     highlight: "Strategic Innovation",
     color: "text-cyan-200"
   },
   {
-    text: "We're Postino. We Deliver",
+    text: "",
     highlight: "Sustainable Success",
     color: "text-violet-200"
   }
@@ -47,9 +47,10 @@ export default function MorphingHeadlines() {
 
   return (
     <div className="relative morphing-container">
-      {/* Simplified headline container */}
+      {/* Three-line headline structure */}
       <h1 className="text-6xl lg:text-9xl font-heading font-bold mb-6 text-center">
-        <span className="block text-white drop-shadow-lg">{currentHeadline.text}</span>
+        <span className="block text-white drop-shadow-lg">we're postino.</span>
+        <span className="block text-white drop-shadow-lg">we deliver.</span>
         <span className={`block transition-colors duration-1000 ${currentHeadline.color} drop-shadow-lg`} style={{textShadow: '2px 2px 4px rgba(0,0,0,0.5)'}}>
           {currentHeadline.highlight}
         </span>

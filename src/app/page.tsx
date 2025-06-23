@@ -20,7 +20,9 @@ const MorphingHeadlines = dynamic(() => import("@/components/MorphingHeadlines")
   loading: () => (
     <div className="morphing-container">
       <h1 className="text-6xl lg:text-9xl font-heading font-bold mb-6 text-white text-center">
-        We're Postino. We Deliver
+        <span className="block">we're postino.</span>
+        <span className="block">we deliver.</span>
+        <span className="block text-orange-200">Exceptional Growth</span>
       </h1>
     </div>
   ),

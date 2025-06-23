@@ -1,16 +1,128 @@
 import { getBlogPost, getAllBlogPosts } from "@/lib/blog-data";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Calendar, Clock, User } from "lucide-react";
+import { ArrowLeft, Calendar, Clock, User, ArrowRight } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 interface BlogPostPageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
-export default function BlogPostPage({ params }: BlogPostPageProps) {
-  const post = getBlogPost(params.slug);
+// CTA mapping for converting text to actionable buttons
+const ctaMapping: Record<string, { text: string; href: string; variant?: "default" | "outline" }> = {
+  "Ready to audit where your audience actually searches": {
+    text: "Get Your Total Search Audit",
+    href: "/contact?service=total-search"
+  },
+  "Book your Total Search audit today": {
+    text: "Book Total Search Audit",
+    href: "/contact?service=total-search"
+  },
+  "Ready to implement AI automation that drives real results": {
+    text: "Start AI Automation Strategy",
+    href: "/contact?service=ai-automation"
+  },
+  "Schedule your AI automation strategy session": {
+    text: "Schedule Strategy Session",
+    href: "/contact?service=ai-automation"
+  },
+  "Ready to build a website platform that serves your business goals": {
+    text: "Discuss Your Website Project",
+    href: "/contact?service=web-development"
+  },
+  "Ready to truly own and control your digital presence": {
+    text: "Get Comprehensive Training",
+    href: "/contact?service=training"
+  },
+  "Ready to cut through the content noise": {
+    text: "Build Your Content Strategy",
+    href: "/contact?service=content-strategy"
+  },
+  "Ready to optimise for the zero-click future": {
+    text: "Develop Zero-Click Strategy",
+    href: "/contact?service=seo-strategy"
+  },
+  "Ready to find your audience wherever they're actually searching": {
+    text: "Start Total Search Strategy",
+    href: "/contact?service=total-search"
+  },
+  "Want to see where your audience is actually searching": {
+    text: "Get Platform Audit",
+    href: "/contact?service=total-search"
+  },
+  "Want to see your AI automation ROI potential": {
+    text: "Calculate AI ROI",
+    href: "/contact?service=ai-automation"
+  },
+  "Concerned about rising acquisition costs": {
+    text: "Reduce Your Acquisition Costs",
+    href: "/contact?service=total-search"
+  },
+  "Book your Total Search audit today": {
+    text: "Book Total Search Audit",
+    href: "/contact?service=total-search"
+  }
+};
+
+// Function to detect and convert CTA text to buttons
+const renderCTAButton = (text: string) => {
+  const cleanText = text.replace(/\*\*/g, '').trim();
+
+  // Check for specific CTA mappings first
+  for (const [key, cta] of Object.entries(ctaMapping)) {
+    if (cleanText.includes(key)) {
+      return (
+        <div className="my-8 text-center">
+          <Button asChild size="lg" className="bg-coral-red hover:bg-coral-red/90 text-white px-8 py-6 text-lg shadow-lg">
+            <Link href={cta.href}>
+              {cta.text}
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
+          </Button>
+        </div>
+      );
+    }
+  }
+
+  // Fallback for any "Ready to..." pattern not specifically mapped
+  if (cleanText.startsWith('Ready to') && cleanText.includes('?')) {
+    return (
+      <div className="my-8 text-center">
+        <Button asChild size="lg" className="bg-coral-red hover:bg-coral-red/90 text-white px-8 py-6 text-lg shadow-lg">
+          <Link href="/contact">
+            Get Started Today
+            <ArrowRight className="ml-2 h-5 w-5" />
+          </Link>
+        </Button>
+      </div>
+    );
+  }
+
+  // Check for "Book" or "Schedule" CTAs
+  if ((cleanText.includes('Book') || cleanText.includes('Schedule')) &&
+      (cleanText.includes('audit') || cleanText.includes('session') || cleanText.includes('consultation'))) {
+    return (
+      <div className="my-8 text-center">
+        <Button asChild size="lg" className="bg-coral-red hover:bg-coral-red/90 text-white px-8 py-6 text-lg shadow-lg">
+          <Link href="/contact">
+            Book Consultation
+            <ArrowRight className="ml-2 h-5 w-5" />
+          </Link>
+        </Button>
+      </div>
+    );
+  }
+
+  return null;
+};
+
+export default async function BlogPostPage({ params }: BlogPostPageProps) {
+  const { slug } = await params;
+  const post = getBlogPost(slug);
 
   if (!post) {
     notFound();
@@ -69,13 +181,103 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
 
       {/* Content */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-        <div className="bg-white rounded-lg shadow-sm">
-          <div className="prose prose-lg max-w-none">
-            <div
-              className="content-styles"
-              dangerouslySetInnerHTML={{ __html: post.content }}
-            />
+        <div className="bg-white rounded-lg shadow-sm p-8">
+          <div className="prose prose-lg prose-slate max-w-none prose-headings:text-midnight-blue prose-h2:text-2xl prose-h2:font-heading prose-h2:font-bold prose-h2:mt-8 prose-h2:mb-4 prose-h3:text-xl prose-h3:font-heading prose-h3:font-semibold prose-h3:mt-6 prose-h3:mb-3 prose-p:text-gray-700 prose-p:leading-relaxed prose-p:mb-4 prose-strong:text-midnight-blue prose-strong:font-semibold prose-ul:my-4 prose-li:my-2 prose-blockquote:border-l-coral-red prose-blockquote:bg-soft-gray prose-blockquote:p-4 prose-blockquote:my-6">
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              components={{
+                h2: ({ children }) => (
+                  <h2 className="text-2xl font-heading font-bold text-midnight-blue mt-8 mb-4 border-b border-gray-200 pb-2">
+                    {children}
+                  </h2>
+                ),
+                h3: ({ children }) => (
+                  <h3 className="text-xl font-heading font-semibold text-midnight-blue mt-6 mb-3">
+                    {children}
+                  </h3>
+                ),
+                p: ({ children }) => {
+                  const textContent = children?.toString() || '';
+                  const ctaButton = renderCTAButton(textContent);
+
+                  if (ctaButton) {
+                    return ctaButton;
+                  }
+
+                  return (
+                    <p className="text-gray-700 leading-relaxed mb-4">
+                      {children}
+                    </p>
+                  );
+                },
+                strong: ({ children }) => {
+                  const textContent = children?.toString() || '';
+                  const ctaButton = renderCTAButton(textContent);
+
+                  if (ctaButton) {
+                    return ctaButton;
+                  }
+
+                  return (
+                    <strong className="text-midnight-blue font-semibold">
+                      {children}
+                    </strong>
+                  );
+                },
+                blockquote: ({ children }) => (
+                  <blockquote className="border-l-4 border-coral-red bg-soft-gray p-4 my-6 italic">
+                    {children}
+                  </blockquote>
+                ),
+                ul: ({ children }) => (
+                  <ul className="list-disc list-inside my-4 space-y-2">
+                    {children}
+                  </ul>
+                ),
+                ol: ({ children }) => (
+                  <ol className="list-decimal list-inside my-4 space-y-2">
+                    {children}
+                  </ol>
+                ),
+                li: ({ children }) => (
+                  <li className="text-gray-700 leading-relaxed">
+                    {children}
+                  </li>
+                ),
+                a: ({ children, href }) => (
+                  <a
+                    href={href}
+                    className="text-coral-red hover:text-coral-red/80 font-medium underline"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {children}
+                  </a>
+                ),
+                hr: () => (
+                  <hr className="my-8 border-gray-200" />
+                )
+              }}
+            >
+              {post.content}
+            </ReactMarkdown>
           </div>
+        </div>
+
+        {/* End-of-post CTA */}
+        <div className="mt-12 p-8 bg-gradient-to-r from-midnight-blue to-blue-800 rounded-lg text-white text-center">
+          <h3 className="text-2xl font-heading font-bold mb-4">
+            Ready to Transform Your {post.category}?
+          </h3>
+          <p className="text-lg mb-6 opacity-90">
+            Get expert guidance tailored to your business goals and challenges.
+          </p>
+          <Button asChild size="lg" className="bg-coral-red hover:bg-coral-red/90 text-white px-8 py-4 text-lg shadow-lg">
+            <Link href="/contact">
+              Book Your Strategy Session
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
+          </Button>
         </div>
 
         {/* Author Bio */}

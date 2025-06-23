@@ -51,9 +51,11 @@ export default function BlogPage() {
                   <Badge className="mb-4 bg-coral-red/10 text-coral-red">
                     {featuredPost.category}
                   </Badge>
-                  <h3 className="text-2xl lg:text-3xl font-heading font-bold text-midnight-blue mb-4">
-                    {featuredPost.title}
-                  </h3>
+                  <Link href={`/blog/${featuredPost.slug}`}>
+                    <h3 className="text-2xl lg:text-3xl font-heading font-bold text-midnight-blue mb-4 hover:text-coral-red transition-colors cursor-pointer">
+                      {featuredPost.title}
+                    </h3>
+                  </Link>
                   <p className="text-gray-600 mb-6 leading-relaxed">
                     {featuredPost.excerpt}
                   </p>
