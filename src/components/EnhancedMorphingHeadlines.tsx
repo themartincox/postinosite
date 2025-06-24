@@ -91,14 +91,7 @@ export default function EnhancedMorphingHeadlines() {
         </span>
       </h1>
 
-      {/* Original subtitle */}
-      <div className="text-center mb-8">
-        <p className="text-xl lg:text-2xl font-body mb-8 max-w-4xl mx-auto leading-relaxed">
-          Postino seamlessly blends expert marketing strategies with
-          cutting-edge AI automation to help SMEs grow smarter, faster, and
-          more efficiently than ever before.
-        </p>
-      </div>
+
 
       {/* Enhanced progress indicators */}
       <div className="flex justify-center space-x-3 mb-8">
