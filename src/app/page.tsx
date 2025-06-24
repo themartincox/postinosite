@@ -16,7 +16,8 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 
 // Optimized dynamic imports with minimal loading states
-const MorphingHeadlines = dynamic(() => import("@/components/MorphingHeadlines"), {
+// Enhanced version with original copy content - ACTIVE
+const MorphingHeadlines = dynamic(() => import("@/components/EnhancedMorphingHeadlines"), {
   loading: () => (
     <div className="morphing-container">
       <h1 className="text-6xl lg:text-9xl font-heading font-bold mb-6 text-white text-center">
@@ -35,6 +36,18 @@ const AIDemo = dynamic(() => import("@/components/AIDemo"), {
       <div className="text-center">
         <Brain className="h-8 w-8 text-blue-600 mx-auto mb-2" />
         <p className="text-gray-600 text-sm">Loading AI Demo...</p>
+      </div>
+    </div>
+  ),
+});
+
+// ROI Calculator with loading state
+const ROICalculator = dynamic(() => import("@/components/ROICalculator"), {
+  loading: () => (
+    <div className="bg-gradient-to-br from-soft-gray to-white py-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="h-8 w-8 bg-coral-red rounded-full mx-auto mb-4 animate-pulse" />
+        <p className="text-gray-600">Loading ROI Calculator...</p>
       </div>
     </div>
   ),
@@ -189,6 +202,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ROI Calculator Section */}
+      <ROICalculator />
 
       {/* Social Proof Section */}
       <section className="py-16 bg-soft-gray">

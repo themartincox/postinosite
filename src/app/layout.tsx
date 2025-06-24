@@ -25,9 +25,9 @@ const crimsonText = Crimson_Text({
 
 export const metadata: Metadata = {
   title: "Postino - Where Growth Meets AI Innovation | Marketing & Automation Agency",
-  description: "Expert marketing strategies with cutting-edge AI automation to help SMEs grow smarter, faster, and more efficiently. Based in Nottingham, serving UK businesses.",
-  keywords: "marketing agency, AI automation, SME growth, Nottingham, digital marketing, business automation",
-  authors: [{ name: "Postino" }],
+  description: "Expert marketing strategies with cutting-edge AI automation to help SMEs grow smarter, faster, and more efficiently. Thought leadership in B2B UX, LinkedIn marketing, SEO strategy, zero-click search, content strategy, Total Search optimization, AI automation, platform-agnostic web development, and client empowerment. Based in Nottingham, serving UK businesses.",
+  keywords: "marketing agency, AI automation, SME growth, Nottingham, digital marketing, business automation, B2B UX design, LinkedIn thought leadership, SEO strategy, zero-click search, content marketing, Total Search optimization, AI marketing automation, platform-agnostic development, client training, web development, conversion optimization, search strategy, data-driven storytelling",
+  authors: [{ name: "Martin", url: "https://postino.cc/about" }, { name: "Postino" }],
   creator: "Postino",
   publisher: "Postino",
   metadataBase: new URL("https://postino.cc"),
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Postino - Where Growth Meets AI Innovation",
-    description: "Expert marketing strategies with cutting-edge AI automation to help SMEs grow smarter, faster, and more efficiently.",
+    description: "Expert marketing strategies with cutting-edge AI automation to help SMEs grow smarter, faster, and more efficiently. Comprehensive thought leadership blog covering B2B UX, LinkedIn marketing, SEO strategy, AI automation, and more.",
     url: "https://postino.cc",
     siteName: "Postino",
     images: [
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Postino - Marketing & AI Automation Agency",
+        alt: "Postino - Marketing & AI Automation Agency with Expert Blog Content",
       },
     ],
     locale: "en_GB",
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Postino - Where Growth Meets AI Innovation",
-    description: "Expert marketing strategies with cutting-edge AI automation to help SMEs grow smarter, faster, and more efficiently.",
+    description: "Expert marketing strategies with cutting-edge AI automation to help SMEs grow smarter, faster, and more efficiently. Comprehensive thought leadership blog covering B2B UX, LinkedIn marketing, SEO strategy, AI automation, and more.",
     images: ["/og-image.jpg"],
   },
   robots: {

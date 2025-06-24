@@ -7,16 +7,106 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: '*',
+        allow: [
+          '/',
+          '/blog/',
+          '/blog/*',
+          '/growth-marketing/',
+          '/ai-automation/',
+          '/industries/',
+          '/contact',
+          '/about',
+        ],
+        disallow: [
+          '/admin/',
+          '/_next/',
+          '/api/',
+          '/admin/blog/',
+          '/admin/content/',
+          '/*.json$',
+          '/private/',
+        ],
+      },
+      {
+        userAgent: 'Googlebot',
+        allow: [
+          '/',
+          '/blog/',
+          '/blog/*',
+          '/growth-marketing/',
+          '/ai-automation/',
+          '/industries/',
+        ],
+        disallow: [
+          '/admin/',
+          '/_next/',
+          '/api/',
+          '/admin/blog/',
+          '/admin/content/',
+        ],
+        crawlDelay: 1,
+      },
+      {
+        userAgent: 'Bingbot',
+        allow: [
+          '/',
+          '/blog/',
+          '/blog/*',
+          '/growth-marketing/',
+          '/ai-automation/',
+        ],
+        disallow: [
+          '/admin/',
+          '/_next/',
+          '/api/',
+        ],
+        crawlDelay: 2,
+      },
+      {
+        userAgent: 'facebookexternalhit',
         allow: '/',
         disallow: ['/admin/', '/_next/', '/api/'],
       },
       {
-        userAgent: 'Googlebot',
+        userAgent: 'Twitterbot',
         allow: '/',
         disallow: ['/admin/', '/_next/', '/api/'],
-        crawlDelay: 1,
+      },
+      // AI/LLM crawlers
+      {
+        userAgent: 'OpenAI-SearchBot',
+        allow: [
+          '/',
+          '/blog/',
+          '/blog/*',
+          '/about',
+          '/growth-marketing/',
+          '/ai-automation/',
+        ],
+        disallow: [
+          '/admin/',
+          '/_next/',
+          '/api/',
+          '/contact',
+        ],
+      },
+      {
+        userAgent: 'PerplexityBot',
+        allow: [
+          '/',
+          '/blog/',
+          '/blog/*',
+          '/about',
+        ],
+        disallow: [
+          '/admin/',
+          '/_next/',
+          '/api/',
+          '/contact',
+        ],
       },
     ],
     sitemap: 'https://postino.cc/sitemap.xml',
+    host: 'https://postino.cc',
   }
 }

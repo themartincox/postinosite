@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next'
+import { getAllBlogPosts } from '@/lib/blog-data'
 
 export const dynamic = 'force-static'
 
@@ -73,12 +74,31 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/industries/cosmetic-clinics',
   ]
 
-  return routes.map((route) => ({
+  // Generate blog post URLs
+  const blogPosts = getAllBlogPosts()
+  const blogRoutes = blogPosts.map(post => `/blog/${post.slug}`)
+
+  // Combine all routes
+  const allRoutes = [...routes, ...blogRoutes]
+
+  return allRoutes.map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
-    changeFrequency: route === '' ? 'daily' : route.includes('/industries') ? 'weekly' : 'weekly',
+    changeFrequency: route === ''
+      ? 'daily'
+      : route === '/blog'
+      ? 'weekly'
+      : route.startsWith('/blog/')
+      ? 'monthly'
+      : route.includes('/industries')
+      ? 'weekly'
+      : 'weekly',
     priority: route === ''
       ? 1
+      : route === '/blog'
+      ? 0.9
+      : route.startsWith('/blog/')
+      ? 0.8
       : route.includes('/growth-marketing') || route.includes('/ai-automation') || route.includes('/industries')
       ? 0.8
       : route === '/contact' || route === '/growth-consultation'

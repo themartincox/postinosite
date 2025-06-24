@@ -195,7 +195,7 @@ Your user experience is your competitive advantage. Make it count.
       avatar: "/images/martin-headshot.jpg",
       bio: "Founder & Growth Strategist at Postino. Over 15 years helping SMEs scale through strategic marketing and AI automation."
     },
-    date: "15 Nov 2024",
+    date: "20 Jun 2024",
     readTime: "12 min read",
     category: "Growth Strategy",
     image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
@@ -445,7 +445,7 @@ Start there.
       avatar: "/images/martin-headshot.jpg",
       bio: "Founder & Growth Strategist at Postino. Over 15 years helping SMEs scale through strategic marketing and AI automation."
     },
-    date: "8 Nov 2024",
+    date: "13 Jun 2024",
     readTime: "15 min read",
     category: "Content Marketing",
     image: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
@@ -747,7 +747,7 @@ Start with one cluster. Do it properly. Then expand from there.
       avatar: "/images/martin-headshot.jpg",
       bio: "Founder & Growth Strategist at Postino. Over 15 years helping SMEs scale through strategic marketing and AI automation."
     },
-    date: "1 Nov 2024",
+    date: "6 Jun 2024",
     readTime: "18 min read",
     category: "SEO Strategy",
     image: "https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
@@ -902,7 +902,7 @@ Ready to optimise for the zero-click future and build authority that AI systems 
       avatar: "/images/martin-headshot.jpg",
       bio: "Founder & Growth Strategist at Postino. Over 15 years helping SMEs scale through strategic marketing and AI automation."
     },
-    date: "25 Oct 2024",
+    date: "30 May 2024",
     readTime: "16 min read",
     category: "SEO Strategy",
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
@@ -1055,7 +1055,7 @@ Ready to cut through the content noise with stories only you can tell? Let's ide
       avatar: "/images/martin-headshot.jpg",
       bio: "Founder & Growth Strategist at Postino. Over 15 years helping SMEs scale through strategic marketing and AI automation."
     },
-    date: "18 Oct 2024",
+    date: "23 May 2024",
     readTime: "18 min read",
     category: "Content Strategy",
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
@@ -1212,7 +1212,7 @@ Ready to find your audience wherever they're actually searching? Let's develop y
       avatar: "/images/martin-headshot.jpg",
       bio: "Founder & Growth Strategist at Postino. Over 15 years helping SMEs scale through strategic marketing and AI automation."
     },
-    date: "23 Dec 2024",
+    date: "16 May 2024",
     readTime: "16 min read",
     category: "Search Strategy",
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
@@ -1387,7 +1387,7 @@ Ready to implement AI automation that drives real business growth rather than ju
       avatar: "/images/martin-headshot.jpg",
       bio: "Founder & Growth Strategist at Postino. Over 15 years helping SMEs scale through strategic marketing and AI automation."
     },
-    date: "5 Jan 2025",
+    date: "9 May 2024",
     readTime: "17 min read",
     category: "AI & Automation",
     image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
@@ -1532,7 +1532,7 @@ Ready to build a website platform that serves your business goals rather than de
       avatar: "/images/martin-headshot.jpg",
       bio: "Founder & Growth Strategist at Postino. Over 15 years helping SMEs scale through strategic marketing and AI automation."
     },
-    date: "12 Jan 2025",
+    date: "2 May 2024",
     readTime: "14 min read",
     category: "Web Development",
     image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
@@ -1725,7 +1725,7 @@ Ready to truly own and control your digital presence rather than remaining depen
       avatar: "/images/martin-headshot.jpg",
       bio: "Founder & Growth Strategist at Postino. Over 15 years helping SMEs scale through strategic marketing and AI automation."
     },
-    date: "18 Jan 2025",
+    date: "25 Apr 2024",
     readTime: "16 min read",
     category: "Client Empowerment",
     image: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
