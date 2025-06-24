@@ -1,0 +1,198 @@
+# Postino.cc Robots.txt
+# Updated: 2025
+
+# Default rules for all crawlers
+User-agent: *
+Allow: /
+Allow: /blog/
+Allow: /blog/*
+Allow: /growth-marketing/
+Allow: /ai-automation/
+Allow: /industries/
+Allow: /industries/*
+Allow: /case-studies/
+Allow: /about/
+Allow: /contact/
+Allow: /revenue-forecast/
+Allow: /website-audit/
+Allow: /growth-consultation/
+Allow: /ai-automation-demo/
+
+Disallow: /admin/
+Disallow: /admin/*
+Disallow: /_next/
+Disallow: /api/
+Disallow: /archive/
+Disallow: /archive/*
+Disallow: /*.json$
+Disallow: /private/
+Disallow: /temp/
+Disallow: /.well-known/
+
+# Google Bot
+User-agent: Googlebot
+Allow: /
+Allow: /blog/
+Allow: /blog/*
+Allow: /growth-marketing/
+Allow: /ai-automation/
+Allow: /industries/
+Allow: /industries/*
+Allow: /case-studies/
+Allow: /about/
+Allow: /contact/
+Allow: /revenue-forecast/
+Allow: /website-audit/
+Allow: /growth-consultation/
+Allow: /ai-automation-demo/
+
+Disallow: /admin/
+Disallow: /admin/*
+Disallow: /_next/
+Disallow: /api/
+Disallow: /archive/
+Disallow: /archive/*
+
+Crawl-delay: 1
+
+# Bing Bot
+User-agent: Bingbot
+Allow: /
+Allow: /blog/
+Allow: /blog/*
+Allow: /growth-marketing/
+Allow: /ai-automation/
+Allow: /industries/
+Allow: /industries/*
+Allow: /case-studies/
+Allow: /about/
+Allow: /contact/
+Allow: /revenue-forecast/
+Allow: /website-audit/
+Allow: /growth-consultation/
+Allow: /ai-automation-demo/
+
+Disallow: /admin/
+Disallow: /admin/*
+Disallow: /_next/
+Disallow: /api/
+Disallow: /archive/
+
+Crawl-delay: 2
+
+# Facebook External Hit
+User-agent: facebookexternalhit
+Allow: /
+Allow: /blog/*
+Allow: /case-studies/
+Allow: /about/
+Allow: /industries/
+Allow: /growth-marketing/
+Allow: /ai-automation/
+
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /api/
+Disallow: /contact/
+
+# Twitter Bot
+User-agent: Twitterbot
+Allow: /
+Allow: /blog/*
+Allow: /case-studies/
+Allow: /about/
+Allow: /industries/
+Allow: /growth-marketing/
+Allow: /ai-automation/
+
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /api/
+Disallow: /contact/
+
+# LinkedIn Bot
+User-agent: LinkedInBot
+Allow: /
+Allow: /blog/
+Allow: /blog/*
+Allow: /about/
+Allow: /case-studies/
+Allow: /growth-marketing/
+Allow: /ai-automation/
+Allow: /industries/
+
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /api/
+Disallow: /contact/
+
+# AI/LLM Crawlers
+User-agent: OpenAI-SearchBot
+Allow: /
+Allow: /blog/
+Allow: /blog/*
+Allow: /about/
+Allow: /growth-marketing/
+Allow: /ai-automation/
+Allow: /industries/
+Allow: /industries/*
+Allow: /case-studies/
+
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /api/
+Disallow: /contact/
+Disallow: /revenue-forecast/
+Disallow: /website-audit/
+
+User-agent: PerplexityBot
+Allow: /
+Allow: /blog/
+Allow: /blog/*
+Allow: /about/
+Allow: /growth-marketing/
+Allow: /ai-automation/
+Allow: /industries/
+Allow: /case-studies/
+
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /api/
+Disallow: /contact/
+Disallow: /revenue-forecast/
+Disallow: /website-audit/
+
+User-agent: Claude-Web
+Allow: /
+Allow: /blog/
+Allow: /blog/*
+Allow: /about/
+Allow: /growth-marketing/
+Allow: /ai-automation/
+Allow: /industries/
+Allow: /case-studies/
+
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /api/
+Disallow: /contact/
+
+# Block aggressive crawlers
+User-agent: SemrushBot
+Disallow: /
+Crawl-delay: 86400
+
+User-agent: AhrefsBot
+Disallow: /
+Crawl-delay: 86400
+
+User-agent: MJ12bot
+Disallow: /
+Crawl-delay: 86400
+
+User-agent: DotBot
+Disallow: /
+Crawl-delay: 86400
+
+# Sitemap
+Sitemap: https://postino.cc/sitemap.xml
