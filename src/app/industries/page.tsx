@@ -598,7 +598,7 @@ export default function Industries2Page() {
                 </li>
                 <li>
                   <Link
-                    href="/industries/wellness-beauty"
+                    href="/wellness-beauty"
                     className="hover:text-white transition-colors"
                   >
                     Wellness & Beauty
@@ -606,7 +606,7 @@ export default function Industries2Page() {
                 </li>
                 <li>
                   <Link
-                    href="/industries/ecommerce"
+                    href="/ecommerce"
                     className="hover:text-white transition-colors"
                   >
                     Ecommerce
