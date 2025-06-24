@@ -1,4 +1,5 @@
 import Navigation from "@/components/Navigation";
+import WhatsAppWidget from "@/components/WhatsAppWidget";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,8 +14,6 @@ import {
   BookOpen,
   Download,
   FileText,
-  Headphones,
-  Video,
   Zap,
 } from "lucide-react";
 import Link from "next/link";
@@ -74,55 +73,6 @@ export default function ResourcesPage() {
           description:
             "Comprehensive checklist to audit and improve your email marketing performance.",
           type: "PDF Checklist",
-          downloadLink: "#",
-        },
-      ],
-    },
-    {
-      category: "Video Resources",
-      icon: Video,
-      color: "bg-midnight-blue",
-      items: [
-        {
-          title: "AI Automation Demo: Customer Service Bot",
-          description:
-            "See how our intelligent chatbot handles customer inquiries and routing in real-time.",
-          type: "Video (12 min)",
-          downloadLink: "#",
-        },
-        {
-          title: "Growth Marketing Case Study Walkthrough",
-          description:
-            "Detailed walkthrough of how we achieved 340% traffic growth for a manufacturing client.",
-          type: "Video (18 min)",
-          downloadLink: "#",
-        },
-        {
-          title: "SEO Strategy Planning Workshop",
-          description:
-            "Complete workshop recording on developing a winning SEO strategy for your business.",
-          type: "Video (45 min)",
-          downloadLink: "#",
-        },
-      ],
-    },
-    {
-      category: "Podcasts & Webinars",
-      icon: Headphones,
-      color: "bg-forest-green",
-      items: [
-        {
-          title: "The Future of AI in Small Business",
-          description:
-            "Expert discussion on how AI is transforming small business operations and customer experiences.",
-          type: "Podcast (30 min)",
-          downloadLink: "#",
-        },
-        {
-          title: "Growth Marketing Trends 2025",
-          description:
-            "Live webinar covering the latest trends and strategies in growth marketing for the year ahead.",
-          type: "Webinar (60 min)",
           downloadLink: "#",
         },
       ],
@@ -516,6 +466,9 @@ export default function ResourcesPage() {
           </div>
         </div>
       </footer>
+
+      {/* WhatsApp Widget */}
+      <WhatsAppWidget />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import EnhancedServiceCards from "@/components/EnhancedServiceCards";
 import Navigation from "@/components/Navigation";
 import ParticleNetwork from "@/components/ParticleNetwork";
+import WhatsAppWidget from "@/components/WhatsAppWidget";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -499,6 +500,9 @@ export default function HomePage() {
           </div>
         </div>
       </footer>
+
+      {/* WhatsApp Widget */}
+      <WhatsAppWidget />
     </div>
   );
 }

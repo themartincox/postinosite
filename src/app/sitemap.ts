@@ -1,108 +1,125 @@
 import type { MetadataRoute } from 'next'
 import { getAllBlogPosts } from '@/lib/blog-data'
 
-export const dynamic = 'force-static'
-
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://postino.cc'
+  const currentDate = new Date().toISOString()
 
-  const routes = [
-    '',
-    '/about',
-    '/contact',
-    '/growth-consultation',
-    '/ai-automation-demo',
-    '/case-studies',
-    '/pricing',
-    '/resources',
-    '/blog',
-    '/nottingham-marketing-agency',
+  // Get all blog posts
+  const blogPosts = getAllBlogPosts()
 
+  // Main static pages
+  const staticPages = [
+    {
+      url: baseUrl,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 1.0,
+    },
+    {
+      url: `${baseUrl}/about`,
+      lastModified: currentDate,
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/contact`,
+      lastModified: currentDate,
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    },
     // Services
-    '/growth-marketing',
-    '/growth-marketing/inbound',
-    '/growth-marketing/inbound/seo',
-    '/growth-marketing/inbound/content-strategy-creation',
-    '/growth-marketing/inbound/email-marketing-automation',
-    '/growth-marketing/inbound/social-media-management',
-    '/growth-marketing/branding',
-    '/growth-marketing/branding/brand-identity-development',
-    '/growth-marketing/branding/collateral-design',
-    '/growth-marketing/branding/website-design-development',
-    '/growth-marketing/branding/website-design-development/nextjs-development',
-    '/growth-marketing/branding/website-design-development/shopify-development',
-    '/growth-marketing/branding/website-design-development/wordpress-development',
-    '/growth-marketing/branding/website-design-development/headless-commerce',
-    '/growth-marketing/branding/conversion-funnels',
-    '/growth-marketing/strategy',
-    '/growth-marketing/strategy/research-market-analysis',
-    '/growth-marketing/strategy/marketing-planning',
-    '/growth-marketing/strategy/analytics-reporting',
-    '/growth-marketing/strategy/conversion-rate-optimization',
-    '/growth-marketing/ai-search',
-    '/growth-marketing/ai-search/ai-keyword-research',
-    '/growth-marketing/ai-search/content-relevance-optimization',
-    '/growth-marketing/ai-search/predictive-seo-analytics',
-    '/growth-marketing/ai-search/organic-visibility-enhancement',
-
-    // AI Automation
-    '/ai-automation',
-    '/ai-automation/process',
-    '/ai-automation/process/business-process-automation',
-    '/ai-automation/process/workflow-automation',
-    '/ai-automation/process/task-management',
-    '/ai-automation/process/system-integration',
-    '/ai-automation/process/quality-control-systems',
-    '/ai-automation/intelligence',
-    '/ai-automation/intelligence/predictive-analytics',
-    '/ai-automation/intelligence/customer-segmentation',
-    '/ai-automation/intelligence/personalised-outreach',
-    '/ai-automation/custom-ai',
-    '/ai-automation/custom-ai/intelligent-chatbots',
-    '/ai-automation/custom-ai/automated-lead-routing',
-    '/ai-automation/custom-ai/predictive-ai-models',
-
-    // Other Services
-    '/seo-services',
-    '/content-strategy',
-    '/ai-automation-hub',
-
+    {
+      url: `${baseUrl}/growth-marketing`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/ai-automation`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.9,
+    },
+    // Lead generation pages
+    {
+      url: `${baseUrl}/revenue-forecast`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/website-audit`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/growth-consultation`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/ai-automation-demo`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
     // Industries
-    '/industries',
-    '/industries/dental-practices',
-    '/industries/medical-practices',
-    '/industries/cosmetic-clinics',
+    {
+      url: `${baseUrl}/industries`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/industries/dental-practices`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/industries/medical-practices`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/industries/wellness-beauty`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/industries/ecommerce`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
+    // Case Studies
+    {
+      url: `${baseUrl}/case-studies`,
+      lastModified: currentDate,
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    },
+    // Blog main page
+    {
+      url: `${baseUrl}/blog`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
   ]
 
-  // Generate blog post URLs
-  const blogPosts = getAllBlogPosts()
-  const blogRoutes = blogPosts.map(post => `/blog/${post.slug}`)
-
-  // Combine all routes
-  const allRoutes = [...routes, ...blogRoutes]
-
-  return allRoutes.map((route) => ({
-    url: `${baseUrl}${route}`,
-    lastModified: new Date(),
-    changeFrequency: route === ''
-      ? 'daily'
-      : route === '/blog'
-      ? 'weekly'
-      : route.startsWith('/blog/')
-      ? 'monthly'
-      : route.includes('/industries')
-      ? 'weekly'
-      : 'weekly',
-    priority: route === ''
-      ? 1
-      : route === '/blog'
-      ? 0.9
-      : route.startsWith('/blog/')
-      ? 0.8
-      : route.includes('/growth-marketing') || route.includes('/ai-automation') || route.includes('/industries')
-      ? 0.8
-      : route === '/contact' || route === '/growth-consultation'
-      ? 0.9
-      : 0.6,
+  // Blog post pages
+  const blogPages = blogPosts.map(post => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: new Date(post.date).toISOString(),
+    changeFrequency: 'monthly' as const,
+    priority: 0.6,
   }))
+
+  return [...staticPages, ...blogPages]
 }
