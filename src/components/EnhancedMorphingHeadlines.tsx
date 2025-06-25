@@ -60,8 +60,8 @@ export default function EnhancedMorphingHeadlines() {
     <div className="relative morphing-container">
       {/* Three-line headline structure */}
       <h1 className="text-6xl lg:text-9xl font-heading font-bold mb-6 text-center leading-tight">
-        <span className="block text-white drop-shadow-lg mb-2">we're postino.</span>
-        <span className="block text-white drop-shadow-lg mb-2">we deliver.</span>
+        <span className="block text-white drop-shadow-lg mb-2">We're Postino.</span>
+        <span className="block text-white drop-shadow-lg mb-2">We Deliver:</span>
 
         {/* Enhanced morphing text */}
         <span className="block relative overflow-hidden" style={{minHeight: "1.2em"}}>

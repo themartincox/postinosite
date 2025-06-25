@@ -39,34 +39,10 @@ export default function ContactForm({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = (e: React.FormEvent) => {
     setIsSubmitting(true);
-
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...formData,
-          type,
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to submit form');
-      }
-
-      setIsSubmitted(true);
-    } catch (error) {
-      console.error('Form submission error:', error);
-      alert('There was an error submitting your form. Please try again or contact us directly.');
-    } finally {
-      setIsSubmitting(false);
-    }
+    // Form will be handled by Netlify automatically
+    // The page will redirect to /success after submission
   };
 
   const handleInputChange = (
@@ -148,7 +124,17 @@ export default function ContactForm({
       </CardHeader>
 
       <CardContent className="p-8">
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form
+          name={`contact-${type}`}
+          method="POST"
+          data-netlify="true"
+          action="/success"
+          onSubmit={handleSubmit}
+          className="space-y-6"
+        >
+          {/* Hidden field for Netlify Forms */}
+          <input type="hidden" name="form-name" value={`contact-${type}`} />
+          <input type="hidden" name="form-type" value={type} />
           {/* Basic Information */}
           <div className="grid md:grid-cols-2 gap-4">
             <div>
