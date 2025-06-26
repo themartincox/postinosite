@@ -473,13 +473,7 @@ export default function ServicePageTemplate({
                     variant="outline"
                     className={`w-full ${colorClass.border} ${colorClass.text} hover:${colorClass.bg} hover:text-white`}
                   >
-                    <Link
-                      href={
-                        service.slug.startsWith("../")
-                          ? `/${parentService}/${service.slug.replace(/^\.\.\//, "")}`
-                          : `/${parentService}/${categorySlug}/${service.slug}`
-                      }
-                    >
+                    <Link href="/contact">
                       Learn More
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>
