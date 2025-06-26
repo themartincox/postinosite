@@ -1,5 +1,5 @@
 import Navigation from "@/components/Navigation";
-import StickyScrollIndustries from "@/components/StickyScrollIndustries";
+// import StickyScrollIndustries from "@/components/StickyScrollIndustries";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -418,12 +418,58 @@ export default function Industries2Page() {
           </div>
         </div>
 
-        <StickyScrollIndustries
-          industries={industries.map(industry => ({
-            ...industry,
-            icon: <industry.icon className="h-6 w-6" />
-          }))}
-        />
+        <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          {industries.map((industry, index) => (
+            <Card key={index} className="bg-white shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <CardHeader>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-12 h-12 bg-midnight-blue rounded-full flex items-center justify-center">
+                      <industry.icon className="h-6 w-6 text-white" />
+                    </div>
+                    <div>
+                      <CardTitle className="text-xl font-heading text-midnight-blue">
+                        {industry.name}
+                      </CardTitle>
+                      {industry.badge && (
+                        <Badge className={`${industry.badgeColor} text-white text-xs`}>
+                          {industry.badge}
+                        </Badge>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <CardDescription className="font-body text-gray-600 mb-4">
+                  {industry.subtitle}
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4 mb-6">
+                  <h4 className="font-heading font-semibold text-midnight-blue">Key Features:</h4>
+                  <ul className="space-y-2">
+                    {industry.features.map((feature, featureIndex) => (
+                      <li key={featureIndex} className="flex items-center font-body text-gray-600 text-sm">
+                        <Check className="h-4 w-4 text-forest-green mr-2 flex-shrink-0" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="p-4 bg-soft-gray rounded-lg mb-4">
+                  <p className="font-heading font-semibold text-coral-red text-sm">
+                    {industry.results}
+                  </p>
+                </div>
+                <Button asChild className="w-full bg-midnight-blue hover:bg-midnight-blue/90 text-white">
+                  <Link href={industry.link}>
+                    Learn More About {industry.name}
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </section>
 
       {/* Other Industries */}
