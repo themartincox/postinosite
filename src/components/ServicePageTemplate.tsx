@@ -473,8 +473,14 @@ export default function ServicePageTemplate({
                     variant="outline"
                     className={`w-full ${colorClass.border} ${colorClass.text} hover:${colorClass.bg} hover:text-white`}
                   >
-                    <Link href="/contact">
-                      Ask Questions
+                    <Link
+                      href={
+                        service.slug.startsWith("../")
+                          ? `/${parentService}/${service.slug.replace(/^\.\.\//, "")}`
+                          : `/${parentService}/${categorySlug}/${service.slug}`
+                      }
+                    >
+                      Learn More
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>
                   </Button>
@@ -547,7 +553,11 @@ export default function ServicePageTemplate({
                     className={`w-full ${colorClass.border} ${colorClass.text} hover:${colorClass.bg} hover:text-white`}
                   >
                     <Link
-                      href={`/${parentService}/${categorySlug}/${service.slug}`}
+                      href={
+                        service.slug.startsWith("../")
+                          ? `/${parentService}/${service.slug.replace(/^\.\.\//, "")}`
+                          : `/${parentService}/${categorySlug}/${service.slug}`
+                      }
                     >
                       Learn More
                       <ArrowRight className="ml-2 h-4 w-4" />
