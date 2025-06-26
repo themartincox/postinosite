@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Navigation from "@/components/Navigation";
+import WhatsAppWidget from "@/components/WhatsAppWidget";
 
 export const metadata: Metadata = {
   title: "AI Automation Services Nottingham | Business Process Automation",
@@ -766,6 +767,9 @@ export default function AIAutomationPage() {
           </div>
         </div>
       </footer>
+
+      {/* WhatsApp Widget */}
+      <WhatsAppWidget />
     </div>
   );
 }

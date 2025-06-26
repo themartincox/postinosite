@@ -2,6 +2,7 @@
 
 import type { Metadata } from "next";
 import Navigation from "@/components/Navigation";
+import WhatsAppWidget from "@/components/WhatsAppWidget";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -527,6 +528,9 @@ export default function ContactPage() {
           </div>
         </div>
       </footer>
+
+      {/* WhatsApp Widget */}
+      <WhatsAppWidget />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Navigation from "@/components/Navigation";
+import WhatsAppWidget from "@/components/WhatsAppWidget";
 import { Badge } from "@/components/ui/badge";
 
 export const metadata: Metadata = {
@@ -824,6 +825,9 @@ export default function GrowthMarketingPage() {
           </div>
         </div>
       </footer>
+
+      {/* WhatsApp Widget */}
+      <WhatsAppWidget />
     </div>
   );
 }

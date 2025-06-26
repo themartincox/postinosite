@@ -1,4 +1,5 @@
 import Navigation from "@/components/Navigation";
+import WhatsAppWidget from "@/components/WhatsAppWidget";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -894,6 +895,9 @@ export default function AboutPage() {
           </div>
         </div>
       </footer>
+
+      {/* WhatsApp Widget */}
+      <WhatsAppWidget />
     </div>
   );
 }
