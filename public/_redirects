@@ -5,14 +5,7 @@ http://www.postino.cc/* https://postino.cc/:splat 301!
 https://www.postino.cc/* https://postino.cc/:splat 301!
 
 # Remove trailing slashes for consistency (except root)
-/*/ /:splat 301!
-
-# Handle common SEO patterns
-/home https://postino.cc/ 301
-/index https://postino.cc/ 301
-/index.html https://postino.cc/ 301
-
-# Service page redirects for consistent URLs
+# Use more specific patterns to avoid root path infinite loop
 /growth-marketing/ /growth-marketing 301
 /ai-automation/ /ai-automation 301
 /industries/ /industries 301
@@ -20,6 +13,13 @@ https://www.postino.cc/* https://postino.cc/:splat 301!
 /blog/ /blog 301
 /about/ /about 301
 /contact/ /contact 301
+
+# Handle common SEO patterns
+/home https://postino.cc/ 301
+/index https://postino.cc/ 301
+/index.html https://postino.cc/ 301
+
+# These are now handled above - removed duplicates
 
 # Legacy redirects if any old URLs exist
 /services/* /growth-marketing/:splat 301

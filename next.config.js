@@ -80,11 +80,7 @@ const nextConfig = {
     ]
   },
 
-  // TypeScript performance
-  typescript: {
-    tsconfigPath: './tsconfig.json',
-    ignoreBuildErrors: true,
-  },
+  // TypeScript configuration already defined above
 }
 
 module.exports = nextConfig
