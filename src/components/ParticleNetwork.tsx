@@ -15,12 +15,12 @@ export default function ParticleNetwork() {
 
   // Optimized particle configuration
   const config = useMemo(() => ({
-    particleCount: 50, // Reduced from typical 100+ for better performance
-    maxDistance: 150,
-    speed: 0.5,
-    particleSize: 2,
-    lineOpacity: 0.15,
-    particleOpacity: 0.6,
+    particleCount: 30, // Further reduced for more subtle effect
+    maxDistance: 120,
+    speed: 0.3,
+    particleSize: 1.5,
+    lineOpacity: 0.08, // Much more subtle lines
+    particleOpacity: 0.25, // Much more subtle particles
   }), []);
 
   useEffect(() => {
