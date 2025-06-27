@@ -10,8 +10,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Get all blog posts
   const blogPosts = getAllBlogPosts()
 
-  // Main static pages
-  const staticPages = [
+  // Core pages
+  const corePages = [
     {
       url: baseUrl,
       lastModified: currentDate,
@@ -36,7 +36,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly' as const,
       priority: 0.5,
     },
-    // Services
+    {
+      url: `${baseUrl}/pricing`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/resources`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.6,
+    },
+  ]
+
+  // Main service categories
+  const serviceCategories = [
     {
       url: `${baseUrl}/growth-marketing`,
       lastModified: currentDate,
@@ -49,7 +64,90 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly' as const,
       priority: 0.9,
     },
-    // Lead generation pages
+    {
+      url: `${baseUrl}/seo-services`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/content-strategy`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
+  ]
+
+  // Growth Marketing sub-services
+  const growthMarketingPages = [
+    // Inbound category and services
+    `${baseUrl}/growth-marketing/inbound`,
+    `${baseUrl}/growth-marketing/inbound/seo`,
+    `${baseUrl}/growth-marketing/inbound/content-strategy-creation`,
+    `${baseUrl}/growth-marketing/inbound/email-marketing-automation`,
+    `${baseUrl}/growth-marketing/inbound/social-media-management`,
+
+    // Branding category and services
+    `${baseUrl}/growth-marketing/branding`,
+    `${baseUrl}/growth-marketing/branding/brand-identity-development`,
+    `${baseUrl}/growth-marketing/branding/collateral-design`,
+    `${baseUrl}/growth-marketing/branding/website-design-development`,
+    `${baseUrl}/growth-marketing/branding/website-design-development/nextjs-development`,
+    `${baseUrl}/growth-marketing/branding/website-design-development/shopify-development`,
+    `${baseUrl}/growth-marketing/branding/website-design-development/wordpress-development`,
+    `${baseUrl}/growth-marketing/branding/website-design-development/headless-commerce`,
+    `${baseUrl}/growth-marketing/branding/conversion-funnels`,
+
+    // Strategy category and services
+    `${baseUrl}/growth-marketing/strategy`,
+    `${baseUrl}/growth-marketing/strategy/research-market-analysis`,
+    `${baseUrl}/growth-marketing/strategy/marketing-planning`,
+    `${baseUrl}/growth-marketing/strategy/analytics-reporting`,
+    `${baseUrl}/growth-marketing/strategy/conversion-rate-optimization`,
+
+    // AI Search category and services
+    `${baseUrl}/growth-marketing/ai-search`,
+    `${baseUrl}/growth-marketing/ai-search/ai-keyword-research`,
+    `${baseUrl}/growth-marketing/ai-search/content-relevance-optimization`,
+    `${baseUrl}/growth-marketing/ai-search/predictive-seo-analytics`,
+    `${baseUrl}/growth-marketing/ai-search/organic-visibility-enhancement`,
+  ].map(url => ({
+    url,
+    lastModified: currentDate,
+    changeFrequency: 'weekly' as const,
+    priority: 0.7,
+  }))
+
+  // AI Automation sub-services
+  const aiAutomationPages = [
+    // Process category and services
+    `${baseUrl}/ai-automation/process`,
+    `${baseUrl}/ai-automation/process/business-process-automation`,
+    `${baseUrl}/ai-automation/process/workflow-automation`,
+    `${baseUrl}/ai-automation/process/task-management`,
+    `${baseUrl}/ai-automation/process/system-integration`,
+    `${baseUrl}/ai-automation/process/quality-control-systems`,
+
+    // Intelligence category and services
+    `${baseUrl}/ai-automation/intelligence`,
+    `${baseUrl}/ai-automation/intelligence/predictive-analytics`,
+    `${baseUrl}/ai-automation/intelligence/customer-segmentation`,
+    `${baseUrl}/ai-automation/intelligence/personalised-outreach`,
+
+    // Custom AI category and services
+    `${baseUrl}/ai-automation/custom-ai`,
+    `${baseUrl}/ai-automation/custom-ai/intelligent-chatbots`,
+    `${baseUrl}/ai-automation/custom-ai/automated-lead-routing`,
+    `${baseUrl}/ai-automation/custom-ai/predictive-ai-models`,
+  ].map(url => ({
+    url,
+    lastModified: currentDate,
+    changeFrequency: 'weekly' as const,
+    priority: 0.7,
+  }))
+
+  // Lead generation and demo pages
+  const leadGenPages = [
     {
       url: `${baseUrl}/revenue-forecast`,
       lastModified: currentDate,
@@ -74,7 +172,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly' as const,
       priority: 0.8,
     },
-    // Industries
+    {
+      url: `${baseUrl}/ai-automation-hub`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.7,
+    },
+  ]
+
+  // Industries pages
+  const industryPages = [
     {
       url: `${baseUrl}/industries`,
       lastModified: currentDate,
@@ -94,25 +201,55 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/industries/wellness-beauty`,
+      url: `${baseUrl}/industries/cosmetic-clinics`,
       lastModified: currentDate,
       changeFrequency: 'weekly' as const,
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/industries/ecommerce`,
+      url: `${baseUrl}/wellness-beauty`,
       lastModified: currentDate,
       changeFrequency: 'weekly' as const,
       priority: 0.8,
     },
-    // Case Studies
+    {
+      url: `${baseUrl}/ecommerce`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
+  ]
+
+  // Local landing pages
+  const localPages = [
+    {
+      url: `${baseUrl}/bingham`,
+      lastModified: currentDate,
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/rushcliffe`,
+      lastModified: currentDate,
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/nottingham-marketing-agency`,
+      lastModified: currentDate,
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    },
+  ]
+
+  // Content pages
+  const contentPages = [
     {
       url: `${baseUrl}/case-studies`,
       lastModified: currentDate,
       changeFrequency: 'monthly' as const,
       priority: 0.7,
     },
-    // Blog main page
     {
       url: `${baseUrl}/blog`,
       lastModified: currentDate,
@@ -129,5 +266,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }))
 
-  return [...staticPages, ...blogPages]
+  return [
+    ...corePages,
+    ...serviceCategories,
+    ...growthMarketingPages,
+    ...aiAutomationPages,
+    ...leadGenPages,
+    ...industryPages,
+    ...localPages,
+    ...contentPages,
+    ...blogPages,
+  ]
 }

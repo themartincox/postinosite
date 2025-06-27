@@ -7,9 +7,36 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, Calendar, Clock, User, ArrowRight } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import type { Metadata } from 'next';
+import { generatePageMetadata } from '@/lib/metadata';
+import { getBlogPostStructuredData } from '@/lib/structured-data';
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>;
+}
+
+// Generate metadata for blog posts
+export async function generateMetadata({
+  params,
+}: BlogPostPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const post = getBlogPost(slug);
+
+  if (!post) {
+    return {
+      title: 'Post Not Found | Postino Blog',
+      description: 'The requested blog post could not be found.',
+    };
+  }
+
+  return generatePageMetadata({
+    title: `${post.title} | Postino Blog`,
+    description: post.excerpt,
+    path: `/blog/${slug}`,
+    keywords: `${post.tags.join(', ')}, ${post.category}, digital marketing, AI automation`,
+    ogImage: post.image,
+    changeFreq: 'monthly',
+  });
 }
 
 // CTA mapping for converting text to actionable buttons
@@ -328,6 +355,14 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </Link>
         </div>
       </div>
+
+      {/* Structured Data for Blog Post */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(getBlogPostStructuredData(post)),
+        }}
+      />
     </div>
   );
 }

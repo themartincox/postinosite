@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Crimson_Text } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
+import { getOrganizationStructuredData, getWebsiteStructuredData } from '@/lib/structured-data';
 
 // More aggressive font optimization
 const inter = Inter({
@@ -133,6 +134,22 @@ export default function RootLayout({
       </head>
       <body className="antialiased min-h-screen bg-white text-gray-900">
         {children}
+
+        {/* Structured Data */}
+        <Script
+          id="organization-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(getOrganizationStructuredData()),
+          }}
+        />
+        <Script
+          id="website-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(getWebsiteStructuredData()),
+          }}
+        />
 
         {/* GTM - Load after page content with reduced priority */}
         <Script

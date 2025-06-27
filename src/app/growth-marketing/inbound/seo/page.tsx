@@ -1,3 +1,5 @@
+import type { Metadata } from 'next'
+import { generatePageMetadata } from '@/lib/metadata'
 import ServicePageTemplate from "@/components/ServicePageTemplate";
 import {
   BarChart3,
@@ -9,6 +11,14 @@ import {
   Users,
   Zap,
 } from "lucide-react";
+
+export const metadata: Metadata = generatePageMetadata({
+  title: "SEO Services Nottingham | Expert Search Engine Optimization",
+  description: "Professional SEO services in Nottingham. Boost your search rankings with our comprehensive SEO strategies. Local SEO, technical SEO, and content optimization for maximum visibility.",
+  path: "/growth-marketing/inbound/seo",
+  keywords: "SEO services Nottingham, search engine optimization, local SEO Nottingham, technical SEO, content optimization, keyword research, SERP rankings, organic traffic",
+  changeFreq: "weekly",
+});
 
 export default function SEOServicePage() {
   return (

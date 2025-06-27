@@ -1,3 +1,5 @@
+import type { Metadata } from 'next'
+import { generatePageMetadata } from '@/lib/metadata'
 import Navigation from "@/components/Navigation";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
 import { Badge } from "@/components/ui/badge";
@@ -22,6 +24,14 @@ import {
   Zap,
 } from "lucide-react";
 import Link from "next/link";
+
+export const metadata: Metadata = generatePageMetadata({
+  title: "About Martin & Postino | Growth Marketing & AI Automation Expert",
+  description: "Meet Martin, founder of Postino. 15+ years helping SMEs scale through strategic marketing and AI automation. Expert in B2B UX, LinkedIn marketing, and Total Search optimization.",
+  path: "/about",
+  keywords: "Martin Postino, marketing expert Nottingham, AI automation specialist, B2B UX design, LinkedIn marketing, Total Search optimization, client empowerment, business growth consultant",
+  changeFreq: "monthly",
+});
 
 export default function AboutPage() {
   return (

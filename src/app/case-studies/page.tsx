@@ -1,3 +1,5 @@
+import type { Metadata } from 'next'
+import { generatePageMetadata } from '@/lib/metadata'
 import Navigation from "@/components/Navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -17,6 +19,14 @@ import {
   Check,
 } from "lucide-react";
 import Link from "next/link";
+
+export const metadata: Metadata = generatePageMetadata({
+  title: "Case Studies | Proven Results in Growth Marketing & AI Automation",
+  description: "Real results from our growth marketing and AI automation campaigns. See how we've helped SMEs achieve 300%+ growth in bookings, leads, and revenue. Nottingham success stories.",
+  path: "/case-studies",
+  keywords: "marketing case studies, AI automation results, growth marketing success, SME growth examples, Nottingham business results, digital marketing ROI, client success stories",
+  changeFreq: "monthly",
+});
 
 export default function CaseStudiesPage() {
   const caseStudies = [

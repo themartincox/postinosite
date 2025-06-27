@@ -1,5 +1,15 @@
+import type { Metadata } from 'next'
+import { generatePageMetadata } from '@/lib/metadata'
 import ServicePageTemplate from "@/components/ServicePageTemplate";
 import { Bot, Brain, MessageSquare, Settings, Users, Zap } from "lucide-react";
+
+export const metadata: Metadata = generatePageMetadata({
+  title: "Intelligent Chatbots | AI Customer Service Automation",
+  description: "Custom AI chatbots for business automation. Enhance customer service with intelligent conversational AI, lead qualification, and 24/7 customer support. Boost engagement and efficiency.",
+  path: "/ai-automation/custom-ai/intelligent-chatbots",
+  keywords: "AI chatbots, intelligent customer service, conversational AI, automated customer support, lead qualification chatbots, business automation, AI customer engagement",
+  changeFreq: "weekly",
+});
 
 export default function IntelligentChatbotsPage() {
   return (
