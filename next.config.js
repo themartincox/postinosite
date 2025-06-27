@@ -57,10 +57,28 @@ const nextConfig = {
     return config
   },
 
+  // URL and SEO Configuration
+  trailingSlash: false, // Consistent URLs without trailing slashes
+
   // Optimize output
   output: 'export',
   distDir: 'out',
   poweredByHeader: false,
+
+  // Custom headers for SEO
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'X-Robots-Tag',
+            value: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
+          },
+        ],
+      },
+    ]
+  },
 
   // TypeScript performance
   typescript: {

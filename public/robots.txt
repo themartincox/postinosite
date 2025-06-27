@@ -1,23 +1,38 @@
 # Postino.cc Robots.txt
-# Updated: 2025
+# Updated: January 2025
+# Marketing & AI Automation Agency - Nottingham, UK
 
 # Default rules for all crawlers
 User-agent: *
 Allow: /
-Allow: /blog/
-Allow: /blog/*
-Allow: /growth-marketing/
-Allow: /ai-automation/
-Allow: /industries/
-Allow: /industries/*
-Allow: /case-studies/
-Allow: /about/
-Allow: /contact/
-Allow: /revenue-forecast/
-Allow: /website-audit/
-Allow: /growth-consultation/
-Allow: /ai-automation-demo/
 
+# Explicitly allow important sections
+Allow: /growth-marketing
+Allow: /growth-marketing/*
+Allow: /ai-automation
+Allow: /ai-automation/*
+Allow: /industries
+Allow: /industries/*
+Allow: /case-studies
+Allow: /blog
+Allow: /blog/*
+Allow: /about
+Allow: /contact
+Allow: /pricing
+Allow: /resources
+
+# Allow lead generation pages
+Allow: /revenue-forecast
+Allow: /website-audit
+Allow: /growth-consultation
+Allow: /ai-automation-demo
+
+# Allow local landing pages
+Allow: /bingham
+Allow: /rushcliffe
+Allow: /nottingham-marketing-agency
+
+# Block admin and private areas
 Disallow: /admin/
 Disallow: /admin/*
 Disallow: /_next/
@@ -28,6 +43,8 @@ Disallow: /*.json$
 Disallow: /private/
 Disallow: /temp/
 Disallow: /.well-known/
+Disallow: /uploads/
+Disallow: /out/
 
 # Google Bot
 User-agent: Googlebot
@@ -177,15 +194,36 @@ Disallow: /_next/
 Disallow: /api/
 Disallow: /contact/
 
-# Block aggressive crawlers
+# Controlled access for SEO crawlers (allow but throttle)
 User-agent: SemrushBot
-Disallow: /
-Crawl-delay: 86400
+Crawl-delay: 10
+Allow: /
+Allow: /blog/*
+Allow: /case-studies
+Allow: /about
+Allow: /industries
+Allow: /growth-marketing
+Allow: /ai-automation
+Disallow: /admin/
+Disallow: /contact/
+Disallow: /revenue-forecast/
+Disallow: /website-audit/
 
 User-agent: AhrefsBot
-Disallow: /
-Crawl-delay: 86400
+Crawl-delay: 10
+Allow: /
+Allow: /blog/*
+Allow: /case-studies
+Allow: /about
+Allow: /industries
+Allow: /growth-marketing
+Allow: /ai-automation
+Disallow: /admin/
+Disallow: /contact/
+Disallow: /revenue-forecast/
+Disallow: /website-audit/
 
+# Block purely aggressive crawlers
 User-agent: MJ12bot
 Disallow: /
 Crawl-delay: 86400
@@ -194,5 +232,8 @@ User-agent: DotBot
 Disallow: /
 Crawl-delay: 86400
 
-# Sitemap
+# Sitemap location
 Sitemap: https://postino.cc/sitemap.xml
+
+# Host declaration
+Host: https://postino.cc
