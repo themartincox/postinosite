@@ -280,7 +280,7 @@ export default function BinghamPage() {
                     >
                       <Button className="w-full bg-coral-red hover:bg-coral-red/90 text-white font-semibold py-3">
                         <ArrowRight className="h-4 w-4 mr-2" />
-                        Book Now - Secure Online Payment
+                        Secure Project Slot - Refundable Deposit
                       </Button>
                     </Link>
                     <p className="text-xs text-gray-500 text-center mt-2">

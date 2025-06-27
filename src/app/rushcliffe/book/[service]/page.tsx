@@ -1,4 +1,4 @@
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Navigation from '@/components/Navigation';
 import LocalServicePayment from '@/components/LocalServicePayment';
@@ -55,10 +55,10 @@ export default async function RushcliffeBookingPage({ params }: BookingPageProps
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h1 className="text-3xl lg:text-4xl font-heading font-bold text-midnight-blue mb-4">
-              Book Your {service.name}
+              Secure Your {service.name}
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Secure online booking for Rushcliffe businesses. Complete your order and our team will contact you within 24 hours.
+              Reserve your project slot with a refundable deposit. Our Rushcliffe team will contact you within 24 hours for a detailed consultation and complete project quote.
             </p>
           </div>
 
