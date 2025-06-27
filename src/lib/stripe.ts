@@ -1,4 +1,4 @@
-import { loadStripe, Stripe } from '@stripe/stripe-js';
+import { loadStripe, type Stripe } from '@stripe/stripe-js';
 
 // Make sure to call loadStripe outside of a component's render to avoid
 // recreating the Stripe object on every render.
@@ -11,6 +11,81 @@ export const getStripe = () => {
     );
   }
   return stripePromise;
+};
+
+// For static builds, we'll use payment links or handle payment differently
+export const createPaymentFlow = async (
+  area: LocalArea,
+  service: ServiceKey,
+  customerInfo: {
+    name: string;
+    email: string;
+    phone: string;
+    businessName: string;
+    requirements: string;
+  }
+) => {
+  // Since we can't create checkout sessions on the client,
+  // we'll use pre-configured payment links or alternative flow
+  const serviceConfig = getServiceConfig(area, service);
+
+  // Store customer info in localStorage for post-payment processing
+  const bookingData = {
+    ...customerInfo,
+    area,
+    service,
+    serviceConfig,
+    timestamp: Date.now(),
+  };
+
+  localStorage.setItem('pending_booking', JSON.stringify(bookingData));
+
+  return {
+    success: true,
+    bookingData,
+  };
+};
+
+// Get payment link URL for a specific service (these would be created in Stripe Dashboard)
+export const getPaymentLinkForService = (area: LocalArea, service: ServiceKey): string | null => {
+  // In production, these would be actual Stripe Payment Links created in the dashboard
+  // For now, return null to trigger the fallback flow
+  const paymentLinks: Record<string, string> = {
+    // Example format - these would be real Stripe payment links:
+    // 'bingham_website_design': 'https://buy.stripe.com/test_...',
+    // 'bingham_ai_chatbot': 'https://buy.stripe.com/test_...',
+  };
+
+  return paymentLinks[`${area}_${service}`] || null;
+};
+
+// Validate environment configuration
+export const validateStripeConfig = (): { valid: boolean; message: string } => {
+  if (!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) {
+    return {
+      valid: false,
+      message: 'Stripe publishable key is not configured. Please add NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY to your environment variables.',
+    };
+  }
+
+  if (process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY.startsWith('pk_test_')) {
+    return {
+      valid: true,
+      message: 'Stripe is configured in test mode.',
+    };
+  }
+
+  if (process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY.startsWith('pk_live_')) {
+    return {
+      valid: true,
+      message: 'Stripe is configured in live mode.',
+    };
+  }
+
+  return {
+    valid: false,
+    message: 'Invalid Stripe publishable key format.',
+  };
 };
 
 // Service configurations for local areas

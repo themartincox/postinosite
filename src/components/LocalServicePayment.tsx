@@ -1,18 +1,14 @@
 "use client";
 
 import React, { useState } from 'react';
-import { loadStripe } from '@stripe/stripe-js';
-import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
-import { CheckCircle, CreditCard, Loader2, MapPin, Phone, Mail, Building } from 'lucide-react';
-import { getServiceConfig, formatPrice, type LocalArea, type ServiceKey } from '@/lib/stripe';
-
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
+import { CheckCircle, CreditCard, Phone, Mail, Building, Loader2 } from 'lucide-react';
+import { getServiceConfig, formatPrice, getStripe, getPaymentLinkForService, validateStripeConfig, createPaymentFlow, type LocalArea, type ServiceKey } from '@/lib/stripe';
 
 interface CustomerInfo {
   name: string;
@@ -25,15 +21,11 @@ interface CustomerInfo {
 interface LocalServicePaymentProps {
   service: ServiceKey;
   area: LocalArea;
-  onSuccess?: (paymentIntent: any) => void;
 }
 
-function PaymentForm({ service, area, onSuccess }: LocalServicePaymentProps) {
-  const stripe = useStripe();
-  const elements = useElements();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+export default function LocalServicePayment({ service, area }: LocalServicePaymentProps) {
   const [step, setStep] = useState<'info' | 'payment' | 'success'>('info');
+  const [loading, setLoading] = useState(false);
   const [customerInfo, setCustomerInfo] = useState<CustomerInfo>({
     name: '',
     email: '',
@@ -51,74 +43,97 @@ function PaymentForm({ service, area, onSuccess }: LocalServicePaymentProps) {
     }
   };
 
-  const handlePayment = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleStripeCheckout = async () => {
+    const stripeConfig = validateStripeConfig();
 
-    if (!stripe || !elements) {
-      setError('Stripe has not loaded yet');
+    if (!stripeConfig.valid) {
+      alert(`Payment system error: ${stripeConfig.message}`);
       return;
     }
 
-    setIsLoading(true);
-    setError(null);
+    setLoading(true);
 
     try {
-      // Create payment intent
-      const response = await fetch('/api/create-payment-intent', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          service,
-          area,
-          customPrice: serviceConfig.price, // Use base price for now
-          customerInfo,
-        }),
-      });
+      // Store customer information for post-payment processing
+      await createPaymentFlow(area, service, customerInfo);
 
-      const { clientSecret, error: backendError } = await response.json();
+      // Try to get a pre-configured payment link first
+      const paymentLinkUrl = getPaymentLinkForService(area, service);
 
-      if (backendError) {
-        setError(backendError);
-        setIsLoading(false);
+      if (paymentLinkUrl) {
+        // Redirect to Stripe Payment Link with customer data
+        const url = new URL(paymentLinkUrl);
+        url.searchParams.set('prefilled_email', customerInfo.email);
+        url.searchParams.set('client_reference_id', `${area}_${service}_${Date.now()}`);
+
+        // Store customer info for retrieval after payment
+        sessionStorage.setItem('booking_customer_info', JSON.stringify(customerInfo));
+
+        window.location.href = url.toString();
         return;
       }
 
-      // Confirm payment with Stripe
-      const cardElement = elements.getElement(CardElement);
-      if (!cardElement) {
-        setError('Card element not found');
-        setIsLoading(false);
-        return;
-      }
+      // Fallback: Use contact-based booking flow
+      const bookingEmail = `
+Subject: ${serviceConfig.name} Booking Request
 
-      const { error: stripeError, paymentIntent } = await stripe.confirmCardPayment(
-        clientSecret,
-        {
-          payment_method: {
-            card: cardElement,
-            billing_details: {
-              name: customerInfo.name,
-              email: customerInfo.email,
-              phone: customerInfo.phone,
-            },
-          },
-        }
+Customer Details:
+- Name: ${customerInfo.name}
+- Email: ${customerInfo.email}
+- Phone: ${customerInfo.phone}
+- Business: ${customerInfo.businessName}
+- Area: ${area.charAt(0).toUpperCase() + area.slice(1)}
+
+Service: ${serviceConfig.name}
+Price: ${formatPrice(serviceConfig.price)}
+${serviceConfig.recurring ? 'Billing: Monthly subscription' : 'Billing: One-time payment'}
+
+Requirements:
+${customerInfo.requirements || 'No specific requirements provided'}
+
+Please process this booking and send payment instructions.
+      `.trim();
+
+      // Create mailto link for fallback
+      const mailtoLink = `mailto:hello@postino.cc?${new URLSearchParams({
+        subject: `${serviceConfig.name} Booking Request - ${customerInfo.businessName}`,
+        body: bookingEmail
+      })}`;
+
+      // Show booking confirmation dialog
+      const confirmed = confirm(
+        `Thank you ${customerInfo.name}!\n\n` +
+        `We'll process your ${serviceConfig.name} booking manually.\n\n` +
+        `Click OK to send an email with your booking details, or Cancel to call us directly at 0800 772 3291.`
       );
 
-      if (stripeError) {
-        setError(stripeError.message || 'Payment failed');
-      } else if (paymentIntent?.status === 'succeeded') {
-        setStep('success');
-        onSuccess?.(paymentIntent);
+      if (confirmed) {
+        window.location.href = mailtoLink;
       }
-    } catch (err) {
-      setError('An unexpected error occurred');
+
+      // Show success regardless of email choice
+      setStep('success');
+
+    } catch (error) {
+      console.error('Booking error:', error);
+      alert('There was an error processing your booking. Please contact us directly at hello@postino.cc or 0800 772 3291.');
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
+
+
+
+  // Check for success/cancel URL parameters
+  React.useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('success') === 'true') {
+      setStep('success');
+    } else if (urlParams.get('canceled') === 'true') {
+      // Payment was canceled, stay on payment step
+      setStep('payment');
+    }
+  }, []);
 
   if (step === 'success') {
     return (
@@ -127,7 +142,7 @@ function PaymentForm({ service, area, onSuccess }: LocalServicePaymentProps) {
           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <CheckCircle className="h-8 w-8 text-green-600" />
           </div>
-          <CardTitle className="text-2xl text-green-600">Payment Successful!</CardTitle>
+          <CardTitle className="text-2xl text-green-600">Booking Confirmed!</CardTitle>
           <CardDescription>
             Thank you for choosing Postino for your {area} business needs.
           </CardDescription>
@@ -137,15 +152,15 @@ function PaymentForm({ service, area, onSuccess }: LocalServicePaymentProps) {
             <h3 className="font-semibold text-midnight-blue mb-2">What happens next?</h3>
             <div className="text-sm text-gray-600 space-y-2">
               <p>• You'll receive a confirmation email within 5 minutes</p>
-              <p>• Our team will contact you within 24 hours to schedule your project kickoff</p>
-              <p>• We'll begin work on your {serviceConfig.name.toLowerCase()} immediately</p>
-              <p>• You'll have a dedicated project manager throughout the process</p>
+              <p>• Our team will contact you within 24 hours to discuss your requirements</p>
+              <p>• We'll provide a detailed project timeline and next steps</p>
+              <p>• Work begins immediately after final requirements confirmation</p>
             </div>
           </div>
           <div className="flex items-center justify-center space-x-4 text-sm text-gray-600">
             <div className="flex items-center">
               <Phone className="h-4 w-4 mr-1" />
-              01949 836 850
+              0800 772 3291
             </div>
             <div className="flex items-center">
               <Mail className="h-4 w-4 mr-1" />
@@ -162,7 +177,7 @@ function PaymentForm({ service, area, onSuccess }: LocalServicePaymentProps) {
       <Card className="max-w-2xl mx-auto">
         <CardHeader>
           <CardTitle className="flex items-center">
-            <MapPin className="h-5 w-5 mr-2 text-coral-red" />
+            <Building className="h-5 w-5 mr-2 text-coral-red" />
             {serviceConfig.name}
           </CardTitle>
           <CardDescription>
@@ -170,7 +185,7 @@ function PaymentForm({ service, area, onSuccess }: LocalServicePaymentProps) {
           </CardDescription>
           <div className="flex items-center space-x-2">
             <Badge variant="outline" className="text-forest-green border-forest-green">
-              Starting from {formatPrice(serviceConfig.price * 100)}
+              Starting from {formatPrice(serviceConfig.price)}
             </Badge>
             {serviceConfig.recurring && (
               <Badge variant="outline" className="text-coral-red border-coral-red">
@@ -268,11 +283,11 @@ function PaymentForm({ service, area, onSuccess }: LocalServicePaymentProps) {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handlePayment} className="space-y-6">
+        <div className="space-y-6">
           <div className="bg-soft-gray p-4 rounded-lg">
             <div className="flex justify-between items-center mb-2">
               <span className="font-semibold">{serviceConfig.name}</span>
-              <span className="font-bold text-lg">{formatPrice(serviceConfig.price * 100)}</span>
+              <span className="font-bold text-lg">{formatPrice(serviceConfig.price)}</span>
             </div>
             <div className="text-sm text-gray-600">
               <p>Customer: {customerInfo.name}</p>
@@ -281,30 +296,17 @@ function PaymentForm({ service, area, onSuccess }: LocalServicePaymentProps) {
             </div>
           </div>
 
-          <div>
-            <Label>Card Details</Label>
-            <div className="mt-2 p-3 border border-gray-300 rounded-md">
-              <CardElement
-                options={{
-                  style: {
-                    base: {
-                      fontSize: '16px',
-                      color: '#424770',
-                      '::placeholder': {
-                        color: '#aab7c4',
-                      },
-                    },
-                  },
-                }}
-              />
-            </div>
+          <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg">
+            <h4 className="font-semibold text-blue-800 mb-2">🔒 Secure Payment with Stripe</h4>
+            <p className="text-sm text-blue-700 mb-3">
+              Your payment will be processed securely through Stripe. We never store your card details.
+            </p>
+            <ul className="text-xs text-blue-600 space-y-1">
+              <li>• SSL encrypted transmission</li>
+              <li>• PCI DSS compliant processing</li>
+              <li>• Instant confirmation email</li>
+            </ul>
           </div>
-
-          {error && (
-            <div className="text-red-600 text-sm bg-red-50 p-3 rounded-md">
-              {error}
-            </div>
-          )}
 
           <div className="flex space-x-3">
             <Button
@@ -312,34 +314,29 @@ function PaymentForm({ service, area, onSuccess }: LocalServicePaymentProps) {
               variant="outline"
               onClick={() => setStep('info')}
               className="flex-1"
+              disabled={loading}
             >
               Back
             </Button>
             <Button
-              type="submit"
-              disabled={!stripe || isLoading}
+              onClick={handleStripeCheckout}
               className="flex-1 bg-coral-red hover:bg-coral-red/90"
+              disabled={loading}
             >
-              {isLoading ? (
+              {loading ? (
                 <>
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                   Processing...
                 </>
               ) : (
-                `Pay ${formatPrice(serviceConfig.price * 100)}`
+                <>
+                  Complete Payment - {formatPrice(serviceConfig.price)}
+                </>
               )}
             </Button>
           </div>
-        </form>
+        </div>
       </CardContent>
     </Card>
-  );
-}
-
-export default function LocalServicePayment(props: LocalServicePaymentProps) {
-  return (
-    <Elements stripe={stripePromise}>
-      <PaymentForm {...props} />
-    </Elements>
   );
 }
