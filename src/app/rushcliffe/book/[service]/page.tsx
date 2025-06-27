@@ -5,9 +5,9 @@ import LocalServicePayment from '@/components/LocalServicePayment';
 import { RUSHCLIFFE_SERVICES, type ServiceKey } from '@/lib/stripe';
 
 interface BookingPageProps {
-  params: {
+  params: Promise<{
     service: string;
-  };
+  }>;
 }
 
 // Valid service slugs mapped to service keys
@@ -19,7 +19,8 @@ const SERVICE_SLUGS: Record<string, ServiceKey> = {
 };
 
 export async function generateMetadata({ params }: BookingPageProps): Promise<Metadata> {
-  const serviceKey = SERVICE_SLUGS[params.service];
+  const resolvedParams = await params;
+  const serviceKey = SERVICE_SLUGS[resolvedParams.service];
 
   if (!serviceKey) {
     return {
@@ -36,8 +37,9 @@ export async function generateMetadata({ params }: BookingPageProps): Promise<Me
   };
 }
 
-export default function RushcliffeBookingPage({ params }: BookingPageProps) {
-  const serviceKey = SERVICE_SLUGS[params.service];
+export default async function RushcliffeBookingPage({ params }: BookingPageProps) {
+  const resolvedParams = await params;
+  const serviceKey = SERVICE_SLUGS[resolvedParams.service];
 
   if (!serviceKey || !RUSHCLIFFE_SERVICES[serviceKey]) {
     notFound();
@@ -63,26 +65,6 @@ export default function RushcliffeBookingPage({ params }: BookingPageProps) {
           <LocalServicePayment
             service={serviceKey}
             area="rushcliffe"
-            onSuccess={(paymentIntent) => {
-              // Track successful payment
-              console.log('Payment successful:', paymentIntent.id);
-
-              // You could add analytics tracking here
-              if (typeof window !== 'undefined' && (window as any).gtag) {
-                (window as any).gtag('event', 'purchase', {
-                  transaction_id: paymentIntent.id,
-                  value: paymentIntent.amount / 100,
-                  currency: 'GBP',
-                  items: [{
-                    item_id: serviceKey,
-                    item_name: service.name,
-                    category: 'Digital Marketing Service',
-                    quantity: 1,
-                    price: paymentIntent.amount / 100,
-                  }]
-                });
-              }
-            }}
           />
         </div>
       </main>
