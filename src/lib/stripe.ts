@@ -2,13 +2,21 @@ import { loadStripe, type Stripe } from '@stripe/stripe-js';
 
 // Make sure to call loadStripe outside of a component's render to avoid
 // recreating the Stripe object on every render.
-let stripePromise: Promise<Stripe | null>;
+let stripePromise: Promise<Stripe | null> | null = null;
 
 export const getStripe = () => {
+  // Only initialize on client side
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
   if (!stripePromise) {
-    stripePromise = loadStripe(
-      process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
-    );
+    const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+    if (!publishableKey) {
+      console.warn('Stripe publishable key not found');
+      return null;
+    }
+    stripePromise = loadStripe(publishableKey);
   }
   return stripePromise;
 };
@@ -38,7 +46,9 @@ export const createPaymentFlow = async (
     timestamp: Date.now(),
   };
 
-  localStorage.setItem('pending_booking', JSON.stringify(bookingData));
+  if (typeof window !== 'undefined' && window.localStorage) {
+    localStorage.setItem('pending_booking', JSON.stringify(bookingData));
+  }
 
   return {
     success: true,
@@ -61,21 +71,31 @@ export const getPaymentLinkForService = (area: LocalArea, service: ServiceKey): 
 
 // Validate environment configuration
 export const validateStripeConfig = (): { valid: boolean; message: string } => {
-  if (!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) {
+  // Only validate on client side
+  if (typeof window === 'undefined') {
+    return {
+      valid: true,
+      message: 'Server side - validation skipped.',
+    };
+  }
+
+  const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+
+  if (!publishableKey) {
     return {
       valid: false,
       message: 'Stripe publishable key is not configured. Please add NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY to your environment variables.',
     };
   }
 
-  if (process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY.startsWith('pk_test_')) {
+  if (publishableKey.startsWith('pk_test_')) {
     return {
       valid: true,
       message: 'Stripe is configured in test mode.',
     };
   }
 
-  if (process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY.startsWith('pk_live_')) {
+  if (publishableKey.startsWith('pk_live_')) {
     return {
       valid: true,
       message: 'Stripe is configured in live mode.',
@@ -93,9 +113,10 @@ export const BINGHAM_SERVICES = {
   website_design: {
     name: 'Professional Website Design - Bingham',
     priceId: 'price_bingham_website', // Will be set in Stripe dashboard
-    price: 1500, // Starting price in pence (£15.00)
-    maxPrice: 3750,
-    description: 'Modern, mobile-friendly website for your Bingham business',
+    price: 15000, // Deposit in pence (£150.00)
+    maxPrice: 375000, // Full price range up to £3,750
+    description: 'Secure your website design project with a refundable deposit',
+    isDeposit: true,
     features: [
       'Custom responsive design',
       'Local SEO optimization',
@@ -108,9 +129,10 @@ export const BINGHAM_SERVICES = {
   ai_chatbot: {
     name: 'AI Chatbot Development - Bingham',
     priceId: 'price_bingham_chatbot',
-    price: 1125,
-    maxPrice: 2250,
-    description: '24/7 customer service chatbot for your Bingham business',
+    price: 11250, // Deposit in pence (£112.50)
+    maxPrice: 225000, // Full price range up to £2,250
+    description: 'Reserve your AI chatbot development with a refundable deposit',
+    isDeposit: true,
     features: [
       'Custom conversation flows',
       'WhatsApp & website integration',
@@ -123,10 +145,11 @@ export const BINGHAM_SERVICES = {
   local_marketing: {
     name: 'Local Marketing Support - Bingham',
     priceId: 'price_bingham_marketing',
-    price: 600,
-    maxPrice: 1500,
-    description: 'Monthly marketing support for Bingham area businesses',
+    price: 6000, // Deposit in pence (£60.00)
+    maxPrice: 150000, // Full monthly price up to £1,500
+    description: 'Secure your monthly marketing support with a refundable deposit',
     recurring: true,
+    isDeposit: true,
     features: [
       'Local SEO & Google My Business',
       'Social media management',
@@ -139,9 +162,10 @@ export const BINGHAM_SERVICES = {
   automation: {
     name: 'Business Automation Solutions - Bingham',
     priceId: 'price_bingham_automation',
-    price: 750,
-    maxPrice: 3000,
-    description: 'Automated workflows and processes for your Bingham business',
+    price: 7500, // Deposit in pence (£75.00)
+    maxPrice: 300000, // Full price range up to £3,000
+    description: 'Reserve your automation project with a refundable deposit',
+    isDeposit: true,
     features: [
       'Automated appointment reminders',
       'Customer follow-up sequences',
@@ -157,9 +181,10 @@ export const RUSHCLIFFE_SERVICES = {
   website_design: {
     name: 'Professional Website Design - Rushcliffe',
     priceId: 'price_rushcliffe_website',
-    price: 1500,
-    maxPrice: 3750,
-    description: 'Modern, mobile-friendly website for your Rushcliffe business',
+    price: 15000, // Deposit in pence (£150.00)
+    maxPrice: 375000, // Full price range up to £3,750
+    description: 'Secure your website design project with a refundable deposit',
+    isDeposit: true,
     features: [
       'Custom responsive design',
       'Local SEO optimization',
@@ -172,9 +197,10 @@ export const RUSHCLIFFE_SERVICES = {
   ai_chatbot: {
     name: 'AI Chatbot Development - Rushcliffe',
     priceId: 'price_rushcliffe_chatbot',
-    price: 1125,
-    maxPrice: 2250,
-    description: '24/7 customer service chatbot for your Rushcliffe business',
+    price: 11250, // Deposit in pence (£112.50)
+    maxPrice: 225000, // Full price range up to £2,250
+    description: 'Reserve your AI chatbot development with a refundable deposit',
+    isDeposit: true,
     features: [
       'Custom conversation flows',
       'WhatsApp & website integration',
@@ -187,10 +213,11 @@ export const RUSHCLIFFE_SERVICES = {
   local_marketing: {
     name: 'Local Marketing Support - Rushcliffe',
     priceId: 'price_rushcliffe_marketing',
-    price: 600,
-    maxPrice: 1500,
-    description: 'Monthly marketing support for Rushcliffe area businesses',
+    price: 6000, // Deposit in pence (£60.00)
+    maxPrice: 150000, // Full monthly price up to £1,500
+    description: 'Secure your monthly marketing support with a refundable deposit',
     recurring: true,
+    isDeposit: true,
     features: [
       'Local SEO & Google My Business',
       'Social media management',
@@ -203,9 +230,10 @@ export const RUSHCLIFFE_SERVICES = {
   automation: {
     name: 'Business Automation Solutions - Rushcliffe',
     priceId: 'price_rushcliffe_automation',
-    price: 750,
-    maxPrice: 3000,
-    description: 'Automated workflows and processes for your Rushcliffe business',
+    price: 7500, // Deposit in pence (£75.00)
+    maxPrice: 300000, // Full price range up to £3,000
+    description: 'Reserve your automation project with a refundable deposit',
+    isDeposit: true,
     features: [
       'Automated appointment reminders',
       'Customer follow-up sequences',
