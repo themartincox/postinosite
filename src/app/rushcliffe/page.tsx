@@ -292,7 +292,7 @@ export default function RushcliffePage() {
                     {service.description}
                   </CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="space-y-6">
                   <ul className="space-y-3">
                     {service.features.map((feature, featureIndex) => (
                       <li key={featureIndex} className="flex items-center font-body text-gray-600">
@@ -301,6 +301,28 @@ export default function RushcliffePage() {
                       </li>
                     ))}
                   </ul>
+
+                  <div className="pt-4 border-t border-gray-100">
+                    <Link
+                      href={`/rushcliffe/book/${
+                        service.name.toLowerCase()
+                          .replace(/professional\s+/, '')
+                          .replace(/\s+design/, '-design')
+                          .replace(/ai\s+chatbot\s+development/, 'ai-chatbot')
+                          .replace(/local\s+marketing\s+support/, 'local-marketing')
+                          .replace(/business\s+automation\s+solutions/, 'automation')
+                      }`}
+                      className="block"
+                    >
+                      <Button className="w-full bg-coral-red hover:bg-coral-red/90 text-white font-semibold py-3">
+                        <ArrowRight className="h-4 w-4 mr-2" />
+                        Book Now - Secure Online Payment
+                      </Button>
+                    </Link>
+                    <p className="text-xs text-gray-500 text-center mt-2">
+                      💳 Secure payment • 24hr response • No hidden fees
+                    </p>
+                  </div>
                 </CardContent>
               </Card>
             ))}
