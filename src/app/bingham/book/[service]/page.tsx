@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Navigation from '@/components/Navigation';
 import LocalServicePayment from '@/components/LocalServicePayment';
-import { BINGHAM_SERVICES, type ServiceKey } from '@/lib/stripe';
+import { BINGHAM_SERVICES, type ServiceKey } from '@/lib/stripe-config';
 
 interface BookingPageProps {
   params: Promise<{
