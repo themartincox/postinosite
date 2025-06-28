@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { CheckCircle, CreditCard, Phone, Mail, Building, Loader2 } from 'lucide-react';
-import { getServiceConfig, formatPrice, getStripe, getPaymentLinkForService, validateStripeConfig, createPaymentFlow, type LocalArea, type ServiceKey } from '@/lib/stripe';
+import { getServiceConfig, formatPrice, getStripe, getPaymentLinkForService, validateStripeConfig, createPaymentFlow, type LocalArea, type ServiceKey } from '@/lib/stripe-config';
 
 interface CustomerInfo {
   name: string;
