@@ -1,0 +1,271 @@
+/* Fonts now optimized via Next.js - removed blocking @import */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Blog Content Styles */
+.content-styles {
+  @apply text-gray-800 leading-relaxed;
+}
+
+.content-styles h1,
+.content-styles h2,
+.content-styles h3,
+.content-styles h4,
+.content-styles h5,
+.content-styles h6 {
+  @apply font-heading font-bold text-midnight-blue mt-8 mb-4;
+}
+
+.content-styles h1 {
+  @apply text-3xl;
+}
+
+.content-styles h2 {
+  @apply text-2xl;
+}
+
+.content-styles h3 {
+  @apply text-xl;
+}
+
+.content-styles p {
+  @apply mb-6 leading-relaxed;
+}
+
+.content-styles ul,
+.content-styles ol {
+  @apply mb-6 ml-6;
+}
+
+.content-styles li {
+  @apply mb-2;
+}
+
+.content-styles ul li {
+  @apply list-disc;
+}
+
+.content-styles ol li {
+  @apply list-decimal;
+}
+
+.content-styles blockquote {
+  @apply border-l-4 border-coral-red bg-coral-red/5 pl-6 py-4 my-8 italic;
+}
+
+.content-styles blockquote p {
+  @apply mb-0 text-gray-700;
+}
+
+.content-styles strong {
+  @apply font-semibold text-midnight-blue;
+}
+
+.content-styles code {
+  @apply bg-gray-100 px-2 py-1 rounded text-sm font-mono;
+}
+
+.content-styles pre {
+  @apply bg-gray-900 text-gray-100 p-4 rounded-lg my-6 overflow-x-auto;
+}
+
+.content-styles pre code {
+  @apply bg-transparent px-0 py-0;
+}
+
+@layer base {
+  :root {
+    /* Postino Brand Colors */
+    --midnight-blue: 210 100% 12%;
+    --forest-green: 158 64% 26%;
+    --coral-red: 14 100% 64%;
+    --soft-gray: 210 20% 98%;
+    --charcoal: 210 24% 16%;
+    --warm-white: 0 0% 100%;
+
+    /* Design System Colors */
+    --background: 0 0% 100%;
+    --foreground: 210 24% 16%;
+    --card: 0 0% 100%;
+    --card-foreground: 210 24% 16%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 24% 16%;
+    --primary: 210 100% 12%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 210 20% 98%;
+    --secondary-foreground: 210 24% 16%;
+    --muted: 210 20% 98%;
+    --muted-foreground: 210 10% 46%;
+    --accent: 158 64% 26%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 14 100% 64%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 210 20% 90%;
+    --input: 210 20% 90%;
+    --ring: 210 100% 12%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 210 24% 16%;
+    --foreground: 0 0% 98%;
+    --card: 210 24% 16%;
+    --card-foreground: 0 0% 98%;
+    --popover: 210 24% 16%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 210 24% 16%;
+    --secondary: 210 20% 20%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 210 20% 20%;
+    --muted-foreground: 210 10% 64%;
+    --accent: 158 64% 35%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 14 100% 64%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 210 20% 25%;
+    --input: 210 20% 25%;
+    --ring: 210 100% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-serif;
+    font-family: 'Crimson Text', serif;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', sans-serif;
+    @apply font-semibold;
+  }
+}
+
+@layer components {
+  /* Brand Color Utilities */
+  .text-midnight-blue {
+    color: hsl(var(--midnight-blue));
+  }
+  .text-forest-green {
+    color: hsl(var(--forest-green));
+  }
+  .text-coral-red {
+    color: hsl(var(--coral-red));
+  }
+  .bg-midnight-blue {
+    background-color: hsl(var(--midnight-blue));
+  }
+  .bg-forest-green {
+    background-color: hsl(var(--forest-green));
+  }
+  .bg-coral-red {
+    background-color: hsl(var(--coral-red));
+  }
+  .bg-soft-gray {
+    background-color: hsl(var(--soft-gray));
+  }
+  .bg-charcoal {
+    background-color: hsl(var(--charcoal));
+  }
+  .border-coral-red {
+    border-color: hsl(var(--coral-red));
+  }
+  .border-forest-green {
+    border-color: hsl(var(--forest-green));
+  }
+  .border-midnight-blue {
+    border-color: hsl(var(--midnight-blue));
+  }
+
+  /* Typography */
+  .font-heading {
+    font-family: 'Inter', sans-serif;
+  }
+  .font-body {
+    font-family: 'Crimson Text', serif;
+  }
+
+  /* Custom Components */
+  .gradient-midnight-forest {
+    background: linear-gradient(135deg, hsl(var(--midnight-blue)), hsl(var(--forest-green)));
+  }
+
+  .hero-gradient {
+    background: linear-gradient(135deg, hsl(var(--midnight-blue)) 0%, hsl(var(--forest-green)) 100%);
+  }
+
+  /* Enhanced animations */
+  .animate-pulse-slow {
+    animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes pulse-slow {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  /* AI Automation Hub animations */
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.8s ease-out;
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.8s ease-out;
+  }
+
+  .delay-200 {
+    animation-delay: 0.2s;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Enhanced backdrop blur support */
+  .backdrop-blur-sm {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+}
