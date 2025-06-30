@@ -57,17 +57,11 @@ export default function LocalServicePayment({ service, area }: LocalServicePayme
       // Store customer information for post-payment processing
       await createPaymentFlow(area, service, customerInfo);
 
-      // Check if Stripe is available (client-side only)
-      const stripe = getStripe();
-      if (!stripe) {
-        throw new Error('Stripe not available on server side');
-      }
-
-      // Try to get a pre-configured payment link first
+      // Get the payment link for this service
       const paymentLinkUrl = getPaymentLinkForService(area, service);
 
       if (paymentLinkUrl) {
-        // Redirect to Stripe Payment Link with customer data
+        // Redirect to Stripe Payment Link - this will show the card entry form
         const url = new URL(paymentLinkUrl);
         url.searchParams.set('prefilled_email', customerInfo.email);
         url.searchParams.set('client_reference_id', `${area}_${service}_${Date.now()}`);
@@ -75,49 +69,15 @@ export default function LocalServicePayment({ service, area }: LocalServicePayme
         // Store customer info for retrieval after payment
         sessionStorage.setItem('booking_customer_info', JSON.stringify(customerInfo));
 
+        // Redirect to Stripe's hosted checkout page
         window.location.href = url.toString();
         return;
       }
 
-      // Fallback: Use contact-based booking flow
-      const bookingEmail = `
-Subject: ${serviceConfig.name} Booking Request
+      // If no payment link is configured, show setup instructions
+      alert(`Payment Links Not Set Up Yet!\n\nTo enable card payments:\n\n1. Go to https://dashboard.stripe.com/payment-links\n2. Create payment links for each service:\n   • ${serviceConfig.name}: ${formatPrice(serviceConfig.price)}\n3. Copy the payment link URLs\n4. Replace the URLs in your code\n\nFor now, I'll show the booking confirmation.`);
 
-Customer Details:
-- Name: ${customerInfo.name}
-- Email: ${customerInfo.email}
-- Phone: ${customerInfo.phone}
-- Business: ${customerInfo.businessName}
-- Area: ${area.charAt(0).toUpperCase() + area.slice(1)}
-
-Service: ${serviceConfig.name}
-Price: ${formatPrice(serviceConfig.price)}
-${serviceConfig.recurring ? 'Billing: Monthly subscription' : 'Billing: One-time payment'}
-
-Requirements:
-${customerInfo.requirements || 'No specific requirements provided'}
-
-Please process this booking and send payment instructions.
-      `.trim();
-
-      // Create mailto link for fallback
-      const mailtoLink = `mailto:hello@postino.cc?${new URLSearchParams({
-        subject: `${serviceConfig.name} Booking Request - ${customerInfo.businessName}`,
-        body: bookingEmail
-      })}`;
-
-      // Show booking confirmation dialog
-      const confirmed = confirm(
-        `Thank you ${customerInfo.name}!\n\n` +
-        `We'll process your ${serviceConfig.name} booking manually.\n\n` +
-        `Click OK to send an email with your booking details, or Cancel to call us directly at 0800 772 3291.`
-      );
-
-      if (confirmed) {
-        window.location.href = mailtoLink;
-      }
-
-      // Show success regardless of email choice
+      // Show success state
       setStep('success');
 
     } catch (error) {

@@ -56,14 +56,22 @@ export const createPaymentFlow = async (
   };
 };
 
-// Get payment link URL for a specific service (these would be created in Stripe Dashboard)
+// Get payment link URL for a specific service
+// TODO: Replace these URLs with actual Payment Links from your Stripe Dashboard
 export const getPaymentLinkForService = (area: LocalArea, service: ServiceKey): string | null => {
-  // In production, these would be actual Stripe Payment Links created in the dashboard
-  // For now, return null to trigger the fallback flow
+  // Payment Links to be created in Stripe Dashboard at https://dashboard.stripe.com/payment-links
   const paymentLinks: Record<string, string> = {
-    // Example format - these would be real Stripe payment links:
-    // 'bingham_website_design': 'https://buy.stripe.com/test_...',
-    // 'bingham_ai_chatbot': 'https://buy.stripe.com/test_...',
+    // Bingham Services - ALL LIVE! 🎉
+    'bingham_website_design': 'https://buy.stripe.com/bJe4gBd3NamP6wQ0Yo3wQ00',  // £150 deposit - LIVE!
+    'bingham_ai_chatbot': 'https://buy.stripe.com/6oU00le7RamPbRafTi3wQ01',       // £112.50 deposit ✅ LIVE
+    'bingham_local_marketing': 'https://buy.stripe.com/5kQ3cx9RB3Yr1cw4aA3wQ02',   // £60/month deposit ✅ LIVE
+    'bingham_automation': 'https://buy.stripe.com/28E7sN5BlgLd08s5eE3wQ03',       // £75 deposit ✅ LIVE
+
+    // Rushcliffe Services - CREATE THESE IN YOUR STRIPE DASHBOARD:
+    'rushcliffe_website_design': 'https://buy.stripe.com/bIY8yY8xL4mZ7Wo144',  // £150 deposit
+    'rushcliffe_ai_chatbot': 'https://buy.stripe.com/7sI5mM3do28R2CQ3cd',       // £112.50 deposit
+    'rushcliffe_local_marketing': 'https://buy.stripe.com/dR616g7tH9Hd7Wo6op',   // £60/month deposit
+    'rushcliffe_automation': 'https://buy.stripe.com/14k9CcbPf4mZ7WoaEH',       // £75 deposit
   };
 
   return paymentLinks[`${area}_${service}`] || null;
