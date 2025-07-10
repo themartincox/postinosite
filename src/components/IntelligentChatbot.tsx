@@ -730,16 +730,99 @@ export default function IntelligentChatbot() {
     initializeChatbot();
   }, [pathname]);
 
-  // Show booking prompt after 10 seconds on page
+  // Enhanced engagement tracking for Layer 4 popup timing
+  const [engagementScore, setEngagementScore] = useState(0);
+  const [pageStartTime] = useState(Date.now());
+  const [interactions, setInteractions] = useState(0);
+  const [maxScrollDepth, setMaxScrollDepth] = useState(0);
+  const [sectionsViewed, setSectionsViewed] = useState<string[]>([]);
+
+  // Engagement-based booking prompt (Layer 4 trigger)
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (!hasStarted && !isOpen) {
+    let engagementTimer: NodeJS.Timeout;
+    let scrollListener: () => void;
+    let clickListener: () => void;
+
+    const trackEngagement = () => {
+      // Time on page (points for sustained attention)
+      const timeSpent = Date.now() - pageStartTime;
+      const timePoints = Math.min(Math.floor(timeSpent / 15000), 4); // Max 4 points for 60+ seconds
+
+      // Scroll depth tracking
+      const scrollTop = window.pageYOffset;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = Math.round((scrollTop / docHeight) * 100);
+
+      if (scrollPercent > maxScrollDepth) {
+        setMaxScrollDepth(scrollPercent);
+      }
+      const scrollPoints = Math.min(Math.floor(scrollPercent / 25), 4); // Max 4 points for 100% scroll
+
+      // Section viewing detection
+      const sections = ['hero', 'services', 'why-choose', 'case-studies', 'pricing'];
+      const currentSections: string[] = [];
+
+      sections.forEach(section => {
+        const element = document.querySelector(`[data-section="${section}"], .${section}, #${section}`);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top < window.innerHeight && rect.bottom > 0) {
+            currentSections.push(section);
+          }
+        }
+      });
+
+      setSectionsViewed(prev => [...new Set([...prev, ...currentSections])]);
+      const sectionPoints = Math.min(sectionsViewed.length, 3); // Max 3 points for viewing multiple sections
+
+      // Interaction points (clicks, form engagement)
+      const interactionPoints = Math.min(interactions, 3); // Max 3 points
+
+      // Calculate total engagement score
+      const totalScore = timePoints + scrollPoints + sectionPoints + interactionPoints;
+      setEngagementScore(totalScore);
+
+      // Layer 4 engagement threshold: 8+ points indicates genuine consideration
+      if (totalScore >= 8 && !hasStarted && !isOpen && !showBookingPrompt) {
         setShowBookingPrompt(true);
       }
-    }, 10000);
+    };
 
-    return () => clearTimeout(timer);
-  }, [hasStarted, isOpen, pathname]);
+    // Scroll tracking
+    scrollListener = () => {
+      trackEngagement();
+    };
+
+    // Click/interaction tracking
+    clickListener = (e: Event) => {
+      const target = e.target as HTMLElement;
+      // Only count meaningful interactions (not just random clicks)
+      if (target.tagName === 'BUTTON' ||
+          target.tagName === 'A' ||
+          target.closest('nav') ||
+          target.closest('.cta') ||
+          target.closest('[role="button"]')) {
+        setInteractions(prev => prev + 1);
+        trackEngagement();
+      }
+    };
+
+    // Set up event listeners
+    window.addEventListener('scroll', scrollListener, { passive: true });
+    document.addEventListener('click', clickListener);
+
+    // Regular engagement check every 10 seconds
+    engagementTimer = setInterval(trackEngagement, 10000);
+
+    // Initial tracking
+    trackEngagement();
+
+    return () => {
+      window.removeEventListener('scroll', scrollListener);
+      document.removeEventListener('click', clickListener);
+      clearInterval(engagementTimer);
+    };
+  }, [hasStarted, isOpen, showBookingPrompt, pageStartTime, interactions, maxScrollDepth, sectionsViewed]);
 
   // Load calendar availability when calendar is shown
   useEffect(() => {
