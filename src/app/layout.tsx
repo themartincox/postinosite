@@ -5,14 +5,14 @@ import Script from "next/script";
 import { getOrganizationStructuredData, getWebsiteStructuredData } from '@/lib/structured-data';
 import dynamic from 'next/dynamic';
 
-// Dynamically import chatbot and PWA wrapper
-const IntelligentChatbot = dynamic(() => import('@/components/IntelligentChatbot'), {
-  loading: () => null,
-});
+// Dynamically import chatbot and PWA wrapper - TEMPORARILY DISABLED
+// const IntelligentChatbot = dynamic(() => import('@/components/IntelligentChatbot'), {
+//   loading: () => null,
+// });
 
-const PWAWrapper = dynamic(() => import('@/components/PWAWrapper'), {
-  loading: () => null,
-});
+// const PWAWrapper = dynamic(() => import('@/components/PWAWrapper'), {
+//   loading: () => null,
+// });
 
 
 
@@ -333,8 +333,8 @@ export default function RootLayout({
           />
         </noscript>
 
-        {/* Intelligent Chatbot - Available on all pages */}
-        <IntelligentChatbot />
+        {/* Intelligent Chatbot - Temporarily disabled to fix redirect issues */}
+        {/* <IntelligentChatbot /> */}
 
         {/* PWA Components - Temporarily disabled to fix redirects */}
         {/* <PWAWrapper /> */}
