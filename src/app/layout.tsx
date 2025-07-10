@@ -14,9 +14,7 @@ const PWAWrapper = dynamic(() => import('@/components/PWAWrapper'), {
   loading: () => null,
 });
 
-const CalendarTest = dynamic(() => import('@/components/CalendarTest'), {
-  loading: () => null,
-});
+
 
 // More aggressive font optimization
 const inter = Inter({
@@ -337,9 +335,6 @@ export default function RootLayout({
 
         {/* Intelligent Chatbot - Available on all pages */}
         <IntelligentChatbot />
-
-        {/* Calendar Test Component - For development/testing only */}
-        {process.env.NODE_ENV === 'development' && <CalendarTest />}
 
         {/* PWA Components */}
         <PWAWrapper />

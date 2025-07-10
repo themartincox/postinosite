@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 import { googleCalendarService, createPostinoEvent, formatTimeSlot } from '@/lib/google-calendar';
 
 export const dynamic = 'force-dynamic';
