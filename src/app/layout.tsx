@@ -336,8 +336,8 @@ export default function RootLayout({
         {/* Intelligent Chatbot - Available on all pages */}
         <IntelligentChatbot />
 
-        {/* PWA Components */}
-        <PWAWrapper />
+        {/* PWA Components - Temporarily disabled to fix redirects */}
+        {/* <PWAWrapper /> */}
       </body>
     </html>
   );
