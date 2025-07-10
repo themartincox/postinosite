@@ -27,10 +27,13 @@ Allow: /website-audit
 Allow: /growth-consultation
 Allow: /ai-automation-demo
 
-# Allow local landing pages
+# Allow enhanced local landing pages with FAQ sections
 Allow: /bingham
+Allow: /bingham/
 Allow: /rushcliffe
+Allow: /rushcliffe/
 Allow: /nottingham-marketing-agency
+Allow: /nottingham-marketing-agency/
 
 # Block admin and private areas
 Disallow: /admin/
@@ -143,7 +146,7 @@ Disallow: /_next/
 Disallow: /api/
 Disallow: /contact/
 
-# AI/LLM Crawlers
+# AI/LLM Crawlers - Enhanced for FAQ and local content
 User-agent: OpenAI-SearchBot
 Allow: /
 Allow: /blog/
@@ -154,6 +157,9 @@ Allow: /ai-automation/
 Allow: /industries/
 Allow: /industries/*
 Allow: /case-studies/
+Allow: /bingham/
+Allow: /rushcliffe/
+Allow: /nottingham-marketing-agency/
 
 Disallow: /admin/
 Disallow: /_next/
@@ -171,6 +177,9 @@ Allow: /growth-marketing/
 Allow: /ai-automation/
 Allow: /industries/
 Allow: /case-studies/
+Allow: /bingham/
+Allow: /rushcliffe/
+Allow: /nottingham-marketing-agency/
 
 Disallow: /admin/
 Disallow: /_next/
@@ -188,6 +197,9 @@ Allow: /growth-marketing/
 Allow: /ai-automation/
 Allow: /industries/
 Allow: /case-studies/
+Allow: /bingham/
+Allow: /rushcliffe/
+Allow: /nottingham-marketing-agency/
 
 Disallow: /admin/
 Disallow: /_next/
