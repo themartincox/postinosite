@@ -2,7 +2,7 @@ const withPWA = require('next-pwa')({
   dest: 'public',
   register: true,
   skipWaiting: true,
-  disable: process.env.NODE_ENV === 'development',
+  disable: true, // Temporarily disable PWA to fix redirects
   runtimeCaching: [
     {
       urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
@@ -75,7 +75,7 @@ const nextConfig = {
     unoptimized: true
   },
   // distDir: 'out',
-  trailingSlash: true,
+  // trailingSlash: true, // Disabled to fix redirect loops
   // Force fresh build to clear Netlify cache
   generateBuildId: () => 'build-' + Date.now(),
 }
