@@ -5,9 +5,9 @@ import Script from "next/script";
 import { getOrganizationStructuredData, getWebsiteStructuredData } from '@/lib/structured-data';
 import dynamic from 'next/dynamic';
 
-// Dynamically import chatbot to avoid SSR issues
+// Dynamically import chatbot
 const IntelligentChatbot = dynamic(() => import('@/components/IntelligentChatbot'), {
-  ssr: false,
+  loading: () => null,
 });
 
 // More aggressive font optimization
