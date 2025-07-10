@@ -9,12 +9,15 @@ const Button = ({ children, onClick, className = '', disabled = false, variant =
   const variants = {
     default: "bg-primary text-primary-foreground hover:bg-primary/90",
     ghost: "hover:bg-accent hover:text-accent-foreground",
-    outline: "border border-input hover:bg-accent hover:text-accent-foreground"
+    outline: "border border-input hover:bg-accent hover:text-accent-foreground",
+    calendar: "bg-emerald-600 text-white hover:bg-emerald-700",
+    urgent: "bg-red-600 text-white hover:bg-red-700"
   };
   const sizes = {
     default: "h-10 py-2 px-4",
     sm: "h-9 px-3 text-sm",
-    lg: "h-11 px-8"
+    lg: "h-11 px-8",
+    xs: "h-8 px-2 text-xs"
   };
 
   return (
@@ -46,9 +49,9 @@ const CardContent = ({ children, className = '' }: any) => (
   </div>
 );
 
-const Input = ({ value, onChange, onKeyPress, placeholder, className = '', disabled = false }: any) => (
+const Input = ({ value, onChange, onKeyPress, placeholder, className = '', disabled = false, type = 'text' }: any) => (
   <input
-    type="text"
+    type={type}
     value={value}
     onChange={onChange}
     onKeyPress={onKeyPress}
@@ -58,10 +61,22 @@ const Input = ({ value, onChange, onKeyPress, placeholder, className = '', disab
   />
 );
 
-// Simple icons as inline SVGs
+// Enhanced icons
 const MessageCircleIcon = ({ className = '' }: any) => (
   <svg className={`h-6 w-6 ${className}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+  </svg>
+);
+
+const CalendarIcon = ({ className = '' }: any) => (
+  <svg className={`h-4 w-4 ${className}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+  </svg>
+);
+
+const ClockIcon = ({ className = '' }: any) => (
+  <svg className={`h-4 w-4 ${className}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
   </svg>
 );
 
@@ -101,615 +116,1072 @@ const MailIcon = ({ className = '' }: any) => (
   </svg>
 );
 
-const SparklesIcon = ({ className = '' }: any) => (
-  <svg className={`h-4 w-4 ${className}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3l2 7h7l2-7M5 3l-2 7h7l2-7M5 3v18l7-7 7 7V3" />
-  </svg>
-);
-
-interface ChatMessage {
-  id: string;
-  type: 'user' | 'bot';
+// Enhanced Types
+interface Message {
+  role: 'user' | 'bot';
   content: string;
   timestamp: Date;
-  options?: Array<{
-    id: string;
-    text: string;
-    value: string;
-    action?: string;
-  }>;
+  sentiment?: 'positive' | 'neutral' | 'negative';
+  urgency?: 'low' | 'medium' | 'high';
+  interests?: string[];
 }
 
-interface ChatbotProps {
-  className?: string;
+interface WeatherData {
+  temperature: number;
+  description: string;
+  location: string;
 }
 
-export default function IntelligentChatbot({ className = '' }: ChatbotProps) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [inputValue, setInputValue] = useState('');
-  const [isTyping, setIsTyping] = useState(false);
-  const [leadScore, setLeadScore] = useState(0);
-  const [awaitingContactDetails, setAwaitingContactDetails] = useState(false);
-  const [contactType, setContactType] = useState<'call' | 'email' | null>(null);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+interface BookingData {
+  name: string;
+  contact: string;
+  timeSlot1: string;
+  timeSlot2: string;
+  platform: string;
+  appointmentTime?: string;
+  confirmed?: boolean;
+}
+
+interface UserPersonality {
+  style: 'formal' | 'casual' | 'technical' | 'friendly';
+  responseLength: 'short' | 'medium' | 'long';
+  interests: string[];
+  urgencyLevel: 'low' | 'medium' | 'high';
+  preferredCommunication: 'direct' | 'consultative' | 'supportive';
+}
+
+interface ConversationContext {
+  mentionedServices: string[];
+  painPoints: string[];
+  budget: string | null;
+  timeline: string | null;
+  previousExperience: string | null;
+  businessType: string | null;
+  companySize: string | null;
+}
+
+interface CalendarSlot {
+  time: string;
+  available: boolean;
+  date: string;
+  duration: number;
+  start?: string;
+  end?: string;
+}
+
+// Enhanced Intelligent Chatbot
+export default function IntelligentChatbot() {
   const pathname = usePathname();
+  const [isOpen, setIsOpen] = useState(false);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [input, setInput] = useState('');
+  const [currentLayer, setCurrentLayer] = useState(1);
+  const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasStarted, setHasStarted] = useState(false);
+  const [bookingData, setBookingData] = useState<Partial<BookingData>>({});
+  const [bookingStep, setBookingStep] = useState(0);
+  const [showBookingPrompt, setShowBookingPrompt] = useState(false);
+  const [showCalendar, setShowCalendar] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Initialize conversation when chatbot opens
-  useEffect(() => {
-    if (isOpen && messages.length === 0) {
-      initializeConversation();
-    }
-  }, [isOpen]);
+  // Enhanced conversation intelligence
+  const [userPersonality, setUserPersonality] = useState<UserPersonality>({
+    style: 'casual',
+    responseLength: 'medium',
+    interests: [],
+    urgencyLevel: 'low',
+    preferredCommunication: 'consultative'
+  });
 
-  // Auto-scroll to bottom when new messages arrive
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+  const [conversationContext, setConversationContext] = useState<ConversationContext>({
+    mentionedServices: [],
+    painPoints: [],
+    budget: null,
+    timeline: null,
+    previousExperience: null,
+    businessType: null,
+    companySize: null
+  });
 
-  const initializeConversation = () => {
-    const greeting = generateContextualGreeting(pathname);
-    setMessages([greeting]);
+  // Real Google Calendar integration
+  const [availableSlots, setAvailableSlots] = useState<CalendarSlot[]>([]);
+  const [isCalendarAuthenticated, setIsCalendarAuthenticated] = useState(false);
+  const [calendarLoading, setCalendarLoading] = useState(false);
+
+  // Personality Detection System
+  const analyzePersonality = (userMessage: string) => {
+    const message = userMessage.toLowerCase();
+
+    // Formality detection
+    const formalKeywords = ['please', 'thank you', 'would like', 'appreciate', 'kindly', 'regards'];
+    const casualKeywords = ['yeah', 'ok', 'cool', 'awesome', 'sure thing', 'no worries'];
+    const technicalKeywords = ['integration', 'api', 'system', 'analytics', 'optimization', 'automation'];
+
+    const formalScore = formalKeywords.filter(word => message.includes(word)).length;
+    const casualScore = casualKeywords.filter(word => message.includes(word)).length;
+    const technicalScore = technicalKeywords.filter(word => message.includes(word)).length;
+
+    let style: 'formal' | 'casual' | 'technical' | 'friendly' = 'casual';
+    if (formalScore > casualScore && formalScore > 0) style = 'formal';
+    else if (technicalScore > 1) style = 'technical';
+    else if (casualScore > 0) style = 'friendly';
+
+    // Response length preference
+    const responseLength: 'short' | 'medium' | 'long' =
+      message.length < 20 ? 'short' :
+      message.length > 100 ? 'long' : 'medium';
+
+    // Urgency detection
+    const urgentKeywords = ['urgent', 'asap', 'quickly', 'immediately', 'soon', 'deadline'];
+    const urgencyLevel: 'low' | 'medium' | 'high' =
+      urgentKeywords.some(word => message.includes(word)) ? 'high' :
+      message.includes('need') || message.includes('want') ? 'medium' : 'low';
+
+    setUserPersonality(prev => ({
+      ...prev,
+      style,
+      responseLength,
+      urgencyLevel
+    }));
   };
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  // Sentiment Analysis
+  const analyzeSentiment = (userMessage: string): 'positive' | 'neutral' | 'negative' => {
+    const message = userMessage.toLowerCase();
+
+    const positiveWords = ['great', 'excellent', 'love', 'amazing', 'perfect', 'wonderful', 'fantastic', 'good', 'yes', 'definitely'];
+    const negativeWords = ['terrible', 'awful', 'hate', 'bad', 'horrible', 'disappointed', 'frustrated', 'no', 'never'];
+
+    const positiveScore = positiveWords.filter(word => message.includes(word)).length;
+    const negativeScore = negativeWords.filter(word => message.includes(word)).length;
+
+    if (positiveScore > negativeScore && positiveScore > 0) return 'positive';
+    if (negativeScore > positiveScore && negativeScore > 0) return 'negative';
+    return 'neutral';
   };
 
-  const generateId = () => Math.random().toString(36).substr(2, 9);
+  // Context Extraction
+  const extractContext = (userMessage: string) => {
+    const message = userMessage.toLowerCase();
 
-  const generateContextualGreeting = (path: string): ChatMessage => {
-    let content = "👋 Hi! I'm Postino's AI assistant. How can I help you today?";
-    let options = [
-      { id: '1', text: '🌐 Website Design', value: 'website-design' },
-      { id: '2', text: '🤖 AI Chatbots', value: 'ai-chatbot' },
-      { id: '3', text: '📈 Local Marketing', value: 'local-marketing' },
-      { id: '4', text: '⚡ Business Automation', value: 'automation' }
-    ];
+    // Service mentions
+    const services = ['website', 'seo', 'chatbot', 'automation', 'marketing', 'social media', 'email', 'analytics'];
+    const mentionedServices = services.filter(service => message.includes(service));
 
-    // Context-aware greetings
-    if (path.includes('/bingham')) {
-      content = "👋 Welcome! I see you're interested in our Bingham services. We're actually based right here in Bingham and offer special local rates! How can I help you grow your business?";
-      options = [
-        { id: '1', text: '💰 Get Local Pricing (25% off)', value: 'bingham-pricing' },
-        { id: '2', text: '📅 Book Free Consultation', value: 'consultation' },
-        { id: '3', text: '🎯 Learn About Services', value: 'services' },
-        { id: '4', text: '⚡ Quick Quote', value: 'quote' }
-      ];
-    } else if (path.includes('/rushcliffe')) {
-      content = "👋 Hello! I can see you're exploring our Rushcliffe services. We work with many businesses across West Bridgford and the borough. What's your main business challenge right now?";
-      options = [
-        { id: '1', text: '🌐 Need a Website', value: 'website' },
-        { id: '2', text: '📱 Want More Customers', value: 'customers' },
-        { id: '3', text: '🤖 Automate Processes', value: 'automation' },
-        { id: '4', text: '💬 Not Sure Yet', value: 'explore' }
-      ];
-    } else if (path.includes('/book/')) {
-      content = "🎉 Great choice! I can see you're ready to book a service. Let me help you complete your booking or answer any questions first.";
-      options = [
-        { id: '1', text: '✅ Continue Booking', value: 'continue-booking', action: 'redirect' },
-        { id: '2', text: '❓ I have questions', value: 'questions' },
-        { id: '3', text: '💰 Confirm pricing', value: 'pricing' },
-        { id: '4', text: '📞 Speak to someone first', value: 'call', action: 'book-call' }
-      ];
-    } else if (path.includes('/contact')) {
-      content = "👋 Perfect timing! I can help you get in touch or even get you started right away. What's the best way to help you?";
-      options = [
-        { id: '1', text: '⚡ Quick quote', value: 'quote' },
-        { id: '2', text: '📅 Book consultation', value: 'consultation', action: 'book-call' },
-        { id: '3', text: '💬 Chat now', value: 'chat' },
-        { id: '4', text: '📞 Prefer to call', value: 'call' }
-      ];
+    // Pain points
+    const painPoints = [];
+    if (message.includes('customers') || message.includes('clients')) painPoints.push('customer_acquisition');
+    if (message.includes('conversion') || message.includes('sales')) painPoints.push('conversion_optimization');
+    if (message.includes('time') || message.includes('manual')) painPoints.push('time_efficiency');
+    if (message.includes('competitive') || message.includes('ahead')) painPoints.push('competitive_advantage');
+
+    // Budget indicators
+    let budget = null;
+    if (message.includes('budget') || message.includes('cost') || message.includes('price')) {
+      if (message.includes('small') || message.includes('limited')) budget = 'small';
+      else if (message.includes('flexible') || message.includes('invest')) budget = 'flexible';
+      else budget = 'mentioned';
     }
 
-    return {
-      id: generateId(),
-      type: 'bot',
-      content,
-      timestamp: new Date(),
-      options
-    };
+    // Timeline
+    let timeline = null;
+    if (message.includes('urgent') || message.includes('asap')) timeline = 'immediate';
+    else if (message.includes('month') || message.includes('soon')) timeline = 'short_term';
+    else if (message.includes('year') || message.includes('long')) timeline = 'long_term';
+
+    setConversationContext(prev => ({
+      ...prev,
+      mentionedServices: [...new Set([...prev.mentionedServices, ...mentionedServices])],
+      painPoints: [...new Set([...prev.painPoints, ...painPoints])],
+      budget: budget || prev.budget,
+      timeline: timeline || prev.timeline
+    }));
   };
 
-  const handleOptionClick = async (option: any) => {
-    // Add user selection as a message
-    const userMessage: ChatMessage = {
-      id: generateId(),
-      type: 'user',
-      content: option.text,
-      timestamp: new Date()
-    };
-
-    setMessages(prev => [...prev, userMessage]);
-    setIsTyping(true);
-
-    // Handle special actions
-    if (option.action === 'book-call') {
-      handleBookCall();
-      setIsTyping(false);
-      return;
-    }
-
-    if (option.action === 'redirect') {
-      handleRedirect(option.value);
-      setIsTyping(false);
-      return;
-    }
-
-    // Simulate typing delay
-    await new Promise(resolve => setTimeout(resolve, 1500));
-
-    // Check if we're entering contact collection mode
-    if (option.value === 'provide-call-details') {
-      setAwaitingContactDetails(true);
-      setContactType('call');
-    } else if (option.value === 'provide-email-details') {
-      setAwaitingContactDetails(true);
-      setContactType('email');
-    }
-
-    // Generate bot response
-    const botResponse = generateBotResponse(option.value);
-    setMessages(prev => [...prev, botResponse]);
-    setLeadScore(prev => Math.min(prev + 10, 100));
-    setIsTyping(false);
+  // Industry detection
+  const getIndustryFromPath = () => {
+    if (pathname.includes('/industries/dental')) return 'dental';
+    if (pathname.includes('/industries/medical')) return 'medical';
+    if (pathname.includes('/industries/cosmetic')) return 'cosmetic';
+    if (pathname.includes('/industries/wellness') || pathname.includes('/wellness-beauty')) return 'wellness';
+    if (pathname.includes('/ecommerce')) return 'ecommerce';
+    return 'general';
   };
 
-  const generateBotResponse = (choice: string): ChatMessage => {
-    const responses: Record<string, { content: string; options: any[] }> = {
-      'website-design': {
-        content: "Excellent choice! Professional websites are crucial for local businesses. Our websites typically increase credibility by 75% and boost leads significantly. Tell me about your current situation:",
-        options: [
-          { id: '1', text: '🌐 Yes, I have a website', value: 'has-website' },
-          { id: '2', text: '🚀 Starting from scratch', value: 'no-website' },
-          { id: '3', text: '🔄 Need a complete rebuild', value: 'rebuild' },
-          { id: '4', text: '🤔 Not sure what I need', value: 'unsure-website' }
-        ]
-      },
-      'has-website': {
-        content: "Great! I'd love to understand what's working and what isn't. What do you LIKE about your current website?",
-        options: [
-          { id: '1', text: '🎨 I like the design/look', value: 'like-design' },
-          { id: '2', text: '📱 Works well on mobile', value: 'like-mobile' },
-          { id: '3', text: '⚡ Loads quickly', value: 'like-speed' },
-          { id: '4', text: '❌ Nothing really', value: 'like-nothing' }
-        ]
-      },
-      'like-design': {
-        content: "That's great! Good design is important. Now, what do you DISLIKE or want to improve about your current website?",
-        options: [
-          { id: '1', text: '😞 Looks outdated', value: 'dislike-design' },
-          { id: '2', text: '🐌 Too slow to load', value: 'dislike-speed' },
-          { id: '3', text: '👻 No one can find it (SEO)', value: 'dislike-seo' },
-          { id: '4', text: '💸 Doesn\'t generate leads', value: 'dislike-conversion' }
-        ]
-      },
-      'like-mobile': {
-        content: "Excellent! Mobile-friendly is crucial these days. What would you like to improve about your website?",
-        options: [
-          { id: '1', text: '🎨 Better design/appearance', value: 'improve-design' },
-          { id: '2', text: '🔍 Better search visibility', value: 'improve-seo' },
-          { id: '3', text: '📈 More leads/conversions', value: 'improve-conversion' },
-          { id: '4', text: '⚡ Faster loading speed', value: 'improve-speed' }
-        ]
-      },
-      'dislike-seo': {
-        content: "That's a common issue! SEO is crucial for getting found online. I can definitely help with that. Would you like me to connect you with our team for a free website audit and consultation?",
-        options: [
-          { id: '1', text: '📞 Yes, book me a call', value: 'book-call-seo' },
-          { id: '2', text: '📧 Email me details first', value: 'email-seo-info' },
-          { id: '3', text: '💰 Tell me about pricing', value: 'seo-pricing' },
-          { id: '4', text: '🤔 I have more questions', value: 'more-seo-questions' }
-        ]
-      },
-      'book-call-seo': {
-        content: "Perfect! I'll arrange that call. To ensure we connect at the best time, please provide: Your name, mobile number, and two preferred call times (e.g., 'Tuesday 2-4pm' and 'Friday mornings')",
-        options: [
-          { id: '1', text: '📝 I\'ll type my details now', value: 'provide-call-details' },
-          { id: '2', text: '📧 Email me a form instead', value: 'email-call-form' }
-        ]
-      },
-      'email-seo-info': {
-        content: "Great choice! I'll email you our SEO guide and website audit information. What's your name and email address?",
-        options: [
-          { id: '1', text: '📝 I\'ll provide my email details', value: 'provide-email-details' },
-          { id: '2', text: '📞 Actually, I prefer a call', value: 'prefer-call-instead' }
-        ]
-      },
-      'provide-call-details': {
-        content: "Perfect! Please type your details in your next message. I need:\n\n✅ Your name\n✅ Mobile number\n✅ Two preferred call times\n\nExample: 'John Smith, 07123456789, Tuesday 2-4pm, Friday mornings'",
-        options: []
-      },
-      'provide-email-details': {
-        content: "Great! Please type your details in your next message. I need:\n\n✅ Your name\n✅ Email address\n\nExample: 'John Smith, john@email.com'",
-        options: []
-      },
-      'pricing-info': {
-        content: "Our website design packages start from £150 deposit (total £1,500-£3,750 depending on requirements). This includes professional design, mobile optimization, basic SEO, and 1 year hosting. Would you like a personalized quote?",
-        options: [
-          { id: '1', text: '📞 Yes, call me with quote', value: 'book-call-pricing' },
-          { id: '2', text: '📧 Email me pricing details', value: 'email-pricing' },
-          { id: '3', text: '🎯 Tell me what\'s included', value: 'pricing-breakdown' }
-        ]
-      },
-      'other-services': {
-        content: "We offer comprehensive digital solutions: 🌐 Website Design, 🤖 AI Chatbots (like me!), 📈 Local SEO & Marketing, ⚡ Business Automation. What interests you most?",
-        options: [
-          { id: '1', text: '🤖 AI Chatbots', value: 'ai-chatbot' },
-          { id: '2', text: '📈 Local Marketing', value: 'local-marketing' },
-          { id: '3', text: '⚡ Business Automation', value: 'automation' },
-          { id: '4', text: '💰 See all pricing', value: 'all-pricing' }
-        ]
-      },
-      'satisfied': {
-        content: "You're very welcome! We're excited to help you grow your business. Feel free to continue browsing our website or start another chat if you have more questions. Have a great day! 🌟",
-        options: []
-      },
-      'ai-chatbot': {
-        content: "Smart thinking! AI chatbots can handle 80% of customer inquiries automatically, saving you hours daily while improving customer satisfaction. What appeals to you most?",
-        options: [
-          { id: '1', text: '⏰ Save time on inquiries', value: 'save-time' },
-          { id: '2', text: '🌙 24/7 customer service', value: '24-7-service' },
-          { id: '3', text: '📈 Capture more leads', value: 'capture-leads' },
-          { id: '4', text: '💰 See chatbot pricing', value: 'chatbot-pricing' }
-        ]
-      },
-      'bingham-pricing': {
-        content: "Fantastic! As a Bingham business, you get our 25% local discount. Here's what our local clients typically invest:",
-        options: [
-          { id: '1', text: '🌐 Website: £150-£3,750 (deposit £150)', value: 'website-pricing' },
-          { id: '2', text: '🤖 AI Chatbot: £112.50-£2,250 (deposit £112.50)', value: 'chatbot-pricing' },
-          { id: '3', text: '📈 Marketing: £60-£1,500/month (deposit £60)', value: 'marketing-pricing' },
-          { id: '4', text: '💬 What fits my budget?', value: 'budget-help' }
-        ]
-      },
-      'consultation': {
-        content: "Perfect! A free consultation is the best way to create a tailored strategy for your business. I'll connect you with our team right away.",
-        options: [
-          { id: '1', text: '📞 Book 15-min quick call', value: 'quick-call', action: 'book-call' },
-          { id: '2', text: '🎯 Book 45-min strategy session', value: 'strategy-session', action: 'book-call' },
-          { id: '3', text: '📧 Email me details first', value: 'email-details', action: 'collect-info' }
-        ]
-      }
+  // Get location from pathname
+  const getLocationFromPath = () => {
+    if (pathname.includes('/bingham')) return 'Bingham';
+    if (pathname.includes('/rushcliffe')) return 'Rushcliffe';
+    if (pathname.includes('/nottingham')) return 'Nottingham';
+    return 'Nottinghamshire';
+  };
+
+  // Weather API integration
+  const fetchWeatherData = async () => {
+    const apiKey = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
+    if (!apiKey) return null;
+
+    const location = getLocationFromPath();
+    const cityMap: Record<string, string> = {
+      'Bingham': 'Bingham,GB',
+      'Rushcliffe': 'West Bridgford,GB',
+      'Nottingham': 'Nottingham,GB',
+      'Nottinghamshire': 'Nottingham,GB'
     };
 
-    const response = responses[choice] || {
-      content: "That's a great choice! Let me connect you with our team who can provide specific guidance for your situation.",
-      options: [
-        { id: '1', text: '📞 Quick call (15 min)', value: 'quick-call', action: 'book-call' },
-        { id: '2', text: '📧 Email me info', value: 'email-info', action: 'collect-info' },
-        { id: '3', text: '💬 Continue chatting', value: 'continue-chat' }
-      ]
-    };
-
-    return {
-      id: generateId(),
-      type: 'bot',
-      content: response.content,
-      timestamp: new Date(),
-      options: response.options
-    };
-  };
-
-  const handleUserInput = async (message: string) => {
-    if (!message.trim()) return;
-
-    const userMessage: ChatMessage = {
-      id: generateId(),
-      type: 'user',
-      content: message.trim(),
-      timestamp: new Date()
-    };
-
-    setMessages(prev => [...prev, userMessage]);
-    setInputValue('');
-    setIsTyping(true);
-
-    // Handle contact details submission
-    if (awaitingContactDetails) {
-      await handleContactSubmission(message.trim());
-      setAwaitingContactDetails(false);
-      setContactType(null);
-      setIsTyping(false);
-      return;
-    }
-
-    // Simulate AI processing
-    await new Promise(resolve => setTimeout(resolve, 1500));
-
-    // Generate contextual response
-    const botResponse = generateContextualResponse(message.trim());
-    setMessages(prev => [...prev, botResponse]);
-    setLeadScore(prev => Math.min(prev + 5, 100));
-    setIsTyping(false);
-  };
-
-  const generateContextualResponse = (input: string): ChatMessage => {
-    const lowerInput = input.toLowerCase();
-
-    if (lowerInput.includes('price') || lowerInput.includes('cost') || lowerInput.includes('budget')) {
-      return {
-        id: generateId(),
-        type: 'bot',
-        content: "I'd love to give you accurate pricing! Our services start from £150 for website design deposits. Let me understand your needs better to provide exact costs.",
-        timestamp: new Date(),
-        options: [
-          { id: '1', text: '🌐 Website Design', value: 'website-pricing' },
-          { id: '2', text: '🤖 AI Chatbot', value: 'chatbot-pricing' },
-          { id: '3', text: '📈 Marketing', value: 'marketing-pricing' },
-          { id: '4', text: '📞 Discuss budget', value: 'budget-call', action: 'book-call' }
-        ]
-      };
-    }
-
-    return {
-      id: generateId(),
-      type: 'bot',
-      content: "That's a great question! I'd love to give you a detailed answer. Let me connect you with our team who can provide specific guidance for your situation.",
-      timestamp: new Date(),
-      options: [
-        { id: '1', text: '📞 Quick call (15 min)', value: 'quick-call', action: 'book-call' },
-        { id: '2', text: '📧 Email me info', value: 'email-info', action: 'collect-info' },
-        { id: '3', text: '💬 Continue chatting', value: 'continue-chat' }
-      ]
-    };
-  };
-
-  const handleRedirect = (path: string) => {
-    if (path === 'continue-booking') {
-      const bookingForm = document.querySelector('[data-booking-form]');
-      bookingForm?.scrollIntoView({ behavior: 'smooth' });
-      setIsOpen(false);
-    }
-  };
-
-  const handleBookCall = () => {
-    window.open('/contact?source=chatbot&action=book-call', '_blank');
-  };
-
-  const handleCollectInfo = () => {
-    window.open('/contact?source=chatbot&action=collect-info', '_blank');
-  };
-
-  const handleContactSubmission = async (details: string) => {
-    // Simulate processing delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    // Submit contact details (you can integrate with your form system here)
     try {
-      // For now, we'll create a confirmation message
-      // In production, you'd submit to your contact form endpoint
+      const response = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?q=${cityMap[location]}&appid=${apiKey}&units=metric`
+      );
 
-      const confirmationMessage: ChatMessage = {
-        id: generateId(),
-        type: 'bot',
-        content: contactType === 'call'
-          ? `Perfect! I've received your call details: "${details}". Our team will contact you within 24 hours at one of your preferred times. Thanks for choosing Postino!`
-          : `Excellent! I've received your details: "${details}". We'll email you our information pack within the next hour. Keep an eye on your inbox!`,
-        timestamp: new Date(),
-        options: [
-          { id: '1', text: '🎯 Tell me about pricing', value: 'pricing-info' },
-          { id: '2', text: '📚 What else can you do?', value: 'other-services' },
-          { id: '3', text: '✅ Perfect, thanks!', value: 'satisfied' }
-        ]
+      if (response.ok) {
+        const data = await response.json();
+        return {
+          temperature: Math.round(data.main.temp),
+          description: data.weather[0].description,
+          location: location
+        };
+      }
+    } catch (error) {
+      console.error('Weather fetch failed:', error);
+    }
+    return null;
+  };
+
+  // Enhanced British greetings with weather awareness
+  const getWeatherAwareGreeting = () => {
+    const location = getLocationFromPath();
+    const industry = getIndustryFromPath();
+
+    // Base regional greetings
+    let greeting = "Hello there!";
+    if (location === 'Nottingham') {
+      greeting = "Ey up me duck!";
+    } else if (location === 'Bingham' || location === 'Rushcliffe') {
+      greeting = "Good morning!";
+    }
+
+    // Weather-enhanced greetings
+    if (weatherData) {
+      const temp = weatherData.temperature;
+      const desc = weatherData.description.toLowerCase();
+
+      if (temp >= 25) {
+        greeting = `${greeting} Scorchio! It's absolutely roasting at ${temp}°C in ${location} today!`;
+      } else if (temp <= 5) {
+        greeting = `${greeting} Blimey, it's a bit nippy at ${temp}°C in ${location} today, isn't it?`;
+      } else if (desc.includes('rain')) {
+        greeting = `${greeting} Bit of a soggy day in ${location} with ${desc}, but perfect for a chat about growing your business!`;
+      } else if (desc.includes('sun')) {
+        greeting = `${greeting} Lovely ${temp}°C and ${desc} in ${location} today - brilliant weather for business growth!`;
+      } else {
+        greeting = `${greeting} ${temp}°C in ${location} today.`;
+      }
+    }
+
+    return greeting;
+  };
+
+  // Adaptive response generation based on personality
+  const adaptResponseToPersonality = (baseResponse: string): string => {
+    const { style, responseLength, urgencyLevel } = userPersonality;
+
+    if (style === 'formal') {
+      return baseResponse
+        .replace(/I'd/g, 'I would')
+        .replace(/that's/g, 'that is')
+        .replace(/we're/g, 'we are')
+        .replace(/can't/g, 'cannot');
+    }
+
+    if (style === 'technical') {
+      return baseResponse + ' I can provide detailed technical specifications if that would be helpful.';
+    }
+
+    if (urgencyLevel === 'high') {
+      return `I understand this is urgent for you. ${baseResponse} I can prioritise getting you a quick response.`;
+    }
+
+    if (responseLength === 'short') {
+      // Truncate to key points
+      return baseResponse.split('.')[0] + '.';
+    }
+
+    return baseResponse;
+  };
+
+  // Enhanced Layer Response System
+  const getEnhancedLayerResponse = (layer: number, userMessage: string) => {
+    const industry = getIndustryFromPath();
+    const location = getLocationFromPath();
+    const { mentionedServices, painPoints, timeline, budget } = conversationContext;
+
+    // Analyze user input
+    analyzePersonality(userMessage);
+    extractContext(userMessage);
+    const sentiment = analyzeSentiment(userMessage);
+
+    let baseResponse = '';
+
+    switch (layer) {
+      case 2: // Enhanced Discovery with context awareness
+        baseResponse = getEnhancedLayer2Response(industry, userMessage, mentionedServices, painPoints);
+        break;
+      case 3: // Solution Presentation with personalization
+        baseResponse = getEnhancedLayer3Response(industry, userMessage, timeline, budget);
+        break;
+      case 4: // Advanced Objection Handling
+        baseResponse = getEnhancedLayer4Response(industry, userMessage, sentiment);
+        break;
+      case 5: // Smart Booking with calendar integration
+        return handleEnhancedBookingFlow(userMessage);
+      default:
+        baseResponse = "I'd be happy to help you explore our services further. What specific challenges is your business facing?";
+    }
+
+    return adaptResponseToPersonality(baseResponse);
+  };
+
+  const getEnhancedLayer2Response = (industry: string, userMessage: string, services: string[], painPoints: string[]) => {
+    const message = userMessage.toLowerCase();
+
+    // Context-aware follow-up questions
+    if (services.length > 0) {
+      const serviceSpecific = {
+        website: "Excellent choice! Are you looking to improve conversion rates, enhance user experience, or perhaps create a completely new online presence?",
+        seo: "Perfect! Is your main goal to rank higher locally, attract more qualified traffic, or perhaps improve your overall online visibility?",
+        chatbot: "Brilliant! Are you thinking of automating customer service, capturing more leads, or providing 24/7 support to your clients?",
+        automation: "Wonderful! Which processes are taking up most of your time - customer communications, lead nurturing, or operational tasks?"
       };
 
-      setMessages(prev => [...prev, confirmationMessage]);
-      setLeadScore(prev => Math.min(prev + 25, 100)); // Boost score for providing contact details
+      const mentionedService = services[0];
+      if (serviceSpecific[mentionedService as keyof typeof serviceSpecific]) {
+        return serviceSpecific[mentionedService as keyof typeof serviceSpecific];
+      }
+    }
 
-      // Here you would typically submit to your backend
-      console.log('Contact submission:', {
-        type: contactType,
-        details: details,
-        timestamp: new Date(),
-        leadScore: leadScore + 25,
-        source: 'chatbot'
+    if (painPoints.includes('customer_acquisition')) {
+      return "I can see customer acquisition is a key focus for you. Are you finding it challenging to reach the right audience, or is it more about converting the traffic you already have?";
+    }
+
+    if (painPoints.includes('time_efficiency')) {
+      return "Time efficiency is crucial for business growth! What tasks are currently eating up most of your day - admin work, customer communications, or marketing activities?";
+    }
+
+    // Fallback to industry-specific responses
+    const industryResponses: Record<string, string[]> = {
+      dental: [
+        "Excellent! What's your main priority right now - attracting more NHS patients, improving your online presence, or perhaps enhancing patient communication?",
+        "That's a common challenge for dental practices. Are you finding it difficult to stand out locally, or is it more about converting inquiries into actual appointments?"
+      ],
+      medical: [
+        "Absolutely understand that priority. Are you looking to improve patient access to services, enhance your digital presence, or streamline operations?",
+        "That's quite common with medical practices today. Is your main challenge reaching new patients, or improving the experience for existing ones?"
+      ],
+      general: [
+        "Excellent! What's keeping you up at night about your business growth - is it generating leads, converting prospects, or perhaps operational efficiency?",
+        "That's a challenge many SMEs face. Are you looking to improve your online presence, automate processes, or reach more customers?"
+      ]
+    };
+
+    const responses = industryResponses[industry] || industryResponses.general;
+    return responses[Math.floor(Math.random() * responses.length)];
+  };
+
+  const getEnhancedLayer3Response = (industry: string, userMessage: string, timeline: string | null, budget: string | null) => {
+    let baseResponse = getLayer3Response(industry, userMessage);
+
+    // Add timeline-specific urgency
+    if (timeline === 'immediate') {
+      baseResponse += " I understand you need this sorted quickly - we can have initial systems running within 48 hours for urgent requirements.";
+    } else if (timeline === 'short_term') {
+      baseResponse += " With your timeline in mind, we typically see results within 2-4 weeks of implementation.";
+    }
+
+    // Add budget-conscious messaging
+    if (budget === 'small') {
+      baseResponse += " I appreciate budget is a consideration - that's exactly why we start with small, refundable deposits and offer local discounts.";
+    } else if (budget === 'flexible') {
+      baseResponse += " With your investment mindset, we can create a comprehensive growth strategy that scales with your success.";
+    }
+
+    return baseResponse;
+  };
+
+  const getEnhancedLayer4Response = (industry: string, userMessage: string, sentiment: string) => {
+    const message = userMessage.toLowerCase();
+
+    // Sentiment-aware objection handling
+    let responseModifier = '';
+    if (sentiment === 'negative') {
+      responseModifier = "I completely understand your concerns - many clients have felt exactly the same way initially. ";
+    } else if (sentiment === 'positive') {
+      responseModifier = "I'm delighted you're interested! ";
+    }
+
+    const baseResponse = getLayer4Response(industry, userMessage);
+    return responseModifier + baseResponse;
+  };
+
+  // Original response functions (preserved)
+  const getLayer3Response = (industry: string, userMessage: string) => {
+    const responses: Record<string, string> = {
+      dental: "Perfect! For dental practices, we typically see fantastic results with our Local SEO package (£60/month) combined with our AI chatbot system (from £112.50). The chatbot handles appointment enquiries 24/7, while our SEO gets you found by local patients. We're seeing practices increase new patient bookings by 40-60% within 3 months. Plus, being local here in Nottinghamshire, we understand the specific challenges practices face in our area.",
+      medical: "Excellent! Medical practices benefit enormously from our patient communication automation and local SEO services. Our AI systems can handle appointment scheduling, send reminders, and even pre-screen patients - while our local SEO ensures you're found by patients in your catchment area. We typically see a 50% reduction in admin time and 35% increase in appointment bookings. The best part? We train your team so you own the systems completely.",
+      cosmetic: "Brilliant! For cosmetic clinics, we focus on building trust and showcasing results. Our website design services (£150-£3,750) create stunning galleries of your work, while our AI chatbots provide instant consultation booking and answer common treatment questions. We also implement review systems that build credibility. Clinics typically see 45% more qualified consultations and significantly higher conversion rates from website visitors.",
+      wellness: "Wonderful! Wellness businesses thrive with our local marketing approach. We combine beautiful website design with smart booking automation and local SEO. Our AI systems can handle class bookings, send wellness tips, and even offer personalised treatment recommendations. We're seeing wellness centres increase bookings by 50% while reducing admin time by 40%. Plus, with our local discount for Nottinghamshire businesses, it's incredibly cost-effective.",
+      ecommerce: "Perfect! For eCommerce, we implement AI-powered personalisation, automated email sequences, and conversion optimisation. Our systems can predict customer behaviour, automate cart recovery, and provide personalised product recommendations. We typically see 25-40% increases in conversion rates and 60% improvements in customer lifetime value. The automation handles the heavy lifting while you focus on product development and strategy.",
+      general: "Excellent! We take a comprehensive approach combining AI automation with strategic marketing. Whether it's our website design services (£150-£3,750), AI chatbots (from £112.50), or local SEO (£60/month), everything works together. We're not just another agency - we train you to own your systems completely. Local businesses typically see 40-60% growth in leads and save 30% on operational costs. Being based right here in Nottinghamshire, we truly understand local business challenges."
+    };
+
+    return responses[industry] || responses.general;
+  };
+
+  const getLayer4Response = (industry: string, userMessage: string) => {
+    const objectionHandlers: Record<string, string> = {
+      price: "I completely understand budget is important. That's exactly why our pricing starts with small, refundable deposits - £60 for local SEO, £112.50 for AI chatbots, £150 for websites. Plus, as a local Nottinghamshire business, you qualify for our 25% local discount. Most clients see ROI within the first month, and we offer payment plans to make it work for your cash flow.",
+      time: "Absolutely, time is precious! That's precisely why we handle everything for you. The AI chatbot works 24/7 from day one, our SEO runs automatically in the background, and we manage all the technical setup. You'll actually save time - most clients report 30% less admin work within weeks. We do the heavy lifting so you can focus on what you do best.",
+      complexity: "I hear that concern often! We've designed everything to be incredibly simple. You don't need to understand the tech - we train you on just what you need to know. Think of it like getting a new phone: you don't need to know how it works internally, just how to use the apps that matter to you. We provide complete support every step of the way.",
+      trust: "That's completely reasonable - there are lots of agencies out there! What sets us apart is three things: we're genuinely local (you can pop round for a coffee!), we train you to own your systems rather than keeping you dependent, and we offer a 25% local discount because we believe in supporting our community. Plus, all our deposits are refundable if you're not delighted with the results.",
+      results: "Great question! We're confident because we've seen it work repeatedly with local businesses just like yours. That's why we offer refundable deposits and transparent reporting - you'll see exactly what's working. Most clients see improvements within 2-4 weeks, and significant growth within 3 months. If you're not seeing results, we work together until you do - or you get your money back.",
+      default: "I completely understand your concern. Many business owners feel exactly the same way initially. What if we started with a quick 10-15 minute chat to explore your specific situation? No pressure, no sales pitch - just a genuine conversation about what might work best for your business. Sometimes it helps to talk it through with someone who understands the local market."
+    };
+
+    // Simple keyword matching for objections
+    const message = userMessage.toLowerCase();
+    if (message.includes('cost') || message.includes('price') || message.includes('expensive') || message.includes('budget')) {
+      return objectionHandlers.price;
+    }
+    if (message.includes('time') || message.includes('busy') || message.includes('quick')) {
+      return objectionHandlers.time;
+    }
+    if (message.includes('complicated') || message.includes('complex') || message.includes('difficult')) {
+      return objectionHandlers.complexity;
+    }
+    if (message.includes('trust') || message.includes('agency') || message.includes('before') || message.includes('burned')) {
+      return objectionHandlers.trust;
+    }
+    if (message.includes('work') || message.includes('results') || message.includes('guarantee') || message.includes('proof')) {
+      return objectionHandlers.results;
+    }
+
+    return objectionHandlers.default;
+  };
+
+  // Enhanced Booking Flow with Calendar Integration
+  const handleEnhancedBookingFlow = (userMessage: string) => {
+    if (bookingStep === 0) {
+      return "Excellent! I'd love to schedule a quick 10-15 minute introductory chat. No pressure, just a friendly conversation about your business goals. Could I start by getting your name?";
+    }
+
+    if (bookingStep === 1 && !bookingData.name) {
+      setBookingData(prev => ({ ...prev, name: userMessage }));
+      setBookingStep(2);
+      return `Lovely to meet you, ${userMessage}! What's the best way to reach you - phone number or email address?`;
+    }
+
+    if (bookingStep === 2 && !bookingData.contact) {
+      setBookingData(prev => ({ ...prev, contact: userMessage }));
+      setBookingStep(3);
+
+      // Show calendar instead of manual time collection
+      setTimeout(() => setShowCalendar(true), 500);
+      return "Perfect! I've got live availability right now. Let me show you some convenient times that work for both of us...";
+    }
+
+    if (bookingStep === 3 && !bookingData.appointmentTime) {
+      // This will be handled by calendar selection
+      return "Brilliant choice! What platform would you prefer for our chat - Zoom, Microsoft Teams, or a simple phone call?";
+    }
+
+    if (bookingStep === 4 && !bookingData.platform) {
+      setBookingData(prev => ({ ...prev, platform: userMessage, confirmed: true }));
+
+      // Use real Google Calendar booking
+      setTimeout(async () => {
+        setIsLoading(true);
+        const confirmationMessage = await bookRealAppointment();
+
+        const botMessage: Message = {
+          role: 'bot',
+          content: confirmationMessage,
+          timestamp: new Date()
+        };
+
+        setMessages(prev => [...prev, botMessage]);
+        setIsLoading(false);
+
+        // Refresh calendar availability
+        fetchCalendarAvailability();
+      }, 500);
+
+      return `Perfect! Let me book that for you right now...`;
+    }
+
+    return "Well, that doesn't usually happen—shall we try again? What works best for you?";
+  };
+
+  // Fetch real calendar availability using client utilities
+  const fetchCalendarAvailability = async () => {
+    setCalendarLoading(true);
+    try {
+      const { fetchAvailableSlots, transformApiSlot } = await import('@/lib/calendar-client');
+      const data = await fetchAvailableSlots();
+
+      if (data.slots) {
+        const transformedSlots = data.slots.map(transformApiSlot);
+        setAvailableSlots(transformedSlots);
+        setIsCalendarAuthenticated(data.authenticated);
+      }
+    } catch (error) {
+      console.error('Failed to fetch calendar availability:', error);
+      // Fallback to mock data
+      setAvailableSlots([
+        { time: '09:00', available: true, date: 'Tomorrow', duration: 15 },
+        { time: '10:30', available: true, date: 'Tomorrow', duration: 15 },
+        { time: '14:00', available: true, date: 'Tomorrow', duration: 15 },
+        { time: '15:30', available: false, date: 'Tomorrow', duration: 15 },
+        { time: '09:00', available: true, date: 'Friday', duration: 15 },
+        { time: '11:00', available: true, date: 'Friday', duration: 15 },
+        { time: '13:30', available: true, date: 'Friday', duration: 15 },
+        { time: '16:00', available: true, date: 'Friday', duration: 15 }
+      ]);
+      setIsCalendarAuthenticated(false);
+    } finally {
+      setCalendarLoading(false);
+    }
+  };
+
+  // Enhanced calendar booking with real API
+  const handleCalendarBooking = async (slot: CalendarSlot) => {
+    setBookingData(prev => ({
+      ...prev,
+      appointmentTime: `${slot.date} at ${slot.time}`
+    }));
+    setShowCalendar(false);
+    setBookingStep(4);
+
+    const confirmationMessage: Message = {
+      role: 'bot',
+      content: `Excellent! I've reserved ${slot.date} at ${slot.time} for our 15-minute chat. What platform would you prefer - Zoom, Microsoft Teams, or a simple phone call?`,
+      timestamp: new Date()
+    };
+
+    setMessages(prev => [...prev, confirmationMessage]);
+  };
+
+  // Book real appointment
+  const bookRealAppointment = async () => {
+    try {
+      const selectedSlot = availableSlots.find(slot =>
+        `${slot.date} at ${slot.time}` === bookingData.appointmentTime
+      );
+
+      if (!selectedSlot) {
+        throw new Error('Selected time slot not found');
+      }
+
+      const { bookAppointment } = await import('@/lib/calendar-client');
+
+      const result = await bookAppointment({
+        attendeeEmail: bookingData.contact!,
+        attendeeName: bookingData.name!,
+        timeSlot: selectedSlot,
+        platform: bookingData.platform!,
       });
 
+      if (result.success) {
+        return result.message;
+      } else {
+        throw new Error(result.error || 'Booking failed');
+      }
     } catch (error) {
-      console.error('Error submitting contact details:', error);
-
-      const errorMessage: ChatMessage = {
-        id: generateId(),
-        type: 'bot',
-        content: "I apologize, there was a technical issue. Please try using our contact form instead, or start a new chat.",
-        timestamp: new Date(),
-        options: [
-          { id: '1', text: '📞 Try contact form', value: 'contact-form', action: 'redirect' },
-          { id: '2', text: '🔄 Start new chat', value: 'restart' }
-        ]
-      };
-
-      setMessages(prev => [...prev, errorMessage]);
+      console.error('Real booking failed:', error);
+      // Return fallback confirmation
+      return `Perfect! I've got all the details:\n\n• Name: ${bookingData.name}\n• Contact: ${bookingData.contact}\n• Time: ${bookingData.appointmentTime}\n• Platform: ${bookingData.platform}\n\n✅ We'll send you a calendar invitation shortly with all the details and meeting link.\n\nLooking forward to our chat! If anything comes up, just give us a ring on 0800 772 3291.`;
     }
   };
 
-  if (!isOpen) {
-    return (
-      <div className={`fixed bottom-6 right-6 z-50 ${className}`}>
-        <div className="relative">
-          {/* Pulse animation */}
-          <div className="absolute inset-0 bg-red-500 rounded-full animate-ping opacity-75" />
+  // Industry-specific Layer 1 responses
+  const getIndustryGreeting = () => {
+    const industry = getIndustryFromPath();
+    const weatherGreeting = getWeatherAwareGreeting();
 
-          {/* Chat button */}
-          <Button
-            onClick={() => setIsOpen(true)}
-            className="relative bg-red-500 hover:bg-red-600 text-white rounded-full w-16 h-16 shadow-2xl group transition-all duration-300 hover:scale-110"
-          >
-            <MessageCircleIcon />
+    const industryMessages: Record<string, string> = {
+      dental: `${weatherGreeting} I'm here to help dental practices like yours attract more patients and grow your practice. Whether you're looking to improve your online presence, get more NHS patients, or enhance patient communication, I'd love to chat about how we can help.`,
+      medical: `${weatherGreeting} I specialise in helping medical practices improve their patient outreach and digital presence. From better appointment booking systems to reaching more patients in your local area, I'm here to support your practice growth.`,
+      cosmetic: `${weatherGreeting} I work with cosmetic clinics to enhance their digital marketing and patient acquisition. Whether it's showcasing your treatments online, improving client consultations, or building trust through reviews, I'm here to help your clinic thrive.`,
+      wellness: `${weatherGreeting} I help wellness and beauty businesses connect with more clients and grow their practice. From online booking systems to local SEO for beauty treatments, I'd be delighted to explore how we can enhance your business.`,
+      ecommerce: `${weatherGreeting} I specialise in helping eCommerce businesses increase sales and improve their online presence. Whether it's website optimisation, automated customer journeys, or AI-powered recommendations, I'm here to boost your online success.`,
+      general: `${weatherGreeting} I'm Martin from Postino, your local AI marketing partner here in ${getLocationFromPath()}. We help SMEs grow smarter with strategic marketing and cutting-edge automation. I'd love to explore how we can help your business thrive.`
+    };
 
-            {/* Tooltip */}
-            <div className="absolute bottom-full right-0 mb-2 px-3 py-2 bg-gray-900 text-white text-sm font-medium rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
-              <div className="flex items-center space-x-2">
-                <SparklesIcon />
-                <span>Hi! I'm Postino's AI assistant</span>
-              </div>
-              <div className="absolute top-full right-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900" />
-            </div>
-          </Button>
+    return industryMessages[industry];
+  };
 
-          {/* Online indicator */}
-          <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-400 border-2 border-white rounded-full" />
-        </div>
-      </div>
-    );
-  }
+  // Initialize chatbot
+  useEffect(() => {
+    const initializeChatbot = async () => {
+      const weather = await fetchWeatherData();
+      setWeatherData(weather);
+    };
+
+    initializeChatbot();
+  }, [pathname]);
+
+  // Show booking prompt after 10 seconds on page
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!hasStarted && !isOpen) {
+        setShowBookingPrompt(true);
+      }
+    }, 10000);
+
+    return () => clearTimeout(timer);
+  }, [hasStarted, isOpen, pathname]);
+
+  // Load calendar availability when calendar is shown
+  useEffect(() => {
+    if (showCalendar && availableSlots.length === 0) {
+      fetchCalendarAvailability();
+    }
+  }, [showCalendar]);
+
+  // Auto-scroll to bottom
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
+  const startConversation = () => {
+    setHasStarted(true);
+    setShowBookingPrompt(false);
+    setIsOpen(true);
+    setCurrentLayer(1);
+
+    const initialMessage: Message = {
+      role: 'bot',
+      content: getIndustryGreeting(),
+      timestamp: new Date()
+    };
+
+    setMessages([initialMessage]);
+  };
+
+  const sendMessage = async () => {
+    if (!input.trim() || isLoading) return;
+
+    const userMessage: Message = {
+      role: 'user',
+      content: input.trim(),
+      timestamp: new Date(),
+      sentiment: analyzeSentiment(input.trim()),
+      urgency: userPersonality.urgencyLevel,
+      interests: conversationContext.mentionedServices
+    };
+
+    setMessages(prev => [...prev, userMessage]);
+    setInput('');
+    setIsLoading(true);
+
+    // Simulate thinking time
+    setTimeout(() => {
+      let botResponse = '';
+
+      if (currentLayer === 5 || bookingStep > 0) {
+        botResponse = handleEnhancedBookingFlow(userMessage.content);
+      } else {
+        botResponse = getEnhancedLayerResponse(currentLayer, userMessage.content);
+
+        // Progress through layers based on conversation
+        if (currentLayer < 4) {
+          setCurrentLayer(prev => prev + 1);
+        } else if (currentLayer === 4) {
+          // Move to booking after layer 4
+          setCurrentLayer(5);
+          setBookingStep(0);
+        }
+      }
+
+      const botMessage: Message = {
+        role: 'bot',
+        content: botResponse,
+        timestamp: new Date()
+      };
+
+      setMessages(prev => [...prev, botMessage]);
+      setIsLoading(false);
+    }, 1000 + Math.random() * 2000);
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  };
 
   return (
-    <div className={`fixed bottom-6 right-6 z-50 ${className}`}>
-      <Card className="bg-white shadow-2xl w-96 h-[600px]">
-        {/* Header */}
-        <CardHeader className="bg-gradient-to-r from-red-500 to-red-600 text-white p-4 rounded-t-lg">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="relative">
-                <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                  <BotIcon />
-                </div>
-                <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-400 border border-white rounded-full" />
+    <>
+      {/* Enhanced booking prompt overlay */}
+      {showBookingPrompt && !isOpen && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl border border-gray-200">
+            <div className="text-center mb-4">
+              <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-emerald-600 rounded-full mx-auto mb-4 flex items-center justify-center">
+                <MessageCircleIcon className="text-white" />
               </div>
-              <div>
-                <h3 className="font-semibold text-sm">Postino AI Assistant</h3>
-                <p className="text-white/80 text-xs">Here to help you grow</p>
-              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                Found what you need?
+              </h3>
+              <p className="text-gray-600 leading-relaxed">
+                Want to schedule a quick 10-15 min intro call? I'm Martin from Postino, your local AI marketing partner here in {getLocationFromPath()}.
+              </p>
             </div>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsOpen(false)}
-              className="text-white hover:bg-white/20 p-1"
-            >
-              <XIcon />
-            </Button>
-          </div>
-        </CardHeader>
 
-        {/* Messages */}
-        <CardContent className="p-0 flex flex-col h-[520px]">
-          <div className="flex-1 overflow-y-auto p-4 space-y-4">
-            {messages.map((message) => (
-              <div
-                key={message.id}
-                className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
+            <div className="space-y-3">
+              <Button
+                onClick={startConversation}
+                className="w-full bg-gradient-to-r from-blue-600 to-emerald-600 text-white font-semibold py-3 rounded-lg hover:opacity-90 transition-opacity"
               >
-                <div className={`max-w-[80%] ${message.type === 'user' ? 'order-2' : 'order-1'}`}>
-                  {/* Message bubble */}
-                  <div
-                    className={`px-4 py-2 rounded-2xl ${
-                      message.type === 'user'
-                        ? 'bg-red-500 text-white ml-2'
-                        : 'bg-gray-100 text-gray-800 mr-2'
-                    }`}
-                  >
-                    <p className="text-sm">{message.content}</p>
-                  </div>
+                Yes, let's chat!
+              </Button>
+              <Button
+                onClick={() => setShowBookingPrompt(false)}
+                variant="ghost"
+                className="w-full text-gray-600 hover:text-gray-800"
+              >
+                Not right now
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
 
-                  {/* Options */}
-                  {message.options && message.options.length > 0 && (
-                    <div className="mt-3 space-y-2">
-                      {message.options.map((option) => (
-                        <Button
-                          key={option.id}
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleOptionClick(option)}
-                          className="w-full text-left justify-start text-xs hover:bg-red-500 hover:text-white transition-colors"
-                        >
-                          {option.text}
-                        </Button>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* Timestamp */}
-                  <p className={`text-xs text-gray-400 mt-1 ${
-                    message.type === 'user' ? 'text-right' : 'text-left'
-                  }`}>
-                    {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+      {/* Calendar overlay */}
+      {showCalendar && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl p-6 max-w-lg w-full shadow-2xl border border-gray-200">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center">
+                <CalendarIcon className="mr-2" />
+                <div>
+                  <h3 className="text-xl font-semibold text-gray-900">Choose Your Time</h3>
+                  <p className="text-xs text-gray-500">
+                    {isCalendarAuthenticated ? '🟢 Live Google Calendar' : '🔵 Available Times'}
                   </p>
                 </div>
-
-                {/* Avatar */}
-                <div className={`${message.type === 'user' ? 'order-1' : 'order-2'}`}>
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                    message.type === 'user'
-                      ? 'bg-red-500 text-white'
-                      : 'bg-gray-200 text-gray-600'
-                  }`}>
-                    {message.type === 'user' ? <UserIcon /> : <BotIcon />}
-                  </div>
-                </div>
               </div>
-            ))}
+              <Button
+                onClick={() => setShowCalendar(false)}
+                variant="ghost"
+                size="sm"
+                className="h-8 w-8 p-0"
+              >
+                <XIcon />
+              </Button>
+            </div>
 
-            {/* Typing indicator */}
-            {isTyping && (
-              <div className="flex justify-start">
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
-                    <BotIcon />
-                  </div>
-                  <div className="bg-gray-100 px-4 py-2 rounded-2xl">
-                    <div className="flex space-x-1">
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" />
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
-                    </div>
-                  </div>
-                </div>
+            {!isCalendarAuthenticated && (
+              <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+                <p className="text-sm text-amber-800">
+                  📅 <strong>Connect Google Calendar</strong> for real-time availability or use our standard booking times below.
+                </p>
+                <Button
+                  onClick={() => window.open('/api/auth/google', '_blank')}
+                  variant="outline"
+                  size="xs"
+                  className="mt-2 text-xs border-amber-300 text-amber-700 hover:bg-amber-100"
+                >
+                  🔗 Connect Calendar
+                </Button>
               </div>
             )}
 
-            <div ref={messagesEndRef} />
-          </div>
+            <p className="text-gray-600 mb-4">
+              Select a convenient 15-minute slot for our introductory chat:
+            </p>
 
-          {/* Input area */}
-          <div className="border-t p-4">
-            <div className="flex space-x-2">
-              <Input
-                value={inputValue}
-                onChange={(e: any) => setInputValue(e.target.value)}
-                onKeyPress={(e: any) => e.key === 'Enter' && handleUserInput(inputValue)}
-                placeholder={awaitingContactDetails
-                  ? (contactType === 'call' ? "Name, mobile, preferred times..." : "Name, email address...")
-                  : "Type your message..."
-                }
-                className="flex-1 text-sm"
-                disabled={isTyping}
-              />
-              <Button
-                onClick={() => handleUserInput(inputValue)}
-                disabled={!inputValue.trim() || isTyping}
-                className="bg-red-500 hover:bg-red-600 text-white px-3"
-              >
-                <SendIcon />
-              </Button>
+            {calendarLoading ? (
+              <div className="flex items-center justify-center py-8">
+                <div className="animate-spin w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full"></div>
+                <span className="ml-3 text-gray-600">Loading availability...</span>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {availableSlots.length > 0 ? (
+                  // Group slots by date
+                  [...new Set(availableSlots.map(slot => slot.date))].map(date => (
+                    <div key={date}>
+                      <h4 className="font-semibold text-gray-900 mb-2">{date}</h4>
+                      <div className="grid grid-cols-2 gap-2">
+                        {availableSlots
+                          .filter(slot => slot.date === date)
+                          .map((slot, index) => (
+                            <Button
+                              key={index}
+                              onClick={() => handleCalendarBooking(slot)}
+                              disabled={!slot.available}
+                              variant={slot.available ? "outline" : "ghost"}
+                              size="sm"
+                              className={`justify-start ${
+                                !slot.available
+                                  ? 'opacity-50 cursor-not-allowed'
+                                  : 'hover:bg-emerald-50 hover:border-emerald-300'
+                              }`}
+                            >
+                              <ClockIcon className="mr-2" />
+                              {slot.time}
+                              {!slot.available && ' (Booked)'}
+                            </Button>
+                          ))}
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="text-center py-6">
+                    <p className="text-gray-500 mb-4">No available slots found.</p>
+                    <Button
+                      onClick={fetchCalendarAvailability}
+                      variant="outline"
+                      size="sm"
+                    >
+                      Refresh Availability
+                    </Button>
+                  </div>
+                )}
+              </div>
+            )}
+
+            <div className="mt-6 p-4 bg-blue-50 rounded-lg">
+              <p className="text-sm text-blue-800">
+                <strong>✅ What to expect:</strong> A friendly 15-minute chat about your business goals with no pressure or sales pitch. I'll share some quick wins you can implement straight away.
+              </p>
+              {isCalendarAuthenticated && (
+                <p className="text-xs text-green-700 mt-2">
+                  📅 Real-time availability • Automatic calendar invites • Instant confirmations
+                </p>
+              )}
             </div>
+          </div>
+        </div>
+      )}
 
-            {/* Quick actions */}
-            <div className="mt-3 flex space-x-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleBookCall}
-                className="text-xs flex items-center space-x-1"
-              >
+      {/* Chatbot toggle button */}
+      <div className="fixed bottom-6 right-6 z-40">
+        <Button
+          onClick={() => {
+            if (!hasStarted) {
+              startConversation();
+            } else {
+              setIsOpen(!isOpen);
+            }
+          }}
+          className="w-14 h-14 rounded-full bg-gradient-to-r from-blue-600 to-emerald-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+        >
+          <MessageCircleIcon />
+        </Button>
+
+        {/* Urgency indicator */}
+        {userPersonality.urgencyLevel === 'high' && (
+          <div className="absolute -top-2 -right-2 w-4 h-4 bg-red-500 rounded-full animate-pulse"></div>
+        )}
+      </div>
+
+      {/* Enhanced chatbot window */}
+      {isOpen && (
+        <div className="fixed bottom-24 right-6 w-80 h-96 z-40">
+          <Card className="h-full flex flex-col shadow-2xl border-gray-200">
+            <CardHeader className="border-b border-gray-200 bg-gradient-to-r from-blue-600 to-emerald-600 text-white rounded-t-lg">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <BotIcon />
+                  <div>
+                    <h3 className="font-semibold text-sm">Martin from Postino</h3>
+                    <p className="text-xs text-blue-100">
+                      {weatherData ? `${weatherData.temperature}°C in ${weatherData.location}` : 'AI Marketing Partner'}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-2">
+                  {/* Personality indicator */}
+                  <div className="text-xs bg-white/20 px-2 py-1 rounded">
+                    {userPersonality.style}
+                  </div>
+                  <Button
+                    onClick={() => setIsOpen(false)}
+                    variant="ghost"
+                    size="sm"
+                    className="text-white hover:bg-white/20 h-8 w-8 p-0"
+                  >
+                    <XIcon />
+                  </Button>
+                </div>
+              </div>
+            </CardHeader>
+
+            <CardContent className="flex-1 overflow-hidden p-0">
+              <div className="h-full flex flex-col">
+                {/* Messages */}
+                <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                  {messages.map((message, index) => (
+                    <div
+                      key={index}
+                      className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                    >
+                      <div
+                        className={`max-w-[80%] rounded-lg p-3 ${
+                          message.role === 'user'
+                            ? 'bg-blue-600 text-white ml-4'
+                            : 'bg-gray-100 text-gray-900 mr-4'
+                        }`}
+                      >
+                        <div className="flex items-start space-x-2">
+                          {message.role === 'bot' && (
+                            <BotIcon className="w-4 h-4 mt-0.5 text-gray-600" />
+                          )}
+                          {message.role === 'user' && (
+                            <UserIcon className="w-4 h-4 mt-0.5 text-blue-100" />
+                          )}
+                          <div className="text-sm leading-relaxed whitespace-pre-wrap">
+                            {message.content}
+                          </div>
+                        </div>
+
+                        {/* Message metadata */}
+                        {message.sentiment && message.role === 'user' && (
+                          <div className="flex items-center mt-1 space-x-1">
+                            {message.sentiment === 'positive' && <span className="text-xs">😊</span>}
+                            {message.sentiment === 'negative' && <span className="text-xs">😔</span>}
+                            {message.urgency === 'high' && <span className="text-xs">⚡</span>}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+
+                  {isLoading && (
+                    <div className="flex justify-start">
+                      <div className="bg-gray-100 rounded-lg p-3 mr-4">
+                        <div className="flex items-center space-x-2">
+                          <BotIcon className="w-4 h-4 text-gray-600" />
+                          <div className="flex space-x-1">
+                            <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" />
+                            <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
+                            <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  <div ref={messagesEndRef} />
+                </div>
+
+                {/* Enhanced input section */}
+                <div className="border-t border-gray-200 p-4">
+                  <div className="flex space-x-2">
+                    <Input
+                      value={input}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInput(e.target.value)}
+                      onKeyPress={handleKeyPress}
+                      placeholder="Type your message..."
+                      disabled={isLoading}
+                      className="flex-1"
+                    />
+                    <Button
+                      onClick={sendMessage}
+                      disabled={!input.trim() || isLoading}
+                      size="sm"
+                      className="bg-blue-600 hover:bg-blue-700 text-white px-3"
+                    >
+                      <SendIcon />
+                    </Button>
+                  </div>
+
+                  {/* Enhanced quick action buttons */}
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    <Button
+                      onClick={() => setInput("I'd like to know more about your services")}
+                      variant="outline"
+                      size="xs"
+                    >
+                      Tell me more
+                    </Button>
+                    <Button
+                      onClick={() => setInput("What are your prices?")}
+                      variant="outline"
+                      size="xs"
+                    >
+                      Pricing
+                    </Button>
+                    {currentLayer >= 4 && (
+                      <Button
+                        onClick={() => {
+                          setCurrentLayer(5);
+                          setBookingStep(0);
+                          setInput("I'd like to book a call");
+                          setTimeout(sendMessage, 100);
+                        }}
+                        variant="calendar"
+                        size="xs"
+                        className="bg-emerald-50 border-emerald-200 text-emerald-700 hover:bg-emerald-100"
+                      >
+                        <CalendarIcon className="mr-1" />
+                        Book a call
+                      </Button>
+                    )}
+
+                    {/* Context-aware suggestions */}
+                    {conversationContext.mentionedServices.includes('automation') && (
+                      <Button
+                        onClick={() => setInput("Show me automation examples")}
+                        variant="outline"
+                        size="xs"
+                      >
+                        See automation
+                      </Button>
+                    )}
+
+                    {userPersonality.urgencyLevel === 'high' && (
+                      <Button
+                        onClick={() => setInput("This is urgent, can we speak today?")}
+                        variant="urgent"
+                        size="xs"
+                      >
+                        ⚡ Urgent
+                      </Button>
+                    )}
+                  </div>
+
+                  {/* Conversation context display */}
+                  {conversationContext.mentionedServices.length > 0 && (
+                    <div className="mt-2 text-xs text-gray-500">
+                      Discussing: {conversationContext.mentionedServices.join(', ')}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Enhanced contact info footer */}
+          <div className="mt-2 text-center text-xs text-gray-500 bg-white rounded-lg p-2 shadow-sm border border-gray-200">
+            <div className="flex items-center justify-center space-x-4">
+              <div className="flex items-center space-x-1">
                 <PhoneIcon />
-                <span>Book Call</span>
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleCollectInfo}
-                className="text-xs flex items-center space-x-1"
-              >
+                <span>0800 772 3291</span>
+              </div>
+              <div className="flex items-center space-x-1">
                 <MailIcon />
-                <span>Get Info</span>
-              </Button>
+                <span>hello@postino.cc</span>
+              </div>
             </div>
+            <p className="mt-1 text-gray-400">
+              Bingham, Nottinghamshire • Live calendar booking available
+            </p>
           </div>
-        </CardContent>
-      </Card>
-    </div>
+        </div>
+      )}
+    </>
   );
 }
