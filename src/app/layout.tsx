@@ -5,8 +5,16 @@ import Script from "next/script";
 import { getOrganizationStructuredData, getWebsiteStructuredData } from '@/lib/structured-data';
 import dynamic from 'next/dynamic';
 
-// Dynamically import chatbot
+// Dynamically import chatbot and PWA wrapper
 const IntelligentChatbot = dynamic(() => import('@/components/IntelligentChatbot'), {
+  loading: () => null,
+});
+
+const PWAWrapper = dynamic(() => import('@/components/PWAWrapper'), {
+  loading: () => null,
+});
+
+const CalendarTest = dynamic(() => import('@/components/CalendarTest'), {
   loading: () => null,
 });
 
@@ -141,12 +149,25 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
+        {/* PWA Manifest */}
+        <link rel="manifest" href="/manifest.json" />
+
         {/* Favicon and app icons */}
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        <link rel="manifest" href="/site.webmanifest" />
+        <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+        <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png" />
+
+        {/* PWA Meta Tags */}
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="Postino" />
+        <meta name="application-name" content="Postino" />
+        <meta name="msapplication-TileColor" content="#1e3a8a" />
+        <meta name="msapplication-config" content="/browserconfig.xml" />
+        <meta name="theme-color" content="#1e3a8a" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#1e3a8a" media="(prefers-color-scheme: dark)" />
 
         {/* Performance hints */}
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -316,6 +337,12 @@ export default function RootLayout({
 
         {/* Intelligent Chatbot - Available on all pages */}
         <IntelligentChatbot />
+
+        {/* Calendar Test Component - For development/testing only */}
+        {process.env.NODE_ENV === 'development' && <CalendarTest />}
+
+        {/* PWA Components */}
+        <PWAWrapper />
       </body>
     </html>
   );
