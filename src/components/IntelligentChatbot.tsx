@@ -130,6 +130,8 @@ export default function IntelligentChatbot({ className = '' }: ChatbotProps) {
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [leadScore, setLeadScore] = useState(0);
+  const [awaitingContactDetails, setAwaitingContactDetails] = useState(false);
+  const [contactType, setContactType] = useState<'call' | 'email' | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
 
@@ -237,6 +239,15 @@ export default function IntelligentChatbot({ className = '' }: ChatbotProps) {
     // Simulate typing delay
     await new Promise(resolve => setTimeout(resolve, 1500));
 
+    // Check if we're entering contact collection mode
+    if (option.value === 'provide-call-details') {
+      setAwaitingContactDetails(true);
+      setContactType('call');
+    } else if (option.value === 'provide-email-details') {
+      setAwaitingContactDetails(true);
+      setContactType('email');
+    }
+
     // Generate bot response
     const botResponse = generateBotResponse(option.value);
     setMessages(prev => [...prev, botResponse]);
@@ -247,13 +258,92 @@ export default function IntelligentChatbot({ className = '' }: ChatbotProps) {
   const generateBotResponse = (choice: string): ChatMessage => {
     const responses: Record<string, { content: string; options: any[] }> = {
       'website-design': {
-        content: "Excellent choice! Professional websites are crucial for local businesses. Our websites typically increase credibility by 75% and boost leads significantly. What's your main goal?",
+        content: "Excellent choice! Professional websites are crucial for local businesses. Our websites typically increase credibility by 75% and boost leads significantly. Tell me about your current situation:",
         options: [
-          { id: '1', text: '🎯 Get more customers', value: 'more-customers' },
-          { id: '2', text: '🔧 Replace old website', value: 'replace-website' },
-          { id: '3', text: '🚀 Start new business', value: 'new-business' },
-          { id: '4', text: '💰 See pricing options', value: 'website-pricing' }
+          { id: '1', text: '🌐 Yes, I have a website', value: 'has-website' },
+          { id: '2', text: '🚀 Starting from scratch', value: 'no-website' },
+          { id: '3', text: '🔄 Need a complete rebuild', value: 'rebuild' },
+          { id: '4', text: '🤔 Not sure what I need', value: 'unsure-website' }
         ]
+      },
+      'has-website': {
+        content: "Great! I'd love to understand what's working and what isn't. What do you LIKE about your current website?",
+        options: [
+          { id: '1', text: '🎨 I like the design/look', value: 'like-design' },
+          { id: '2', text: '📱 Works well on mobile', value: 'like-mobile' },
+          { id: '3', text: '⚡ Loads quickly', value: 'like-speed' },
+          { id: '4', text: '❌ Nothing really', value: 'like-nothing' }
+        ]
+      },
+      'like-design': {
+        content: "That's great! Good design is important. Now, what do you DISLIKE or want to improve about your current website?",
+        options: [
+          { id: '1', text: '😞 Looks outdated', value: 'dislike-design' },
+          { id: '2', text: '🐌 Too slow to load', value: 'dislike-speed' },
+          { id: '3', text: '👻 No one can find it (SEO)', value: 'dislike-seo' },
+          { id: '4', text: '💸 Doesn\'t generate leads', value: 'dislike-conversion' }
+        ]
+      },
+      'like-mobile': {
+        content: "Excellent! Mobile-friendly is crucial these days. What would you like to improve about your website?",
+        options: [
+          { id: '1', text: '🎨 Better design/appearance', value: 'improve-design' },
+          { id: '2', text: '🔍 Better search visibility', value: 'improve-seo' },
+          { id: '3', text: '📈 More leads/conversions', value: 'improve-conversion' },
+          { id: '4', text: '⚡ Faster loading speed', value: 'improve-speed' }
+        ]
+      },
+      'dislike-seo': {
+        content: "That's a common issue! SEO is crucial for getting found online. I can definitely help with that. Would you like me to connect you with our team for a free website audit and consultation?",
+        options: [
+          { id: '1', text: '📞 Yes, book me a call', value: 'book-call-seo' },
+          { id: '2', text: '📧 Email me details first', value: 'email-seo-info' },
+          { id: '3', text: '💰 Tell me about pricing', value: 'seo-pricing' },
+          { id: '4', text: '🤔 I have more questions', value: 'more-seo-questions' }
+        ]
+      },
+      'book-call-seo': {
+        content: "Perfect! I'll arrange that call. To ensure we connect at the best time, please provide: Your name, mobile number, and two preferred call times (e.g., 'Tuesday 2-4pm' and 'Friday mornings')",
+        options: [
+          { id: '1', text: '📝 I\'ll type my details now', value: 'provide-call-details' },
+          { id: '2', text: '📧 Email me a form instead', value: 'email-call-form' }
+        ]
+      },
+      'email-seo-info': {
+        content: "Great choice! I'll email you our SEO guide and website audit information. What's your name and email address?",
+        options: [
+          { id: '1', text: '📝 I\'ll provide my email details', value: 'provide-email-details' },
+          { id: '2', text: '📞 Actually, I prefer a call', value: 'prefer-call-instead' }
+        ]
+      },
+      'provide-call-details': {
+        content: "Perfect! Please type your details in your next message. I need:\n\n✅ Your name\n✅ Mobile number\n✅ Two preferred call times\n\nExample: 'John Smith, 07123456789, Tuesday 2-4pm, Friday mornings'",
+        options: []
+      },
+      'provide-email-details': {
+        content: "Great! Please type your details in your next message. I need:\n\n✅ Your name\n✅ Email address\n\nExample: 'John Smith, john@email.com'",
+        options: []
+      },
+      'pricing-info': {
+        content: "Our website design packages start from £150 deposit (total £1,500-£3,750 depending on requirements). This includes professional design, mobile optimization, basic SEO, and 1 year hosting. Would you like a personalized quote?",
+        options: [
+          { id: '1', text: '📞 Yes, call me with quote', value: 'book-call-pricing' },
+          { id: '2', text: '📧 Email me pricing details', value: 'email-pricing' },
+          { id: '3', text: '🎯 Tell me what\'s included', value: 'pricing-breakdown' }
+        ]
+      },
+      'other-services': {
+        content: "We offer comprehensive digital solutions: 🌐 Website Design, 🤖 AI Chatbots (like me!), 📈 Local SEO & Marketing, ⚡ Business Automation. What interests you most?",
+        options: [
+          { id: '1', text: '🤖 AI Chatbots', value: 'ai-chatbot' },
+          { id: '2', text: '📈 Local Marketing', value: 'local-marketing' },
+          { id: '3', text: '⚡ Business Automation', value: 'automation' },
+          { id: '4', text: '💰 See all pricing', value: 'all-pricing' }
+        ]
+      },
+      'satisfied': {
+        content: "You're very welcome! We're excited to help you grow your business. Feel free to continue browsing our website or start another chat if you have more questions. Have a great day! 🌟",
+        options: []
       },
       'ai-chatbot': {
         content: "Smart thinking! AI chatbots can handle 80% of customer inquiries automatically, saving you hours daily while improving customer satisfaction. What appeals to you most?",
@@ -315,6 +405,15 @@ export default function IntelligentChatbot({ className = '' }: ChatbotProps) {
     setInputValue('');
     setIsTyping(true);
 
+    // Handle contact details submission
+    if (awaitingContactDetails) {
+      await handleContactSubmission(message.trim());
+      setAwaitingContactDetails(false);
+      setContactType(null);
+      setIsTyping(false);
+      return;
+    }
+
     // Simulate AI processing
     await new Promise(resolve => setTimeout(resolve, 1500));
 
@@ -372,6 +471,59 @@ export default function IntelligentChatbot({ className = '' }: ChatbotProps) {
     window.open('/contact?source=chatbot&action=collect-info', '_blank');
   };
 
+  const handleContactSubmission = async (details: string) => {
+    // Simulate processing delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    // Submit contact details (you can integrate with your form system here)
+    try {
+      // For now, we'll create a confirmation message
+      // In production, you'd submit to your contact form endpoint
+
+      const confirmationMessage: ChatMessage = {
+        id: generateId(),
+        type: 'bot',
+        content: contactType === 'call'
+          ? `Perfect! I've received your call details: "${details}". Our team will contact you within 24 hours at one of your preferred times. Thanks for choosing Postino!`
+          : `Excellent! I've received your details: "${details}". We'll email you our information pack within the next hour. Keep an eye on your inbox!`,
+        timestamp: new Date(),
+        options: [
+          { id: '1', text: '🎯 Tell me about pricing', value: 'pricing-info' },
+          { id: '2', text: '📚 What else can you do?', value: 'other-services' },
+          { id: '3', text: '✅ Perfect, thanks!', value: 'satisfied' }
+        ]
+      };
+
+      setMessages(prev => [...prev, confirmationMessage]);
+      setLeadScore(prev => Math.min(prev + 25, 100)); // Boost score for providing contact details
+
+      // Here you would typically submit to your backend
+      console.log('Contact submission:', {
+        type: contactType,
+        details: details,
+        timestamp: new Date(),
+        leadScore: leadScore + 25,
+        source: 'chatbot'
+      });
+
+    } catch (error) {
+      console.error('Error submitting contact details:', error);
+
+      const errorMessage: ChatMessage = {
+        id: generateId(),
+        type: 'bot',
+        content: "I apologize, there was a technical issue. Please try using our contact form instead, or start a new chat.",
+        timestamp: new Date(),
+        options: [
+          { id: '1', text: '📞 Try contact form', value: 'contact-form', action: 'redirect' },
+          { id: '2', text: '🔄 Start new chat', value: 'restart' }
+        ]
+      };
+
+      setMessages(prev => [...prev, errorMessage]);
+    }
+  };
+
   if (!isOpen) {
     return (
       <div className={`fixed bottom-6 right-6 z-50 ${className}`}>
@@ -418,7 +570,7 @@ export default function IntelligentChatbot({ className = '' }: ChatbotProps) {
               </div>
               <div>
                 <h3 className="font-semibold text-sm">Postino AI Assistant</h3>
-                <p className="text-white/80 text-xs">Lead Score: {leadScore}%</p>
+                <p className="text-white/80 text-xs">Here to help you grow</p>
               </div>
             </div>
             <Button
@@ -518,7 +670,10 @@ export default function IntelligentChatbot({ className = '' }: ChatbotProps) {
                 value={inputValue}
                 onChange={(e: any) => setInputValue(e.target.value)}
                 onKeyPress={(e: any) => e.key === 'Enter' && handleUserInput(inputValue)}
-                placeholder="Type your message..."
+                placeholder={awaitingContactDetails
+                  ? (contactType === 'call' ? "Name, mobile, preferred times..." : "Name, email address...")
+                  : "Type your message..."
+                }
                 className="flex-1 text-sm"
                 disabled={isTyping}
               />

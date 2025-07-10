@@ -54,11 +54,29 @@ export class ConversationFlowManager {
       'proposal-generation': this.handleProposalGeneration.bind(this),
       'next-steps': this.handleNextSteps.bind(this),
       'closing-conversion': this.handleClosingConversion.bind(this),
-      'follow-up-setup': this.handleFollowUpSetup.bind(this)
+      'follow-up-setup': this.handleFollowUpSetup.bind(this),
+      'website-qualification': this.handleWebsiteQualification.bind(this),
+      'contact-collection': this.handleContactCollection.bind(this)
     };
 
     const handler = flows[step];
     return handler ? handler(choice, state) : this.getConversionDefault(state);
+  }
+
+  // Layer 4: Deep qualification and contact collection
+  handleLayer4Flow(step: string, choice: string, state: ConversationState): ChatMessage {
+    const flows: Record<string, (choice: string, state: ConversationState) => ChatMessage> = {
+      'contact-form-collection': this.handleContactFormCollection.bind(this),
+      'website-deep-dive': this.handleWebsiteDeepDive.bind(this),
+      'website-dislikes': this.handleWebsiteDislikes.bind(this),
+      'call-scheduling-details': this.handleCallSchedulingDetails.bind(this),
+      'email-collection-form': this.handleEmailCollectionForm.bind(this),
+      'final-conversion': this.handleFinalConversion.bind(this),
+      'submission-confirmation': this.handleSubmissionConfirmation.bind(this)
+    };
+
+    const handler = flows[step];
+    return handler ? handler(choice, state) : this.getFinalDefault(state);
   }
 
   // Layer 1 Handlers
@@ -71,6 +89,22 @@ export class ConversationFlowManager {
     };
 
     const content = serviceResponses[choice] || `Great choice! Let me tell you more about ${choice}.`;
+
+    // Special flow for website design
+    if (choice === 'website-design') {
+      return {
+        id: this.generateId(),
+        type: 'bot',
+        content: `${content} Tell me about your current situation - do you have a website already?`,
+        timestamp: new Date(),
+        options: [
+          { id: '1', text: '🌐 Yes, I have a website', value: 'has-website', action: 'continue', nextStep: 'website-qualification' },
+          { id: '2', text: '🚀 Starting from scratch', value: 'no-website', action: 'continue', nextStep: 'new-website-requirements' },
+          { id: '3', text: '🔄 Need a complete rebuild', value: 'rebuild', action: 'continue', nextStep: 'website-qualification' },
+          { id: '4', text: '🤔 Not sure what I need', value: 'unsure', action: 'continue', nextStep: 'website-consultation' }
+        ]
+      };
+    }
 
     return {
       id: this.generateId(),
@@ -339,6 +373,175 @@ export class ConversationFlowManager {
         { id: '1', text: '🚀 Let\'s do this!', value: 'proceed', action: 'book-call' },
         { id: '2', text: '📧 Send me proposal', value: 'proposal', action: 'collect-info' },
         { id: '3', text: '🤔 Need to think', value: 'consider', action: 'continue', nextStep: 'follow-up-setup' }
+      ]
+    };
+  }
+
+  // New Layer 3 Handlers
+  private handleWebsiteQualification(choice: string, state: ConversationState): ChatMessage {
+    if (choice === 'has-website' || choice === 'rebuild') {
+      return {
+        id: this.generateId(),
+        type: 'bot',
+        content: "Great! I'd love to understand more about your current website. What's the URL so I can take a look?",
+        timestamp: new Date(),
+        options: [
+          { id: '1', text: '🌐 I'll share the URL', value: 'share-url', action: 'continue', nextStep: 'website-deep-dive' },
+          { id: '2', text: '🔒 Prefer not to share yet', value: 'no-url', action: 'continue', nextStep: 'website-deep-dive' },
+          { id: '3', text: '🚧 It\'s not live yet', value: 'not-live', action: 'continue', nextStep: 'website-deep-dive' }
+        ]
+      };
+    }
+
+    return {
+      id: this.generateId(),
+      type: 'bot',
+      content: "Perfect! Starting fresh gives us complete creative freedom. Let me understand what you're looking for.",
+      timestamp: new Date(),
+      options: [
+        { id: '1', text: '💼 Professional business site', value: 'business-site', action: 'continue', nextStep: 'website-deep-dive' },
+        { id: '2', text: '🛒 E-commerce store', value: 'ecommerce', action: 'continue', nextStep: 'website-deep-dive' },
+        { id: '3', text: '📱 Lead generation focus', value: 'lead-gen', action: 'continue', nextStep: 'website-deep-dive' },
+        { id: '4', text: '🎨 Portfolio/showcase', value: 'portfolio', action: 'continue', nextStep: 'website-deep-dive' }
+      ]
+    };
+  }
+
+  private handleContactCollection(choice: string, state: ConversationState): ChatMessage {
+    if (choice === 'quick-call' || choice === 'strategy-call') {
+      return {
+        id: this.generateId(),
+        type: 'bot',
+        content: "Perfect! I'll arrange that call for you. Let me get a few details to ensure we connect at the right time.",
+        timestamp: new Date(),
+        options: [
+          { id: '1', text: '📱 I\'ll provide my details', value: 'provide-details', action: 'continue', nextStep: 'call-scheduling-details' },
+          { id: '2', text: '📧 Email me instead', value: 'email-preferred', action: 'continue', nextStep: 'email-collection-form' },
+          { id: '3', text: '🤔 Tell me more first', value: 'more-info', action: 'continue', nextStep: 'consultation-details' }
+        ]
+      };
+    }
+
+    return {
+      id: this.generateId(),
+      type: 'bot',
+      content: "I'd be happy to help with that! Let me collect your details so we can send you the right information.",
+      timestamp: new Date(),
+      options: [
+        { id: '1', text: '📧 Email me details', value: 'email-details', action: 'continue', nextStep: 'email-collection-form' },
+        { id: '2', text: '📞 I prefer a call', value: 'prefer-call', action: 'continue', nextStep: 'call-scheduling-details' },
+        { id: '3', text: '💬 Continue chatting', value: 'continue-chat', action: 'continue', nextStep: 'more-questions' }
+      ]
+    };
+  }
+
+  // Layer 4 Handlers
+  private handleWebsiteDeepDive(choice: string, state: ConversationState): ChatMessage {
+    return {
+      id: this.generateId(),
+      type: 'bot',
+      content: "Excellent! Now let me understand what's working and what isn't with your current approach. What do you LIKE about your current website or online presence?",
+      timestamp: new Date(),
+      options: [
+        { id: '1', text: '🎨 I like the design/look', value: 'like-design', action: 'continue', nextStep: 'website-dislikes' },
+        { id: '2', text: '📱 It works on mobile', value: 'like-mobile', action: 'continue', nextStep: 'website-dislikes' },
+        { id: '3', text: '⚡ It loads quickly', value: 'like-speed', action: 'continue', nextStep: 'website-dislikes' },
+        { id: '4', text: '❌ Nothing really', value: 'like-nothing', action: 'continue', nextStep: 'website-dislikes' },
+        { id: '5', text: '🚀 Don\'t have one yet', value: 'no-website', action: 'continue', nextStep: 'website-requirements' }
+      ]
+    };
+  }
+
+  private handleCallSchedulingDetails(choice: string, state: ConversationState): ChatMessage {
+    return {
+      id: this.generateId(),
+      type: 'bot',
+      content: "Perfect! Let me get your details. What's your name and mobile number? Also, what are your two preferred times for me to call? (e.g., 'Tuesday 2-4pm' and 'Friday mornings')",
+      timestamp: new Date(),
+      options: [
+        { id: '1', text: '📝 I\'ll type my details', value: 'type-details', action: 'continue', nextStep: 'contact-form-collection' },
+        { id: '2', text: '📧 Email me a form instead', value: 'email-form', action: 'continue', nextStep: 'email-collection-form' }
+      ]
+    };
+  }
+
+  private handleEmailCollectionForm(choice: string, state: ConversationState): ChatMessage {
+    return {
+      id: this.generateId(),
+      type: 'bot',
+      content: "Perfect! I'll email you all the details. What's your name and email address?",
+      timestamp: new Date(),
+      options: [
+        { id: '1', text: '📝 I\'ll provide my details', value: 'provide-email', action: 'continue', nextStep: 'contact-form-collection' },
+        { id: '2', text: '📞 Actually, I prefer a call', value: 'prefer-call', action: 'continue', nextStep: 'call-scheduling-details' }
+      ]
+    };
+  }
+
+  private handleContactFormCollection(choice: string, state: ConversationState): ChatMessage {
+    return {
+      id: this.generateId(),
+      type: 'bot',
+      content: "Great! Please provide your details in your next message. For calls, I need: Name, Mobile, and 2 preferred call times. For email: Name and Email address.",
+      timestamp: new Date(),
+      options: [
+        { id: '1', text: '✅ Details submitted', value: 'details-submitted', action: 'continue', nextStep: 'submission-confirmation' },
+        { id: '2', text: '🔄 Change to email instead', value: 'change-email', action: 'continue', nextStep: 'email-collection-form' },
+        { id: '3', text: '🔄 Change to call instead', value: 'change-call', action: 'continue', nextStep: 'call-scheduling-details' }
+      ]
+    };
+  }
+
+  private handleSubmissionConfirmation(choice: string, state: ConversationState): ChatMessage {
+    return {
+      id: this.generateId(),
+      type: 'bot',
+      content: "Fantastic! I've received your details and our team will be in touch within 24 hours. In the meantime, feel free to explore our website or ask any other questions!",
+      timestamp: new Date(),
+      options: [
+        { id: '1', text: '🎯 Tell me about pricing', value: 'pricing-info', action: 'continue', nextStep: 'pricing-overview' },
+        { id: '2', text: '📚 What else can you do?', value: 'other-services', action: 'continue', nextStep: 'service-overview' },
+        { id: '3', text: '✅ Perfect, thanks!', value: 'satisfied', action: 'continue', nextStep: 'final-conversion' }
+      ]
+    };
+  }
+
+  private handleFinalConversion(choice: string, state: ConversationState): ChatMessage {
+    return {
+      id: this.generateId(),
+      type: 'bot',
+      content: "You're very welcome! We're excited to help you grow your business. Keep an eye out for our call/email, and don't hesitate to start another chat if you have more questions!",
+      timestamp: new Date(),
+      options: []
+    };
+  }
+
+  private handleWebsiteDislikes(choice: string, state: ConversationState): ChatMessage {
+    return {
+      id: this.generateId(),
+      type: 'bot',
+      content: "That's helpful to know what's working! Now, what do you DISLIKE or want to improve about your current website or online presence?",
+      timestamp: new Date(),
+      options: [
+        { id: '1', text: '😞 Looks outdated/unprofessional', value: 'dislike-design', action: 'continue', nextStep: 'contact-collection' },
+        { id: '2', text: '📱 Doesn\'t work well on mobile', value: 'dislike-mobile', action: 'continue', nextStep: 'contact-collection' },
+        { id: '3', text: '🐌 Too slow to load', value: 'dislike-speed', action: 'continue', nextStep: 'contact-collection' },
+        { id: '4', text: '👻 No one can find it (SEO)', value: 'dislike-seo', action: 'continue', nextStep: 'contact-collection' },
+        { id: '5', text: '💸 Doesn\'t generate leads/sales', value: 'dislike-conversion', action: 'continue', nextStep: 'contact-collection' },
+        { id: '6', text: '🔧 Hard to update/manage', value: 'dislike-management', action: 'continue', nextStep: 'contact-collection' }
+      ]
+    };
+  }
+
+  private getFinalDefault(state: ConversationState): ChatMessage {
+    return {
+      id: this.generateId(),
+      type: 'bot',
+      content: "Thank you for chatting with me today! Our team will be in touch soon. Feel free to continue browsing or start a new conversation anytime.",
+      timestamp: new Date(),
+      options: [
+        { id: '1', text: '🔄 Start over', value: 'restart', action: 'continue', nextStep: 'greeting' },
+        { id: '2', text: '📞 Quick call now', value: 'immediate-call', action: 'book-call' }
       ]
     };
   }

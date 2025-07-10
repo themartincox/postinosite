@@ -7,7 +7,7 @@ export interface PageContext {
 }
 
 export interface ConversationState {
-  layer: 1 | 2 | 3;
+  layer: 1 | 2 | 3 | 4;
   context: PageContext;
   userInfo: {
     name?: string;
@@ -17,6 +17,11 @@ export interface ConversationState {
     budget?: string;
     timeline?: string;
     requirements?: string;
+    currentSite?: string;
+    siteLikes?: string;
+    siteDislikes?: string;
+    preferredCallTime1?: string;
+    preferredCallTime2?: string;
   };
   leadScore: number;
   conversationId: string;
@@ -297,11 +302,15 @@ export function getNextConversationStep(state: ConversationState, userChoice: st
   let newLayer = layer;
   const isQualificationStep = ['budget-qualification', 'timeline-qualification', 'business-details'].includes(currentStep);
   const isConversionStep = ['pricing-proposal', 'booking-assistance', 'consultation-scheduling'].includes(currentStep);
+  const isDeepQualificationStep = ['website-qualification', 'contact-collection', 'detailed-requirements'].includes(currentStep);
+  const isFinalStep = ['contact-form-collection', 'call-scheduling-details', 'email-collection-form'].includes(currentStep);
 
   if (layer === 1 && isQualificationStep) {
     newLayer = 2;
   } else if (layer <= 2 && isConversionStep) {
     newLayer = 3;
+  } else if (layer <= 3 && isDeepQualificationStep) {
+    newLayer = 4;
   }
 
   // Import the flow manager dynamically to avoid circular dependencies
@@ -321,6 +330,11 @@ export function getNextConversationStep(state: ConversationState, userChoice: st
     // Layer 3: Action and conversion
     if (newLayer === 3) {
       return conversationFlowManager.handleLayer3Flow(currentStep, userChoice, state);
+    }
+
+    // Layer 4: Deep qualification and contact collection
+    if (newLayer === 4) {
+      return conversationFlowManager.handleLayer4Flow(currentStep, userChoice, state);
     }
   } catch (error) {
     console.warn('Flow manager not available, using fallback responses');
