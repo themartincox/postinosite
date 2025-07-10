@@ -106,8 +106,8 @@ class GoogleCalendarService {
 
   // Get available time slots for booking
   public async getAvailableSlots(
-    calendarId: string = 'primary',
-    days: number = 7
+    calendarId = 'primary',
+    days = 7
   ): Promise<TimeSlot[]> {
     if (!this.isInitialized) {
       console.warn('Google Calendar not initialized, returning mock data');
@@ -213,7 +213,7 @@ class GoogleCalendarService {
   // Create a calendar event
   public async createEvent(
     eventDetails: CalendarEvent,
-    calendarId: string = 'primary'
+    calendarId = 'primary'
   ): Promise<any> {
     if (!this.isInitialized) {
       console.warn('Google Calendar not initialized, simulating event creation');
@@ -238,7 +238,7 @@ class GoogleCalendarService {
   public async updateEvent(
     eventId: string,
     eventDetails: Partial<CalendarEvent>,
-    calendarId: string = 'primary'
+    calendarId = 'primary'
   ): Promise<any> {
     if (!this.isInitialized) {
       throw new Error('Google Calendar service not initialized');
@@ -262,7 +262,7 @@ class GoogleCalendarService {
   // Delete an event
   public async deleteEvent(
     eventId: string,
-    calendarId: string = 'primary'
+    calendarId = 'primary'
   ): Promise<void> {
     if (!this.isInitialized) {
       throw new Error('Google Calendar service not initialized');

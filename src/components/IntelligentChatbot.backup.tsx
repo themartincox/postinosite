@@ -731,7 +731,12 @@ export default function IntelligentChatbot() {
     initializeChatbot();
   }, [pathname]);
 
-  // No auto-popup - users click chat when ready
+  // Enhanced engagement tracking for Layer 4 popup timing
+  const [engagementScore, setEngagementScore] = useState(0);
+  const [pageStartTime] = useState(Date.now());
+  const [interactions, setInteractions] = useState(0);
+  const [maxScrollDepth, setMaxScrollDepth] = useState(0);
+  const [sectionsViewed, setSectionsViewed] = useState<string[]>([]);
 
   // Enhanced booking prompt (Layer 4 trigger)
   useEffect(() => {
@@ -813,8 +818,12 @@ export default function IntelligentChatbot() {
     // Initial tracking
     trackEngagement();
 
-    // Manual chat activation - no automatic tracking
-  }, []);
+    return () => {
+      window.removeEventListener('scroll', scrollListener);
+      document.removeEventListener('click', clickListener);
+      clearInterval(engagementTimer);
+    };
+  }, [hasStarted, isOpen, showBookingPrompt, pageStartTime, interactions, maxScrollDepth, sectionsViewed]);
 
   // Load calendar availability when calendar is shown
   useEffect(() => {
