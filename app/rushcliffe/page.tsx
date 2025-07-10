@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Navigation from "@/components/Navigation";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
 import { Badge } from "@/components/ui/badge";
@@ -25,6 +26,57 @@ import {
   Heart,
 } from "lucide-react";
 import Link from "next/link";
+import Script from "next/script";
+import { getLocalBusinessStructuredData } from "@/lib/structured-data";
+
+export const metadata: Metadata = {
+  title: "Digital Marketing Services Rushcliffe | Web Design & AI Automation | Postino",
+  description: "Digital marketing agency serving Rushcliffe, Nottinghamshire. Services: Website Design (£150-£3,750), AI Chatbots (£112.50-£2,250), Local SEO (£60/month), Business Automation (£75-£3,000). 25% local discount. Refundable deposits. Free consultation: 0800 772 3291. Serving West Bridgford and surrounding areas.",
+  keywords: "digital marketing Rushcliffe, web design Rushcliffe, AI automation Rushcliffe, local SEO Rushcliffe, marketing agency Rushcliffe, website design West Bridgford, chatbot development Rushcliffe, business automation Rushcliffe, local marketing Nottinghamshire, small business marketing East Midlands",
+  alternates: {
+    canonical: 'https://postino.cc/rushcliffe'
+  },
+  openGraph: {
+    title: "Digital Marketing Services Rushcliffe | Postino",
+    description: "Professional digital marketing, web design, and AI automation services for Rushcliffe businesses. Expert local SEO and business growth solutions.",
+    url: 'https://postino.cc/rushcliffe',
+    type: "website",
+    locale: "en_GB",
+    images: [
+      {
+        url: "/images/rushcliffe-digital-marketing.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Digital Marketing Services in Rushcliffe - Postino",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Digital Marketing Services Rushcliffe | Postino",
+    description: "Professional digital marketing, web design, and AI automation services for Rushcliffe businesses.",
+    images: ["/images/rushcliffe-digital-marketing.jpg"],
+  },
+  other: {
+    'geo.region': 'GB-NTT',
+    'geo.placename': 'Rushcliffe, Nottinghamshire',
+    'geo.position': '52.9333;-1.1333',
+    'ICBM': '52.9333, -1.1333',
+  }
+};
+
+const rushcliffeServices = [
+  "Professional Website Design",
+  "AI Chatbot Development",
+  "Local Marketing Support",
+  "Business Automation Solutions"
+];
+
+const structuredData = getLocalBusinessStructuredData({
+  name: "Postino Digital Marketing Rushcliffe",
+  area: "rushcliffe",
+  services: rushcliffeServices
+});
 
 export default function RushcliffePage() {
   const services = [
@@ -689,6 +741,73 @@ export default function RushcliffePage() {
         </div>
       </section>
 
+      {/* FAQ Section for Zero-click Optimization */}
+      <section className="py-20 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl lg:text-4xl font-heading font-bold text-midnight-blue mb-6">
+              Frequently Asked Questions - Rushcliffe Digital Marketing
+            </h2>
+            <p className="text-xl font-body text-gray-600 max-w-3xl mx-auto">
+              Get answers to common questions about our digital marketing services for Rushcliffe businesses.
+            </p>
+          </div>
+
+          <div className="space-y-8">
+            {[
+              {
+                question: "What digital marketing services do you offer in Rushcliffe?",
+                answer: "We offer comprehensive digital marketing services specifically for Rushcliffe businesses including professional website design (£150-£3,750), AI chatbot development (£112.50-£2,250), local marketing support (£60-£1,500/month), and business automation solutions (£75-£3,000). All services include local SEO optimization and Google My Business integration for West Bridgford and surrounding areas."
+              },
+              {
+                question: "How much does digital marketing cost for Rushcliffe businesses?",
+                answer: "Our Rushcliffe digital marketing services start with refundable deposits: Website Design £150, AI Chatbots £112.50, Local Marketing £60/month, and Business Automation £75. Full project costs range from £750-£3,750 depending on requirements. We offer 25% discounts for local Rushcliffe businesses."
+              },
+              {
+                question: "Do you provide local SEO services in Rushcliffe and West Bridgford?",
+                answer: "Yes, all our services include comprehensive local SEO optimization for Rushcliffe businesses. This includes Google My Business setup, local directory listings, Rushcliffe-specific keyword optimization, West Bridgford local citations, and ongoing local search visibility improvements to help you rank for 'near me' searches across the borough."
+              },
+              {
+                question: "How quickly can you start working on my Rushcliffe business marketing?",
+                answer: "We can start immediately after your consultation. Our process: Pay refundable deposit online → Consultation call within 24 hours → Project kickoff within 48 hours → First results within 7-14 days. We serve all areas of Rushcliffe including West Bridgford, Bingham, and surrounding villages."
+              },
+              {
+                question: "What makes your Rushcliffe marketing services different?",
+                answer: "We understand the unique market dynamics of Rushcliffe, from West Bridgford's business district to village communities. We offer specialized local pricing (25% off), dedicated local support, community-focused marketing strategies, and deep knowledge of the Rushcliffe business landscape. Plus, we provide training so you own your marketing assets."
+              },
+              {
+                question: "Do you offer AI automation for Rushcliffe businesses?",
+                answer: "Yes, we specialize in AI automation including 24/7 chatbots for customer service, automated appointment booking, customer follow-up sequences, and business process automation. Our AI solutions are tailored for Rushcliffe businesses and integrate with local systems across West Bridgford and the wider borough."
+              }
+            ].map((faq, index) => (
+              <Card key={index} className="border border-gray-200">
+                <CardHeader className="cursor-pointer">
+                  <CardTitle className="text-lg font-heading text-midnight-blue flex items-center justify-between">
+                    {faq.question}
+                    <ArrowRight className="h-5 w-5 text-coral-red" />
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="font-body text-gray-600 leading-relaxed">{faq.answer}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <p className="text-lg font-body text-gray-600 mb-6">
+              Still have questions about our Rushcliffe digital marketing services?
+            </p>
+            <Button asChild size="lg" className="bg-coral-red hover:bg-coral-red/90">
+              <Link href="/contact?source=rushcliffe-faq">
+                <Phone className="mr-2 h-5 w-5" />
+                Call 0800 772 3291 for Free Consultation
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="bg-charcoal text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -746,6 +865,53 @@ export default function RushcliffePage() {
 
       {/* WhatsApp Widget */}
       <WhatsAppWidget />
+
+      {/* Local Business Structured Data */}
+      <Script
+        id="rushcliffe-structured-data"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData),
+        }}
+      />
+
+      {/* FAQ Structured Data for Zero-click Results */}
+      <Script
+        id="rushcliffe-faq-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "What digital marketing services do you offer in Rushcliffe?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "We offer comprehensive digital marketing services specifically for Rushcliffe businesses including professional website design (£150-£3,750), AI chatbot development (£112.50-£2,250), local marketing support (£60-£1,500/month), and business automation solutions (£75-£3,000). All services include local SEO optimization and Google My Business integration for West Bridgford and surrounding areas."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How much does digital marketing cost for Rushcliffe businesses?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Our Rushcliffe digital marketing services start with refundable deposits: Website Design £150, AI Chatbots £112.50, Local Marketing £60/month, and Business Automation £75. Full project costs range from £750-£3,750 depending on requirements. We offer 25% discounts for local Rushcliffe businesses."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Do you provide local SEO services in Rushcliffe and West Bridgford?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes, all our services include comprehensive local SEO optimization for Rushcliffe businesses. This includes Google My Business setup, local directory listings, Rushcliffe-specific keyword optimization, West Bridgford local citations, and ongoing local search visibility improvements to help you rank for 'near me' searches across the borough."
+                }
+              }
+            ]
+          }),
+        }}
+      />
     </div>
   );
 }

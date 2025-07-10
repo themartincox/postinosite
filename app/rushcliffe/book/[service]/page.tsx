@@ -31,9 +31,15 @@ export async function generateMetadata({ params }: BookingPageProps): Promise<Me
   const service = RUSHCLIFFE_SERVICES[serviceKey];
 
   return {
-    title: `Book ${service.name} - Postino Rushcliffe`,
-    description: `Secure online booking for ${service.description}. Exclusive 25% discount for Rushcliffe businesses.`,
+    title: `Book ${service.name} Rushcliffe | Secure Online Booking | Postino`,
+    description: `Secure online booking for ${service.description}. Professional ${service.name.toLowerCase()} services for Rushcliffe businesses. Refundable deposit, 24hr response, local expertise.`,
+    keywords: `book ${service.name.toLowerCase()} Rushcliffe, ${service.name.toLowerCase()} booking Rushcliffe, digital marketing booking Nottinghamshire, local business services West Bridgford`,
     robots: 'noindex, nofollow', // Prevent indexing of booking pages
+    other: {
+      'geo.region': 'GB-NTT',
+      'geo.placename': 'Rushcliffe, Nottinghamshire',
+      'geo.position': '52.9333;-1.1333',
+    }
   };
 }
 

@@ -220,25 +220,79 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ]
 
-  // Local landing pages
+  // Local landing pages - Enhanced with FAQ sections and comprehensive structured data
   const localPages = [
     {
       url: `${baseUrl}/bingham`,
       lastModified: currentDate,
-      changeFrequency: 'monthly' as const,
-      priority: 0.7,
+      changeFrequency: 'weekly' as const,
+      priority: 0.9, // Increased priority due to FAQ sections and enhanced structured data
     },
     {
       url: `${baseUrl}/rushcliffe`,
       lastModified: currentDate,
-      changeFrequency: 'monthly' as const,
-      priority: 0.7,
+      changeFrequency: 'weekly' as const,
+      priority: 0.9, // Increased priority due to FAQ sections and enhanced structured data
     },
     {
       url: `${baseUrl}/nottingham-marketing-agency`,
       lastModified: currentDate,
       changeFrequency: 'monthly' as const,
-      priority: 0.7,
+      priority: 0.8, // Increased priority for comprehensive local SEO
+    },
+  ]
+
+  // Local booking pages - Live payment systems (noindexed but included for sitemap completeness)
+  const bookingPages = [
+    // Bingham booking pages
+    {
+      url: `${baseUrl}/bingham/book/website-design`,
+      lastModified: currentDate,
+      changeFrequency: 'monthly' as const,
+      priority: 0.3,
+    },
+    {
+      url: `${baseUrl}/bingham/book/ai-chatbot`,
+      lastModified: currentDate,
+      changeFrequency: 'monthly' as const,
+      priority: 0.3,
+    },
+    {
+      url: `${baseUrl}/bingham/book/local-marketing`,
+      lastModified: currentDate,
+      changeFrequency: 'monthly' as const,
+      priority: 0.3,
+    },
+    {
+      url: `${baseUrl}/bingham/book/automation`,
+      lastModified: currentDate,
+      changeFrequency: 'monthly' as const,
+      priority: 0.3,
+    },
+    // Rushcliffe booking pages
+    {
+      url: `${baseUrl}/rushcliffe/book/website-design`,
+      lastModified: currentDate,
+      changeFrequency: 'monthly' as const,
+      priority: 0.3,
+    },
+    {
+      url: `${baseUrl}/rushcliffe/book/ai-chatbot`,
+      lastModified: currentDate,
+      changeFrequency: 'monthly' as const,
+      priority: 0.3,
+    },
+    {
+      url: `${baseUrl}/rushcliffe/book/local-marketing`,
+      lastModified: currentDate,
+      changeFrequency: 'monthly' as const,
+      priority: 0.3,
+    },
+    {
+      url: `${baseUrl}/rushcliffe/book/automation`,
+      lastModified: currentDate,
+      changeFrequency: 'monthly' as const,
+      priority: 0.3,
     },
   ]
 
@@ -274,6 +328,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...leadGenPages,
     ...industryPages,
     ...localPages,
+    ...bookingPages,
     ...contentPages,
     ...blogPages,
   ]
