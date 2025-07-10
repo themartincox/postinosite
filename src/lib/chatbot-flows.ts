@@ -1,8 +1,8 @@
-import {
-  type ConversationState,
-  type ChatMessage,
-  type PageContext,
-  type ChatOption
+import type {
+  ConversationState,
+  ChatMessage,
+  PageContext,
+  ChatOption
 } from './chatbot-context';
 
 // Enhanced conversation flow manager for 3-layer system
