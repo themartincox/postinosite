@@ -3,6 +3,12 @@ import { Inter, Crimson_Text } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
 import { getOrganizationStructuredData, getWebsiteStructuredData } from '@/lib/structured-data';
+import dynamic from 'next/dynamic';
+
+// Dynamically import chatbot to avoid SSR issues
+const IntelligentChatbot = dynamic(() => import('@/components/IntelligentChatbot'), {
+  ssr: false,
+});
 
 // More aggressive font optimization
 const inter = Inter({
@@ -26,8 +32,8 @@ const crimsonText = Crimson_Text({
 
 export const metadata: Metadata = {
   title: "Postino - Where Growth Meets AI Innovation | Marketing & Automation Agency",
-  description: "Expert marketing strategies with cutting-edge AI automation to help SMEs grow smarter, faster, and more efficiently. Thought leadership in B2B UX, LinkedIn marketing, SEO strategy, zero-click search, content strategy, Total Search optimization, AI automation, platform-agnostic web development, and client empowerment. Based in Nottingham, serving UK businesses.",
-  keywords: "marketing agency, AI automation, SME growth, Nottingham, digital marketing, business automation, B2B UX design, LinkedIn thought leadership, SEO strategy, zero-click search, content marketing, Total Search optimization, AI marketing automation, platform-agnostic development, client training, web development, conversion optimization, search strategy, data-driven storytelling",
+  description: "Digital marketing agency based in Bingham, Nottinghamshire serving local businesses. Services: Website Design (£150-£3,750), AI Chatbots (£112.50-£2,250), Local SEO (£60/month), Business Automation (£75-£3,000). Expert in B2B UX, LinkedIn marketing, zero-click search, AI automation. Call 0800 772 3291 for free consultation.",
+  keywords: "marketing agency, AI automation, SME growth, Nottingham, digital marketing, business automation, B2B UX design, LinkedIn thought leadership, SEO strategy, zero-click search, content marketing, Total Search optimization, AI marketing automation, platform-agnostic development, client training, web development, conversion optimization, search strategy, data-driven storytelling, Bingham, Rushcliffe",
   authors: [{ name: "Martin", url: "https://postino.cc/about" }, { name: "Postino" }],
   creator: "Postino",
   publisher: "Postino",
@@ -67,6 +73,20 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
     },
+  },
+  other: {
+    'geo.region': 'GB-NTT',
+    'geo.placename': 'Bingham, Nottinghamshire',
+    'geo.position': '52.9518;-0.9515',
+    'ICBM': '52.9518, -0.9515',
+    'DC.title': 'Postino - Digital Marketing & AI Automation Agency',
+    'DC.creator': 'Postino',
+    'DC.subject': 'Digital Marketing, AI Automation, Local SEO, Web Design',
+    'DC.description': 'Expert marketing strategies with AI automation for SME growth',
+    'DC.publisher': 'Postino',
+    'DC.language': 'en-GB',
+    'article:author': 'Martin',
+    'article:publisher': 'Postino',
   },
   verification: {
     google: "google-site-verification-token",
@@ -151,6 +171,124 @@ export default function RootLayout({
           }}
         />
 
+        {/* Service Area Schema for Local Coverage */}
+        <Script
+          id="service-area-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "ServiceArea",
+              "name": "Postino Service Coverage",
+              "description": "Digital marketing and AI automation services covering Nottinghamshire and East Midlands",
+              "serviceLocation": [
+                {
+                  "@type": "Place",
+                  "name": "Bingham, Nottinghamshire",
+                  "geo": {
+                    "@type": "GeoCoordinates",
+                    "latitude": "52.9518",
+                    "longitude": "-0.9515"
+                  }
+                },
+                {
+                  "@type": "Place",
+                  "name": "Rushcliffe, Nottinghamshire",
+                  "geo": {
+                    "@type": "GeoCoordinates",
+                    "latitude": "52.9333",
+                    "longitude": "-1.1333"
+                  }
+                },
+                {
+                  "@type": "Place",
+                  "name": "Nottingham, Nottinghamshire",
+                  "geo": {
+                    "@type": "GeoCoordinates",
+                    "latitude": "52.9548",
+                    "longitude": "-1.1581"
+                  }
+                }
+              ]
+            }),
+          }}
+        />
+
+        {/* Global FAQ Schema for Zero-click & LLM Optimization */}
+        <Script
+          id="global-faq-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              "mainEntity": [
+                {
+                  "@type": "Question",
+                  "name": "What services does Postino offer?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Postino offers digital marketing services including Website Design (£150-£3,750), AI Chatbot Development (£112.50-£2,250), Local SEO & Marketing (£60-£1,500/month), and Business Automation (£75-£3,000). We serve Bingham, Rushcliffe, and Nottinghamshire with 25% local discounts. All services include Google My Business optimization and local SEO."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "How much does digital marketing cost with Postino?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Postino pricing starts with refundable deposits: Website Design £150, AI Chatbots £112.50, Local Marketing £60/month, Business Automation £75. Full projects range £750-£3,750. We offer 25% discounts for Bingham and Rushcliffe businesses. Payment plans available."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Where is Postino located and what areas do you serve?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Postino is based in Bingham, Nottinghamshire (1 Fisher Lane, NG13 8BQ). We serve Bingham, Rushcliffe, Nottingham, and surrounding Nottinghamshire areas. Local businesses receive priority service and special pricing. Call 0800 772 3291 for consultation."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "What makes Postino different from other marketing agencies?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Postino combines expert marketing with cutting-edge AI automation. We're locally based with deep community knowledge, offer client training for asset ownership, provide 25% local discounts, and specialize in B2B UX, LinkedIn marketing, and zero-click search optimization. Our AI-first approach delivers faster, smarter growth."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Do you offer AI automation services?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, Postino specializes in AI automation including 24/7 chatbots, automated appointment booking, customer follow-up sequences, business process automation, and predictive analytics. Our AI solutions integrate with existing systems and are tailored for local businesses."
+                  }
+                }
+              ]
+            }),
+          }}
+        />
+
+        {/* Enhanced Speakable Content Schema */}
+        <Script
+          id="speakable-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "SpeakableSpecification",
+              "cssSelector": ["h1", "h2", ".intro", ".summary", ".hero-text", ".cta-text"],
+              "xpath": [
+                "//h1",
+                "//h2",
+                "//*[@class='intro']",
+                "//*[@class='summary']",
+                "//*[@class='hero-text']",
+                "//*[@class='cta-text']"
+              ]
+            }),
+          }}
+        />
+
         {/* GTM - Load after page content with reduced priority */}
         <Script
           id="gtm-script"
@@ -175,6 +313,9 @@ export default function RootLayout({
             style={{ display: 'none', visibility: 'hidden' }}
           />
         </noscript>
+
+        {/* Intelligent Chatbot - Available on all pages */}
+        <IntelligentChatbot />
       </body>
     </html>
   );

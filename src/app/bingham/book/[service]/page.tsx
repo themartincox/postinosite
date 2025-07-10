@@ -31,9 +31,15 @@ export async function generateMetadata({ params }: BookingPageProps): Promise<Me
   const service = BINGHAM_SERVICES[serviceKey];
 
   return {
-    title: `Book ${service.name} - Postino Bingham`,
-    description: `Secure online booking for ${service.description}. Exclusive 25% discount for Bingham businesses.`,
+    title: `Book ${service.name} Bingham | Secure Online Booking | Postino`,
+    description: `Secure online booking for ${service.description}. Professional ${service.name.toLowerCase()} services for Bingham businesses. Refundable deposit, 24hr response, local expertise.`,
+    keywords: `book ${service.name.toLowerCase()} Bingham, ${service.name.toLowerCase()} booking Bingham, digital marketing booking Nottinghamshire, local business services Bingham`,
     robots: 'noindex, nofollow', // Prevent indexing of booking pages
+    other: {
+      'geo.region': 'GB-NTT',
+      'geo.placename': 'Bingham, Nottinghamshire',
+      'geo.position': '52.9518;-0.9515',
+    }
   };
 }
 
