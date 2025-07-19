@@ -209,6 +209,7 @@ export default function IntelligentChatbot() {
   const [availableSlots, setAvailableSlots] = useState<CalendarSlot[]>([]);
   const [isCalendarAuthenticated, setIsCalendarAuthenticated] = useState(false);
   const [calendarLoading, setCalendarLoading] = useState(false);
+  const [showPersonalityTip, setShowPersonalityTip] = useState(false);
 
   // Personality Detection System
   const analyzePersonality = (userMessage: string) => {
@@ -239,12 +240,20 @@ export default function IntelligentChatbot() {
       urgentKeywords.some(word => message.includes(word)) ? 'high' :
       message.includes('need') || message.includes('want') ? 'medium' : 'low';
 
-    setUserPersonality(prev => ({
-      ...prev,
-      style,
-      responseLength,
-      urgencyLevel
-    }));
+    setUserPersonality(prev => {
+      // Show tip if personality style changes
+      if (prev.style !== style && messages.length > 1) {
+        setShowPersonalityTip(true);
+        setTimeout(() => setShowPersonalityTip(false), 3000);
+      }
+
+      return {
+        ...prev,
+        style,
+        responseLength,
+        urgencyLevel
+      };
+    });
   };
 
   // Sentiment Analysis
@@ -410,6 +419,77 @@ export default function IntelligentChatbot() {
     }
 
     return baseResponse;
+  };
+
+  // Generate contextual quick replies based on conversation state
+  const getContextualQuickReplies = () => {
+    const layer = currentLayer;
+    const industry = getIndustryFromPath();
+
+    if (bookingStep > 0) {
+      // Booking flow quick replies
+      if (bookingStep === 1) return ['Martin', 'John', 'Sarah', 'David'];
+      if (bookingStep === 2) return ['Phone: 01234 567890', 'Email: name@email.com'];
+      if (bookingStep === 4) return ['Zoom', 'Microsoft Teams', 'Phone call'];
+      return [];
+    }
+
+    switch (layer) {
+      case 1:
+        return [
+          'Tell me more about your services',
+          'What makes you different?',
+          'I need help with my website',
+          'I want more customers'
+        ];
+
+      case 2:
+        const industryQuickReplies: Record<string, string[]> = {
+          dental: [
+            'I need more NHS patients',
+            'Improve online presence',
+            'Better appointment booking',
+            'Patient communication'
+          ],
+          medical: [
+            'Reach more patients',
+            'Reduce admin time',
+            'Online appointments',
+            'Digital marketing'
+          ],
+          general: [
+            'Generate more leads',
+            'Save time on admin',
+            'Improve website',
+            'Social media help'
+          ]
+        };
+        return industryQuickReplies[industry] || industryQuickReplies.general;
+
+      case 3:
+        return [
+          'What are your prices?',
+          'How quickly can you start?',
+          'Do you offer training?',
+          'Tell me about local discounts'
+        ];
+
+      case 4:
+        return [
+          'I\'m interested',
+          'What\'s the next step?',
+          'I need to think about it',
+          'Can we schedule a call?'
+        ];
+
+      default:
+        return [
+          'Tell me more',
+          'What are your prices?',
+          'I\'m interested',
+          'Book a call'
+        ];
+    }
   };
 
   // Enhanced Layer Response System
@@ -787,13 +867,28 @@ export default function IntelligentChatbot() {
       } else {
         botResponse = getEnhancedLayerResponse(currentLayer, userMessage.content);
 
-        // Progress through layers based on conversation
-        if (currentLayer < 4) {
-          setCurrentLayer(prev => prev + 1);
+        // Smart layer progression based on user engagement
+        const message = userMessage.content.toLowerCase();
+
+        if (currentLayer === 1) {
+          // Always move to layer 2 after initial response
+          setCurrentLayer(2);
+        } else if (currentLayer === 2) {
+          // Move to layer 3 if user shows interest or asks about solutions
+          if (message.includes('price') || message.includes('cost') || message.includes('how') || message.includes('what') || message.includes('tell') || message.includes('more')) {
+            setCurrentLayer(3);
+          }
+        } else if (currentLayer === 3) {
+          // Move to layer 4 if user asks follow-up questions or shows objections
+          if (message.includes('but') || message.includes('however') || message.includes('concern') || message.includes('worry') || message.includes('think') || message.includes('interested')) {
+            setCurrentLayer(4);
+          }
         } else if (currentLayer === 4) {
-          // Move to booking after layer 4
-          setCurrentLayer(5);
-          setBookingStep(0);
+          // Move to booking if user shows readiness
+          if (message.includes('book') || message.includes('call') || message.includes('schedule') || message.includes('meeting') || message.includes('chat') || message.includes('speak') || message.includes('next') || message.includes('interested')) {
+            setCurrentLayer(5);
+            setBookingStep(0);
+          }
         }
       }
 
@@ -984,23 +1079,23 @@ export default function IntelligentChatbot() {
 
       {/* Enhanced chatbot window */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 w-80 h-96 z-40">
+        <div className="fixed bottom-24 right-6 w-96 h-[500px] z-40">
           <Card className="h-full flex flex-col shadow-2xl border-gray-200">
-            <CardHeader className="border-b border-gray-200 bg-gradient-to-r from-blue-600 to-emerald-600 text-white rounded-t-lg">
+            <CardHeader className="border-b border-gray-200 bg-gradient-to-r from-blue-600 to-emerald-600 text-white rounded-t-lg p-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
                   <BotIcon />
                   <div>
                     <h3 className="font-semibold text-sm">Martin from Postino</h3>
                     <p className="text-xs text-blue-100">
-                      {weatherData ? `${weatherData.temperature}°C in ${weatherData.location}` : 'AI Marketing Partner'}
+                      {weatherData ? `${weatherData.temperature}°C in ${weatherData.location}` : 'AI Marketing Partner'} • {userPersonality.style} style
                     </p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-2">
-                  {/* Personality indicator */}
+                  {/* Engagement indicator */}
                   <div className="text-xs bg-white/20 px-2 py-1 rounded">
-                    {userPersonality.style}
+                    Layer {currentLayer}
                   </div>
                   <Button
                     onClick={() => setIsOpen(false)}
@@ -1017,7 +1112,7 @@ export default function IntelligentChatbot() {
             <CardContent className="flex-1 overflow-hidden p-0">
               <div className="h-full flex flex-col">
                 {/* Messages */}
-                <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                <div className="flex-1 overflow-y-auto p-3 space-y-3">
                   {messages.map((message, index) => (
                     <div
                       key={index}
@@ -1054,6 +1149,15 @@ export default function IntelligentChatbot() {
                     </div>
                   ))}
 
+                  {/* Personality detection tip */}
+                  {showPersonalityTip && (
+                    <div className="flex justify-center">
+                      <div className="bg-blue-50 border border-blue-200 rounded-lg p-2 text-xs text-blue-800 max-w-[90%]">
+                        💡 I've detected you prefer a <strong>{userPersonality.style}</strong> communication style - I'll adapt my responses accordingly!
+                      </div>
+                    </div>
+                  )}
+
                   {isLoading && (
                     <div className="flex justify-start">
                       <div className="bg-gray-100 rounded-lg p-3 mr-4">
@@ -1072,7 +1176,7 @@ export default function IntelligentChatbot() {
                 </div>
 
                 {/* Enhanced input section */}
-                <div className="border-t border-gray-200 p-4">
+                <div className="border-t border-gray-200 p-3">
                   <div className="flex space-x-2">
                     <Input
                       value={input}
@@ -1092,23 +1196,22 @@ export default function IntelligentChatbot() {
                     </Button>
                   </div>
 
-                  {/* Enhanced quick action buttons */}
+                  {/* Dynamic contextual quick replies */}
                   <div className="mt-3 flex flex-wrap gap-2">
-                    <Button
-                      onClick={() => setInput("I'd like to know more about your services")}
-                      variant="outline"
-                      size="xs"
-                    >
-                      Tell me more
-                    </Button>
-                    <Button
-                      onClick={() => setInput("What are your prices?")}
-                      variant="outline"
-                      size="xs"
-                    >
-                      Pricing
-                    </Button>
-                    {currentLayer >= 4 && (
+                    {getContextualQuickReplies().map((reply, index) => (
+                      <Button
+                        key={index}
+                        onClick={() => setInput(reply)}
+                        variant="outline"
+                        size="xs"
+                        className="text-xs"
+                      >
+                        {reply}
+                      </Button>
+                    ))}
+
+                    {/* Special action buttons */}
+                    {currentLayer >= 4 && bookingStep === 0 && (
                       <Button
                         onClick={() => {
                           setCurrentLayer(5);
@@ -1125,17 +1228,6 @@ export default function IntelligentChatbot() {
                       </Button>
                     )}
 
-                    {/* Context-aware suggestions */}
-                    {conversationContext.mentionedServices.includes('automation') && (
-                      <Button
-                        onClick={() => setInput("Show me automation examples")}
-                        variant="outline"
-                        size="xs"
-                      >
-                        See automation
-                      </Button>
-                    )}
-
                     {userPersonality.urgencyLevel === 'high' && (
                       <Button
                         onClick={() => setInput("This is urgent, can we speak today?")}
@@ -1148,11 +1240,19 @@ export default function IntelligentChatbot() {
                   </div>
 
                   {/* Conversation context display */}
-                  {conversationContext.mentionedServices.length > 0 && (
-                    <div className="mt-2 text-xs text-gray-500">
-                      Discussing: {conversationContext.mentionedServices.join(', ')}
+                  <div className="mt-2 flex items-center justify-between text-xs text-gray-500">
+                    <div>
+                      {bookingStep > 0 ?
+                        `Booking Step ${bookingStep}/4` :
+                        `Conversation Layer ${currentLayer}`
+                      }
                     </div>
-                  )}
+                    {conversationContext.mentionedServices.length > 0 && (
+                      <div>
+                        {conversationContext.mentionedServices.slice(0, 2).join(', ')}
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </CardContent>
