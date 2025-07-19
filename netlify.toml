@@ -1,9 +1,12 @@
-[build.environment]
-  NEXT_TELEMETRY_DISABLED = "1"
+[build]
+  command = "npm run build"
+  publish = ".next"
 
-[[headers]]
-  for = "/*"
-  [headers.values]
-    X-Frame-Options = "DENY"
-    X-XSS-Protection = "1; mode=block"
-    X-Content-Type-Options = "nosniff"
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[dev]
+  command = "npm run dev"
+  port = 3000
