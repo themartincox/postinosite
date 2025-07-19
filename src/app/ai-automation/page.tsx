@@ -68,6 +68,7 @@ import {
   Zap,
 } from "lucide-react";
 import Link from "next/link";
+import Script from "next/script";
 
 export default function AIAutomationPage() {
   return (
@@ -124,6 +125,13 @@ export default function AIAutomationPage() {
             </div>
           </div>
         </div>
+      </section>
+
+      {/* AI Automation Introduction */}
+      <section className="ai-intro-text max-w-3xl mx-auto text-center text-lg md:text-xl py-6 px-4">
+        <p className="font-body text-gray-800 leading-relaxed">
+          Postino delivers intelligent automation for fast-moving businesses—blending cutting-edge AI, no-code workflows, and custom API integrations. Whether you're a local SME in Nottingham or a national brand, we help you automate repetitive tasks, streamline CRM operations, and unlock predictive insights with minimal setup time. From AI chatbots to document parsing and workflow orchestration, our automation stack is built to scale.
+        </p>
       </section>
 
       {/* Key Benefits */}
@@ -770,6 +778,42 @@ export default function AIAutomationPage() {
 
       {/* WhatsApp Widget */}
       <WhatsAppWidget />
+
+      {/* Structured Data for AI Automation */}
+      <Script
+        id="ai-automation-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "http://schema.org",
+            "@type": "Organization",
+            "name": "Postino",
+            "url": "https://postino.cc/ai-automation",
+            "description": "Postino is a UK-based AI automation agency offering workflow solutions, CRM automation, and predictive AI tools for SMEs.",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Nottingham",
+              "addressCountry": "UK"
+            },
+            "areaServed": {
+              "@type": "GeoCircle",
+              "geoMidpoint": {
+                "@type": "GeoCoordinates",
+                "latitude": "52.9548",
+                "longitude": "-1.1581"
+              },
+              "geoRadius": "50000"
+            },
+            "serviceType": [
+              "AI automation for SMEs",
+              "AI workflow automation",
+              "CRM automation",
+              "business process automation",
+              "predictive AI tools"
+            ]
+          }),
+        }}
+      />
     </div>
   );
 }
