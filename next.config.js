@@ -61,6 +61,31 @@ const withPWA = require('next-pwa')({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Enhanced image optimization
+  images: {
+    formats: ['image/webp', 'image/avif'],
+    domains: ['postino.cc', 'same-assets.com'],
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+  },
+
+  // Performance optimizations
+  experimental: {
+    optimizeCss: true,
+    scrollRestoration: true,
+    optimizeServerReact: true,
+    turbotrace: {
+      logLevel: 'error'
+    }
+  },
+
+  // Compression and caching
+  compress: true,
+  poweredByHeader: false,
+  generateEtags: true,
+
   // Ignore linting during build for deployment
   eslint: {
     ignoreDuringBuilds: true,
@@ -71,13 +96,101 @@ const nextConfig = {
 
   // Removed static export for Google Calendar API integration
   // output: 'export',
-  images: {
-    unoptimized: true
-  },
+
   // distDir: 'out',
   // trailingSlash: true, // Disabled to fix redirect loops
   // Force fresh build to clear Netlify cache
   generateBuildId: () => 'build-' + Date.now(),
+
+  // Webpack optimizations
+  webpack: (config, { dev, isServer }) => {
+    // Production optimizations
+    if (!dev) {
+      config.optimization = {
+        ...config.optimization,
+        splitChunks: {
+          chunks: 'all',
+          cacheGroups: {
+            default: {
+              minChunks: 2,
+              priority: -20,
+              reuseExistingChunk: true,
+            },
+            vendor: {
+              test: /[\\/]node_modules[\\/]/,
+              name: 'vendors',
+              priority: -10,
+              chunks: 'all',
+            },
+          },
+        },
+      }
+    }
+
+    // Bundle analyzer (only in development)
+    if (dev && !isServer) {
+      config.optimization.splitChunks = {
+        chunks: 'all',
+        cacheGroups: {
+          commons: {
+            name: 'commons',
+            chunks: 'all',
+            minChunks: 2,
+          },
+        },
+      }
+    }
+
+    return config
+  },
+
+  // Headers for performance and security
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'X-Frame-Options',
+            value: 'DENY'
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff'
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin'
+          }
+        ]
+      },
+      {
+        source: '/(.*)\\.(js|css|woff|woff2|eot|ttf|otf|png|jpg|jpeg|gif|webp|avif|svg|ico)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable'
+          }
+        ]
+      }
+    ]
+  },
+
+  // Environment variables
+  env: {
+    CUSTOM_KEY: 'custom_value',
+  },
+
+  // Redirects for SEO
+  async redirects() {
+    return [
+      {
+        source: '/services',
+        destination: '/growth-marketing',
+        permanent: true,
+      },
+    ]
+  },
 }
 
 module.exports = withPWA(nextConfig)
