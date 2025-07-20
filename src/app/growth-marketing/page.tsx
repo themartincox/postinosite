@@ -1,49 +1,10 @@
 import type { Metadata } from "next";
 import Navigation from "@/components/Navigation";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
+import FAQSection from "@/components/ui/faq";
+import Breadcrumb from "@/components/ui/breadcrumb";
 import { Badge } from "@/components/ui/badge";
-
-export const metadata: Metadata = {
-  title: "Growth Marketing Services Nottingham | Expert Marketing Agency",
-  description: "Professional growth marketing services in Nottingham. AI-enhanced SEO, content strategy, conversion optimization & brand development. Proven results for SMEs across Nottinghamshire. Get your free consultation today.",
-  keywords: "growth marketing Nottingham, marketing agency Nottingham, SEO services Nottingham, digital marketing Nottinghamshire, conversion rate optimization, content marketing East Midlands, brand development UK, marketing automation Nottingham",
-  authors: [{ name: "Postino Marketing Agency" }],
-  publisher: "Postino Ltd",
-  alternates: {
-    canonical: '/growth-marketing'
-  },
-  openGraph: {
-    title: "Growth Marketing Services Nottingham | Postino Agency",
-    description: "Transform your Nottingham business with expert growth marketing. AI-enhanced SEO, content strategy, and conversion optimization. Serving SMEs across Nottinghamshire with proven results.",
-    type: "website",
-    locale: "en_GB",
-    url: 'https://postino.cc/growth-marketing',
-    siteName: 'Postino',
-    images: [
-      {
-        url: 'https://postino.cc/og-growth-marketing.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Growth Marketing Services Nottingham - Postino Agency'
-      }
-    ]
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Growth Marketing Services Nottingham | Postino",
-    description: "Expert growth marketing for Nottingham SMEs. AI-enhanced SEO, content strategy & conversion optimization. Proven results across Nottinghamshire.",
-    images: ['https://postino.cc/og-growth-marketing.jpg']
-  },
-  other: {
-    'geo.region': 'GB-NTT',
-    'geo.placename': 'Nottingham',
-    'geo.position': '52.9548;-1.1581',
-    'ICBM': '52.9548, -1.1581',
-    'business:contact_data:locality': 'Nottingham',
-    'business:contact_data:region': 'Nottinghamshire',
-    'business:contact_data:country_name': 'United Kingdom'
-  }
-};
+import { generateMetadata as generateSEOMetadata, servicePageMetadata } from "@/lib/seo-metadata";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -69,11 +30,66 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
+export const metadata: Metadata = generateSEOMetadata({
+  ...servicePageMetadata.growthMarketing,
+  openGraphTitle: "Growth Marketing Services Nottingham | Postino Agency",
+  openGraphDescription: "Transform your Nottingham business with expert AI-enhanced growth marketing. SEO, content strategy, and conversion optimization. Serving SMEs across Nottinghamshire with proven results.",
+  twitterTitle: "Growth Marketing Services Nottingham | Postino",
+  twitterDescription: "Professional AI-enhanced growth marketing for Nottingham businesses. Expert SEO, content strategy & conversion optimization. Free consultation available.",
+});
+
 export default function GrowthMarketingPage() {
+  const breadcrumbItems = [
+    { label: "Services", href: "/services" },
+    { label: "Growth Marketing", current: true }
+  ];
+
+  const growthMarketingFAQs = [
+    {
+      question: "What is growth marketing and how is it different from traditional marketing?",
+      answer: "Growth marketing is a data-driven approach that focuses on the entire customer lifecycle, not just acquisition. Unlike traditional marketing that often relies on broad campaigns, growth marketing uses experimentation, analytics, and optimization to find scalable ways to acquire, activate, retain, and grow customers. We combine proven strategies like SEO and content marketing with innovative AI-enhanced techniques to deliver measurable, sustainable growth for SMEs."
+    },
+    {
+      question: "How much does growth marketing cost for small businesses?",
+      answer: "Growth marketing investment varies by scope and goals. SEO services start from £60/month, comprehensive marketing strategies from £997/month, and custom growth programs from £1,500-£5,000/month. We offer transparent pricing with no hidden fees and flexible packages that scale with your business. Most Nottinghamshire SMEs see 3-5x ROI within 6 months. We also provide 25% local discounts for Bingham and Rushcliffe businesses."
+    },
+    {
+      question: "Which growth marketing strategies work best for SMEs?",
+      answer: "The most effective strategies for SMEs include: <strong>Local SEO</strong> (dominate local search results), <strong>Content Marketing</strong> (establish thought leadership), <strong>Email Automation</strong> (nurture leads effectively), <strong>LinkedIn Marketing</strong> (B2B relationship building), <strong>Conversion Optimization</strong> (improve website performance), and <strong>AI-Enhanced Analytics</strong> (data-driven decisions). We customize the mix based on your industry, audience, and growth goals."
+    },
+    {
+      question: "How long does it take to see results from growth marketing?",
+      answer: "Timeline varies by strategy: Quick wins like conversion optimization and paid ads can show results within 2-4 weeks. SEO and content marketing typically take 3-6 months for significant impact. Email automation and social media see results within 4-8 weeks. Our approach delivers early wins while building long-term sustainable growth. Most clients see measurable improvements within the first month and substantial growth by month 3."
+    },
+    {
+      question: "Do you work with businesses outside of Nottinghamshire?",
+      answer: "Yes, while we're based in Bingham, Nottinghamshire, we work with SMEs across the UK and internationally. However, local businesses receive priority support, 25% discounts, and the benefit of our deep understanding of the East Midlands market. Remote clients still receive the same quality service with regular video consultations and comprehensive reporting."
+    },
+    {
+      question: "What makes Postino different from other marketing agencies?",
+      answer: "We combine expert marketing with cutting-edge AI automation, providing both strategy and execution. We're genuinely local with deep community knowledge, offer comprehensive training so you own your marketing assets, and focus exclusively on SME growth rather than trying to serve everyone. Our AI-first approach delivers faster, smarter growth, and we provide transparent reporting with clear ROI metrics."
+    },
+    {
+      question: "Can you help with both digital and traditional marketing?",
+      answer: "Yes, we provide integrated marketing strategies that combine digital excellence with strategic traditional marketing where appropriate. Our strength is in digital channels (SEO, content, email, social media, automation) but we also advise on print, events, and partnership marketing. We believe in using the right channels for your audience, not just the latest trends."
+    },
+    {
+      question: "How do you measure marketing success and ROI?",
+      answer: "We track comprehensive metrics including: <strong>Revenue Growth</strong> (direct attribution to marketing), <strong>Lead Quality & Quantity</strong> (qualified leads, conversion rates), <strong>Digital Presence</strong> (website traffic, search rankings), <strong>Engagement</strong> (email open rates, social interactions), <strong>Customer Acquisition Cost</strong> (CAC), and <strong>Customer Lifetime Value</strong> (CLV). Monthly reports show clear before/after comparisons with actionable insights for continuous improvement."
+    }
+  ];
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Navigation */}
       <Navigation />
+
+      {/* Breadcrumb */}
+      <div className="bg-white py-4 border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Breadcrumb items={breadcrumbItems} />
+        </div>
+      </div>
 
       {/* Hero Section */}
       <section className="bg-forest-green text-white py-20">
@@ -648,6 +664,49 @@ export default function GrowthMarketingPage() {
           </div>
         </div>
       </section>
+
+      {/* FAQ Section - NEW */}
+      <FAQSection
+        title="Growth Marketing Questions Answered"
+        subtitle="Everything you need to know about strategic marketing for SME growth"
+        items={growthMarketingFAQs}
+        relatedQuestions={[
+          {
+            title: "What is AI automation for businesses?",
+            href: "/ai-automation#faq",
+            description: "Learn how AI automation complements growth marketing"
+          },
+          {
+            title: "How quickly can you start working?",
+            href: "/#faq",
+            description: "Discover our rapid implementation timelines"
+          },
+          {
+            title: "What areas do you serve in the Midlands?",
+            href: "/midlands-ai-automation#faq",
+            description: "Find out about our regional coverage and expertise"
+          }
+        ]}
+        relatedServices={[
+          {
+            title: "AI & Automation Services",
+            href: "/ai-automation",
+            description: "Intelligent systems that enhance your marketing"
+          },
+          {
+            title: "Local SEO Services",
+            href: "/growth-marketing/inbound/seo",
+            description: "Dominate local search results"
+          },
+          {
+            title: "Content Strategy & Creation",
+            href: "/growth-marketing/inbound/content-strategy-creation",
+            description: "Strategic content that drives engagement"
+          }
+        ]}
+        className="bg-soft-gray"
+        schemaId="growth-marketing-faq-schema"
+      />
 
       {/* CTA Section */}
       <section className="py-20 bg-forest-green text-white">

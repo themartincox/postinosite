@@ -3,6 +3,7 @@ import { Inter, Crimson_Text } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
 import { getOrganizationStructuredData, getWebsiteStructuredData } from '@/lib/structured-data';
+import { generateBusinessHoursSchema, generateContactPointSchema, generateLocalBusinessSchema } from '@/lib/seo-metadata';
 import dynamic from 'next/dynamic';
 
 // Dynamically import chatbot and PWA wrapper
@@ -13,8 +14,6 @@ const IntelligentChatbot = dynamic(() => import('@/components/IntelligentChatbot
 const PWAWrapper = dynamic(() => import('@/components/PWAWrapper'), {
   loading: () => null,
 });
-
-
 
 // More aggressive font optimization
 const inter = Inter({
@@ -37,37 +36,18 @@ const crimsonText = Crimson_Text({
 });
 
 export const metadata: Metadata = {
-  title: "Postino - Where Growth Meets AI Innovation | Marketing & Automation Agency",
-  description: "Digital marketing agency based in Bingham, Nottinghamshire serving local businesses. Services: Website Design (£150-£3,750), AI Chatbots (£112.50-£2,250), Local SEO (£60/month), Business Automation (£75-£3,000). Expert in B2B UX, LinkedIn marketing, zero-click search, AI automation. Call 0800 772 3291 for free consultation.",
-  keywords: "marketing agency, AI automation, SME growth, Nottingham, digital marketing, business automation, B2B UX design, LinkedIn thought leadership, SEO strategy, zero-click search, content marketing, Total Search optimization, AI marketing automation, platform-agnostic development, client training, web development, conversion optimization, search strategy, data-driven storytelling, Bingham, Rushcliffe",
+  title: {
+    template: '%s | Postino - AI-Enhanced Marketing Agency',
+    default: 'Postino - Where Growth Meets AI Innovation | Marketing & Automation Agency'
+  },
+  description: "AI-enhanced marketing agency helping SMEs achieve measurable growth through expert strategies and intelligent automation. Based in Bingham, Nottinghamshire. Services: Website Design (£150-£3,750), AI Chatbots (£112.50-£2,250), Local SEO (£60/month), Business Automation (£75-£3,000). Expert in B2B UX, LinkedIn marketing, zero-click search optimization. Call 0800 772 3291 for free consultation.",
+  keywords: "AI-enhanced marketing agency, intelligent automation, SME growth, Nottingham digital marketing, AI marketing automation, B2B UX design, LinkedIn thought leadership, SEO strategy optimization, zero-click search, content marketing, business automation, platform-agnostic development, client training, web development, conversion optimization, search strategy, data-driven storytelling, Bingham, Rushcliffe, East Midlands",
   authors: [{ name: "Martin", url: "https://postino.cc/about" }, { name: "Postino" }],
   creator: "Postino",
   publisher: "Postino",
   metadataBase: new URL("https://postino.cc"),
   alternates: {
     canonical: "https://postino.cc",
-  },
-  openGraph: {
-    title: "Postino - Where Growth Meets AI Innovation",
-    description: "Expert marketing strategies with cutting-edge AI automation to help SMEs grow smarter, faster, and more efficiently. Comprehensive thought leadership blog covering B2B UX, LinkedIn marketing, SEO strategy, AI automation, and more.",
-    url: "https://postino.cc",
-    siteName: "Postino",
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Postino - Marketing & AI Automation Agency with Expert Blog Content",
-      },
-    ],
-    locale: "en_GB",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Postino - Where Growth Meets AI Innovation",
-    description: "Expert marketing strategies with cutting-edge AI automation to help SMEs grow smarter, faster, and more efficiently. Comprehensive thought leadership blog covering B2B UX, LinkedIn marketing, SEO strategy, AI automation, and more.",
-    images: ["/og-image.jpg"],
   },
   robots: {
     index: true,
@@ -80,19 +60,46 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  openGraph: {
+    title: "Postino - Where Growth Meets AI Innovation",
+    description: "AI-enhanced marketing agency helping SMEs achieve measurable growth through expert strategies and intelligent automation. Serving Nottinghamshire with comprehensive digital marketing, AI chatbots, business automation, and strategic consulting.",
+    url: "https://postino.cc",
+    siteName: "Postino",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Postino - AI-Enhanced Marketing & Automation Agency | Nottinghamshire SME Growth Specialists",
+      },
+    ],
+    locale: "en_GB",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@PostinoAgency",
+    creator: "@PostinoAgency",
+    title: "Postino - AI-Enhanced Marketing Agency",
+    description: "Helping SMEs achieve measurable growth through expert marketing strategies and intelligent automation. Based in Nottinghamshire. 🚀 AI-powered solutions for modern businesses.",
+    images: ["/og-image.jpg"],
+  },
   other: {
     'geo.region': 'GB-NTT',
     'geo.placename': 'Bingham, Nottinghamshire',
     'geo.position': '52.9518;-0.9515',
     'ICBM': '52.9518, -0.9515',
-    'DC.title': 'Postino - Digital Marketing & AI Automation Agency',
+    'DC.title': 'Postino - AI-Enhanced Marketing & Automation Agency',
     'DC.creator': 'Postino',
-    'DC.subject': 'Digital Marketing, AI Automation, Local SEO, Web Design',
-    'DC.description': 'Expert marketing strategies with AI automation for SME growth',
+    'DC.subject': 'AI-Enhanced Marketing, Intelligent Automation, Local SEO, Business Growth',
+    'DC.description': 'AI-enhanced marketing strategies with intelligent automation for measurable SME growth',
     'DC.publisher': 'Postino',
     'DC.language': 'en-GB',
     'article:author': 'Martin',
     'article:publisher': 'Postino',
+    'business:contact_data:locality': 'Bingham',
+    'business:contact_data:region': 'Nottinghamshire',
+    'business:contact_data:country_name': 'United Kingdom',
   },
   verification: {
     google: "google-site-verification-token",
@@ -137,20 +144,32 @@ export default function RootLayout({
             @media (prefers-reduced-motion: reduce) {
               * { animation-duration: 0.01ms !important; }
             }
+            /* Prevent layout shift for navigation */
+            nav { min-height: 72px; }
+            /* Optimize text rendering */
+            body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
           `
         }} />
 
-        {/* DNS prefetch only for critical resources */}
+        {/* Essential resource hints for performance */}
         <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+        <link rel="dns-prefetch" href="//www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="//api.openweathermap.org" />
 
         {/* Preconnect for critical third-party origins */}
         <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+
+        {/* Preload critical assets */}
+        <link rel="preload" href="/og-image.jpg" as="image" type="image/jpeg" />
+        <link rel="preload" href="/logo.png" as="image" type="image/png" />
 
         {/* PWA Manifest */}
         <link rel="manifest" href="/manifest.json" />
 
-        {/* Favicon and app icons */}
+        {/* Optimized favicon and app icons */}
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
@@ -167,9 +186,11 @@ export default function RootLayout({
         <meta name="theme-color" content="#1e3a8a" media="(prefers-color-scheme: light)" />
         <meta name="theme-color" content="#1e3a8a" media="(prefers-color-scheme: dark)" />
 
-        {/* Performance hints */}
+        {/* Performance and accessibility hints */}
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="color-scheme" content="light" />
       </head>
       <body className="antialiased min-h-screen bg-white text-gray-900">
         {children}
@@ -230,6 +251,33 @@ export default function RootLayout({
                 }
               ]
             }),
+          }}
+        />
+
+        {/* Business Hours Schema */}
+        <Script
+          id="business-hours-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(generateBusinessHoursSchema()),
+          }}
+        />
+
+        {/* Contact Point Schema */}
+        <Script
+          id="contact-point-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(generateContactPointSchema()),
+          }}
+        />
+
+        {/* Local Business Schema */}
+        <Script
+          id="local-business-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(generateLocalBusinessSchema()),
           }}
         />
 
@@ -323,7 +371,6 @@ export default function RootLayout({
           }}
         />
 
-        {/* GTM noscript fallback */}
         <noscript>
           <iframe
             src={`https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GTM_ID}`}
@@ -333,10 +380,8 @@ export default function RootLayout({
           />
         </noscript>
 
-        {/* Intelligent Chatbot - Available on all pages */}
         <IntelligentChatbot />
 
-        {/* PWA Components */}
         <PWAWrapper />
       </body>
     </html>

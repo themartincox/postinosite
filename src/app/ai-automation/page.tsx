@@ -1,48 +1,17 @@
 import type { Metadata } from "next";
 import Navigation from "@/components/Navigation";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
+import FAQSection from "@/components/ui/faq";
+import Breadcrumb from "@/components/ui/breadcrumb";
+import { generateMetadata as generateSEOMetadata, servicePageMetadata, generateServiceSchema } from "@/lib/seo-metadata";
 
-export const metadata: Metadata = {
-  title: "AI Automation Services Nottingham | Business Process Automation",
-  description: "Transform your Nottingham business with AI automation. Intelligent chatbots, predictive analytics, workflow automation & custom AI solutions. Serving SMEs across Nottinghamshire with 90% efficiency improvements.",
-  keywords: "AI automation Nottingham, business automation Nottinghamshire, intelligent chatbots, predictive analytics East Midlands, workflow automation UK, AI agency Nottingham, machine learning solutions, process automation",
-  authors: [{ name: "Postino AI Automation Specialists" }],
-  publisher: "Postino Ltd",
-  alternates: {
-    canonical: '/ai-automation'
-  },
-  openGraph: {
-    title: "AI Automation Services Nottingham | Postino Agency",
-    description: "Leading AI automation agency in Nottingham. Intelligent chatbots, predictive analytics & custom AI solutions. 90% efficiency improvements for Nottinghamshire SMEs.",
-    type: "website",
-    locale: "en_GB",
-    url: 'https://postino.cc/ai-automation',
-    siteName: 'Postino',
-    images: [
-      {
-        url: 'https://postino.cc/og-ai-automation.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'AI Automation Services Nottingham - Postino Agency'
-      }
-    ]
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "AI Automation Services Nottingham | Postino",
-    description: "Transform your business with AI automation. Intelligent chatbots, predictive analytics & workflow automation for Nottingham SMEs.",
-    images: ['https://postino.cc/og-ai-automation.jpg']
-  },
-  other: {
-    'geo.region': 'GB-NTT',
-    'geo.placename': 'Nottingham',
-    'geo.position': '52.9548;-1.1581',
-    'ICBM': '52.9548, -1.1581',
-    'business:contact_data:locality': 'Nottingham',
-    'business:contact_data:region': 'Nottinghamshire',
-    'business:contact_data:country_name': 'United Kingdom'
-  }
-};
+export const metadata: Metadata = generateSEOMetadata({
+  ...servicePageMetadata.aiAutomation,
+  openGraphTitle: "AI Automation Services Nottingham | Postino Agency",
+  openGraphDescription: "Leading AI automation agency in Nottingham. Intelligent chatbots, predictive analytics & custom AI solutions. 90% efficiency improvements for Nottinghamshire SMEs.",
+  twitterTitle: "AI Automation Services Nottingham | Postino",
+  twitterDescription: "Transform your business with AI automation. Intelligent chatbots, predictive analytics & workflow automation for Nottingham SMEs.",
+});
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -71,10 +40,57 @@ import Link from "next/link";
 import Script from "next/script";
 
 export default function AIAutomationPage() {
+  const breadcrumbItems = [
+    { label: "Services", href: "/services" },
+    { label: "AI Automation", current: true }
+  ];
+
+  const aiAutomationFAQs = [
+    {
+      question: "What is AI automation and how does it work for businesses?",
+      answer: "AI automation uses artificial intelligence to streamline business processes, reduce manual tasks, and improve efficiency. It works by analyzing patterns in your business data, learning from repetitive tasks, and automatically executing workflows. For SMEs, this typically includes customer service chatbots, automated email responses, lead scoring, appointment scheduling, and data entry tasks. Our AI systems integrate with your existing tools and can save 40+ hours per week while reducing errors by 95%."
+    },
+    {
+      question: "How much does AI automation cost for small businesses?",
+      answer: "AI automation costs vary by complexity but start from £75/month for basic workflow automation and £112.50/month for intelligent chatbots. Custom AI solutions range from £750-£3,000 depending on requirements. Most Nottinghamshire SMEs see ROI within 3 months through time savings and improved efficiency. We offer 25% local discounts for Bingham and Rushcliffe businesses, plus payment plans to fit your cash flow."
+    },
+    {
+      question: "Which business processes can be automated with AI?",
+      answer: "Common AI automation applications include: <strong>Customer Service</strong> (24/7 chatbots, automated responses), <strong>Sales</strong> (lead scoring, follow-up sequences, appointment booking), <strong>Operations</strong> (invoice processing, inventory management, report generation), <strong>Marketing</strong> (email campaigns, social media posting, content creation), and <strong>HR</strong> (recruitment screening, employee onboarding). Essentially, any repetitive task with clear rules can be automated."
+    },
+    {
+      question: "How long does it take to implement AI automation?",
+      answer: "Implementation timelines depend on complexity: Basic chatbots and workflow automation can be live within 2-4 weeks. Custom AI solutions typically take 6-12 weeks including testing and training. We follow a phased approach starting with quick wins, then expanding to more complex processes. Most businesses see immediate benefits from the first automation while we build additional capabilities."
+    },
+    {
+      question: "Will AI automation replace my employees?",
+      answer: "No, AI automation enhances your team rather than replacing them. It handles repetitive, time-consuming tasks, freeing your employees for strategic, creative, and relationship-building work. Most businesses find they can grow without hiring additional staff and their existing team becomes more productive and satisfied. We focus on 'human + AI' collaboration where technology amplifies human capabilities."
+    },
+    {
+      question: "What makes Postino different for AI automation?",
+      answer: "We're locally based in Bingham, Nottinghamshire, providing hands-on support you can't get from larger agencies. We specialize in SME-focused solutions with transparent pricing, no long-term contracts, and comprehensive training so you own your systems. Our AI implementations are designed for growth - starting simple and scaling with your business. Plus, we offer 25% local discounts and understand the specific challenges facing East Midlands businesses."
+    },
+    {
+      question: "Do I need technical knowledge to use AI automation?",
+      answer: "No technical knowledge required. We design user-friendly systems and provide comprehensive training for your team. Most AI tools we implement have intuitive interfaces similar to using a smartphone app. We also provide ongoing support, documentation, and training sessions to ensure your team feels confident using the new systems. Our goal is to make AI accessible, not complicated."
+    },
+    {
+      question: "How do you measure the success of AI automation?",
+      answer: "We track concrete metrics including: <strong>Time Savings</strong> (hours per week), <strong>Cost Reduction</strong> (operational expenses), <strong>Accuracy Improvement</strong> (error reduction %), <strong>Customer Satisfaction</strong> (response times, resolution rates), <strong>Lead Generation</strong> (conversion rates, qualified leads), and <strong>ROI</strong> (return on investment). We provide monthly reports showing exactly how AI automation is benefiting your business with clear before/after comparisons."
+    }
+  ];
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Navigation */}
       <Navigation />
+
+      {/* Breadcrumb */}
+      <div className="bg-white py-4 border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Breadcrumb items={breadcrumbItems} />
+        </div>
+      </div>
 
       {/* Hero Section */}
       <section className="bg-coral-red text-white py-20">
@@ -598,6 +614,49 @@ export default function AIAutomationPage() {
           </div>
         </div>
       </section>
+
+      {/* FAQ Section - NEW */}
+      <FAQSection
+        title="AI Automation Questions Answered"
+        subtitle="Everything you need to know about implementing AI automation for your business"
+        items={aiAutomationFAQs}
+        relatedQuestions={[
+          {
+            title: "How much does growth marketing cost?",
+            href: "/growth-marketing#faq",
+            description: "Learn about our comprehensive marketing pricing and ROI"
+          },
+          {
+            title: "What makes Postino different?",
+            href: "/#faq",
+            description: "Discover our unique AI-enhanced marketing approach"
+          },
+          {
+            title: "Do you work with businesses outside Nottingham?",
+            href: "/nottingham-marketing-agency#faq",
+            description: "Find out about our service coverage and local benefits"
+          }
+        ]}
+        relatedServices={[
+          {
+            title: "Growth Marketing Services",
+            href: "/growth-marketing",
+            description: "Strategic marketing combined with AI automation"
+          },
+          {
+            title: "AI Chatbot Development",
+            href: "/ai-automation/custom-ai/intelligent-chatbots",
+            description: "24/7 customer service automation"
+          },
+          {
+            title: "Business Process Automation",
+            href: "/ai-automation/process",
+            description: "Streamline operations with intelligent workflows"
+          }
+        ]}
+        className="bg-gray-50"
+        schemaId="ai-automation-faq-schema"
+      />
 
       {/* CTA Section */}
       <section className="py-20 bg-midnight-blue text-white">

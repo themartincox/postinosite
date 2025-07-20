@@ -1,32 +1,21 @@
 import type { Metadata } from "next";
 import Navigation from "@/components/Navigation";
+import FAQSection from "@/components/ui/faq";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowRight, CheckCircle, MapPin, Phone, Mail } from "lucide-react";
 import Link from "next/link";
+import Script from "next/script";
+import { generateMetadata as generateSEOMetadata, servicePageMetadata, generateOrganizationSchema, generateServiceSchema } from "@/lib/seo-metadata";
 
-export const metadata: Metadata = {
-  title: "Marketing Agency Nottingham | Postino - Local Digital Marketing Experts",
-  description: "Top-rated marketing agency in Nottingham. Expert SEO, web design, AI automation & growth marketing for local businesses. Based in Bingham, serving all of Nottinghamshire. Call 08007723291 for your free consultation.",
-  keywords: "marketing agency Nottingham, digital marketing Nottingham, SEO Nottingham, web design Nottingham, marketing company Nottinghamshire, advertising agency East Midlands, growth marketing Bingham, local marketing services",
-  alternates: {
-    canonical: '/nottingham-marketing-agency'
-  },
-  openGraph: {
-    title: "Marketing Agency Nottingham | Postino",
-    description: "Nottingham's leading marketing agency. Expert digital marketing, SEO & web design for local businesses. Free consultation available.",
-    url: 'https://postino.cc/nottingham-marketing-agency',
-    type: "website",
-    locale: "en_GB",
-  },
-  other: {
-    'geo.region': 'GB-NTT',
-    'geo.placename': 'Nottingham',
-    'geo.position': '52.9548;-1.1581',
-    'ICBM': '52.9548, -1.1581',
-  }
-};
+export const metadata: Metadata = generateSEOMetadata({
+  ...servicePageMetadata.nottinghamAgency,
+  openGraphTitle: "Marketing Agency Nottingham | Postino - Local Digital Marketing Experts",
+  openGraphDescription: "Top-rated marketing agency in Nottingham. Expert AI-enhanced marketing, SEO, web design & automation for local businesses. Based in Bingham, serving all of Nottinghamshire.",
+  twitterTitle: "Marketing Agency Nottingham | Postino",
+  twitterDescription: "Nottingham's leading AI-enhanced marketing agency. Expert digital marketing, SEO & automation for local businesses. Free consultation available.",
+});
 
 const localServices = [
   {
@@ -70,6 +59,41 @@ const localTestimonials = [
 ];
 
 export default function NottinghamMarketingAgency() {
+  const nottinghamFAQs = [
+    {
+      question: "What marketing services do you offer in Nottingham?",
+      answer: "We offer comprehensive digital marketing services specifically for Nottingham businesses including: <strong>Local SEO</strong> (dominate 'near me' searches), <strong>Website Design & Development</strong> (mobile-responsive, conversion-optimized), <strong>AI Chatbots</strong> (24/7 customer service), <strong>Content Marketing</strong> (establish local thought leadership), <strong>Social Media Management</strong>, <strong>Email Marketing Automation</strong>, and <strong>Business Process Automation</strong>. All services are tailored for the Nottinghamshire market with deep local expertise."
+    },
+    {
+      question: "Do you work with small businesses in Nottingham?",
+      answer: "Yes, we specialize exclusively in helping SMEs (Small and Medium Enterprises) across Nottinghamshire and the East Midlands. Our services are designed specifically for growing businesses with budgets and needs that reflect the local market. We understand the challenges facing Nottingham businesses and offer flexible pricing, transparent costs, and solutions that scale with your growth."
+    },
+    {
+      question: "Where is your Nottingham office located?",
+      answer: "We're located at 1 Fisher Lane, Bingham, Nottingham, NG13 8BQ - right in the heart of Nottinghamshire. Being genuinely local means we understand the Nottingham market, can meet face-to-face when needed, and provide hands-on support you won't get from London agencies. We serve businesses throughout Nottinghamshire including Nottingham city centre, West Bridgford, Beeston, Arnold, Carlton, and surrounding areas."
+    },
+    {
+      question: "How much do marketing services cost in Nottingham?",
+      answer: "Our Nottingham marketing packages are competitively priced for local SMEs: Website Design from £150 (refundable deposit), AI Chatbots from £112.50/month, Local SEO from £60/month, and comprehensive marketing strategies from £997/month. We offer 25% local discounts for Bingham and Rushcliffe businesses, transparent pricing with no hidden fees, and flexible payment plans to suit your cash flow."
+    },
+    {
+      question: "Why choose a local Nottingham marketing agency?",
+      answer: "Local agencies offer advantages you can't get elsewhere: <strong>Market Knowledge</strong> (we understand Nottingham customers and competition), <strong>Personal Service</strong> (face-to-face meetings, direct access to decision-makers), <strong>Community Investment</strong> (supporting local business growth), <strong>Responsive Support</strong> (same timezone, immediate assistance), and <strong>Local Networks</strong> (connections with other Nottingham businesses for partnerships). Plus, 25% local discounts make us more cost-effective than larger agencies."
+    },
+    {
+      question: "Can you help Nottingham businesses compete with larger companies?",
+      answer: "Absolutely! Our AI-enhanced marketing levels the playing field by automating processes that larger companies handle with big teams. We help Nottingham SMEs punch above their weight through: smart local SEO strategies, conversion-optimized websites, 24/7 AI customer service, automated marketing campaigns, and data-driven optimization. Many of our clients now outrank and outperform much larger competitors in local search results."
+    },
+    {
+      question: "What results can Nottingham businesses expect?",
+      answer: "Results vary by business and industry, but typical outcomes include: <strong>Local Search</strong> (ranking #1-3 for key local terms within 3-6 months), <strong>Website Traffic</strong> (150-300% increase in qualified visitors), <strong>Lead Generation</strong> (40-60% more inquiries), <strong>Conversion Rates</strong> (25-50% improvement), and <strong>Time Savings</strong> (30-40 hours per week through automation). We provide transparent monthly reporting showing exactly how your investment is performing."
+    },
+    {
+      question: "Do you offer free consultations for Nottingham businesses?",
+      answer: "Yes, we provide free 30-45 minute consultations for all Nottinghamshire businesses. During this session, we'll analyze your current marketing, identify opportunities, discuss your goals, and provide actionable recommendations - even if you don't work with us. There's no pressure or sales pitch, just genuine advice from local marketing experts who understand your market. Call 0800 772 3291 or email hello@postino.cc to book."
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-warm-white">
       <Navigation />
@@ -179,6 +203,15 @@ export default function NottinghamMarketingAgency() {
           </div>
         </div>
       </section>
+
+      {/* FAQ Section - NEW */}
+      <FAQSection
+        title="Nottingham Marketing Agency FAQs"
+        subtitle="Everything you need to know about working with a local Nottingham marketing agency"
+        items={nottinghamFAQs}
+        className="bg-white"
+        schemaId="nottingham-agency-faq-schema"
+      />
 
       {/* Contact CTA */}
       <section className="py-20 bg-gradient-to-r from-coral-red to-forest-green text-white">

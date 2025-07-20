@@ -240,6 +240,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly' as const,
       priority: 0.8, // Increased priority for comprehensive local SEO
     },
+    {
+      url: `${baseUrl}/midlands-ai-automation`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.8, // Regional AI automation services targeting East Midlands
+    },
   ]
 
   // Local booking pages - Live payment systems (noindexed but included for sitemap completeness)

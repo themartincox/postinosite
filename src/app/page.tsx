@@ -2,6 +2,7 @@ import EnhancedServiceCards from "@/components/EnhancedServiceCards";
 import Navigation from "@/components/Navigation";
 import ParticleNetwork from "@/components/ParticleNetwork";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
+import FAQSection from "@/components/ui/faq";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -55,6 +56,49 @@ const ROICalculator = dynamic(() => import("@/components/ROICalculator"), {
 });
 
 export default function HomePage() {
+  const homepageFAQs = [
+    {
+      question: "What services does Postino offer and how much do they cost?",
+      answer:
+        "Postino offers comprehensive digital marketing and AI automation services: <strong>Website Design</strong> (£150-£3,750), <strong>AI Chatbots</strong> (£112.50-£2,250/month), <strong>Local SEO & Marketing</strong> (£60-£1,500/month), <strong>Business Automation</strong> (£75-£3,000), and <strong>Growth Marketing Strategies</strong> (£997-£5,000/month). All pricing includes transparent, refundable deposits and 25% local discounts for Bingham and Rushcliffe businesses. Call 0800 772 3291 for a free consultation.",
+    },
+    {
+      question: "Where is Postino located and what areas do you serve?",
+      answer:
+        "Postino is based at 1 Fisher Lane, Bingham, Nottingham, NG13 8BQ. We serve businesses across Nottinghamshire, the East Midlands, and throughout the UK. Local businesses in Bingham, Rushcliffe, Nottingham, and surrounding areas receive priority service, on-site support, and 25% local discounts. Being genuinely local means we understand the regional market and can provide hands-on support when needed.",
+    },
+    {
+      question: "What makes Postino different from other marketing agencies?",
+      answer:
+        "Postino uniquely combines expert marketing with cutting-edge AI automation. Unlike traditional agencies, we're genuinely local (Bingham-based), provide comprehensive training so you own your marketing assets, offer transparent pricing with no hidden fees, and specialize exclusively in SME growth. Our AI-first approach delivers faster, smarter growth while our local expertise ensures we understand your market and competition.",
+    },
+    {
+      question: "Do you offer AI automation services for small businesses?",
+      answer:
+        "Yes, we specialize in AI automation for SMEs including: 24/7 intelligent chatbots, automated customer follow-up sequences, business process automation, predictive analytics, CRM automation, and workflow optimization. Our AI solutions are designed for small business budgets starting from £75/month, integrate with existing systems, and typically save 40+ hours per week while reducing errors by 95%.",
+    },
+    {
+      question: "How quickly can you start working on my business?",
+      answer:
+        "We can start immediately! Initial consultations are available within 24-48 hours, basic services like chatbots and SEO can begin within 1-2 weeks, and comprehensive marketing strategies typically launch within 2-4 weeks. Website projects start with refundable deposits (£150-£3,750) and most are completed within 4-8 weeks. Emergency support and urgent projects can be prioritized for local Nottinghamshire businesses.",
+    },
+    {
+      question: "Do you provide training and ongoing support?",
+      answer:
+        "Absolutely! We believe in empowering you to own your marketing assets. All services include comprehensive training, documentation, video tutorials, and ongoing support. You'll have direct access to our team via phone (0800 772 3291), email (hello@postino.cc), and for local businesses, face-to-face meetings. Monthly reviews ensure your systems continue performing optimally.",
+    },
+    {
+      question: "Can you help businesses compete with larger companies?",
+      answer:
+        "Yes! Our AI-enhanced marketing levels the playing field by giving SMEs capabilities typically available only to large corporations: professional automation, 24/7 customer service, data-driven optimization, and sophisticated marketing campaigns. Many of our clients now outrank and outperform much larger competitors through smart use of technology and strategic local positioning.",
+    },
+    {
+      question: "What results can I expect and how do you measure success?",
+      answer:
+        "Results vary by business and goals, but typical outcomes include: 150-300% increase in website traffic, 40-60% more qualified leads, 25-50% improvement in conversion rates, 30-40 hours weekly time savings through automation, and 3-5x ROI within 6 months. We provide transparent monthly reporting with clear metrics including traffic, leads, conversions, rankings, and revenue attribution.",
+    },
+  ];
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Navigation */}
@@ -327,6 +371,15 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* FAQ Section - NEW */}
+      <FAQSection
+        title="Frequently Asked Questions"
+        subtitle="Everything you need to know about working with Postino - your local AI-enhanced marketing partner"
+        items={homepageFAQs}
+        className="bg-white"
+        schemaId="homepage-faq-schema"
+      />
 
       {/* Footer */}
       <footer className="bg-charcoal text-white py-16">
