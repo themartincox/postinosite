@@ -386,9 +386,9 @@ export class ConversationFlowManager {
         content: "Great! I'd love to understand more about your current website. What's the URL so I can take a look?",
         timestamp: new Date(),
         options: [
-          { id: '1', text: '🌐 I'll share the URL', value: 'share-url', action: 'continue', nextStep: 'website-deep-dive' },
+          { id: '1', text: '🌐 I will share the URL', value: 'share-url', action: 'continue', nextStep: 'website-deep-dive' },
           { id: '2', text: '🔒 Prefer not to share yet', value: 'no-url', action: 'continue', nextStep: 'website-deep-dive' },
-          { id: '3', text: '🚧 It\'s not live yet', value: 'not-live', action: 'continue', nextStep: 'website-deep-dive' }
+          { id: '3', text: '🚧 It is not live yet', value: 'not-live', action: 'continue', nextStep: 'website-deep-dive' }
         ]
       };
     }
