@@ -1,97 +1,56 @@
-"use client";
+import * as React from "react"
+import { cn } from "@/lib/utils"
 
-import Link from "next/link";
-import { ChevronRight, Home } from "lucide-react";
-import Script from "next/script";
+export interface BreadcrumbProps extends React.HTMLAttributes<HTMLElement> {}
 
-export interface BreadcrumbItem {
-  label: string;
-  href?: string;
-  current?: boolean;
-}
-
-interface BreadcrumbProps {
-  items: BreadcrumbItem[];
-  className?: string;
-  showHome?: boolean;
-  showSchema?: boolean;
-}
-
-export function Breadcrumb({
-  items,
-  className = "",
-  showHome = true,
-  showSchema = true
-}: BreadcrumbProps) {
-  // Create breadcrumb list with home if requested
-  const breadcrumbItems = showHome ? [
-    { label: "Home", href: "/" },
-    ...items
-  ] : items;
-
-  // Generate schema markup
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": breadcrumbItems.map((item, index) => ({
-      "@type": "ListItem",
-      "position": index + 1,
-      "name": item.label,
-      "item": item.href ? `https://postino.cc${item.href}` : undefined
-    }))
-  };
-
+export function Breadcrumb({ children, ...props }: BreadcrumbProps) {
   return (
-    <nav
-      className={`flex items-center space-x-1 text-sm text-gray-600 ${className}`}
-      aria-label="Breadcrumb"
-    >
-      <ol className="flex items-center space-x-1">
-        {breadcrumbItems.map((item, index) => (
-          <li key={index} className="flex items-center">
-            {index > 0 && (
-              <ChevronRight className="h-4 w-4 text-gray-400 mx-1" />
-            )}
-
-            {item.href && !item.current ? (
-              <Link
-                href={item.href}
-                className="hover:text-blue-600 transition-colors flex items-center"
-              >
-                {index === 0 && showHome && (
-                  <Home className="h-4 w-4 mr-1" />
-                )}
-                {item.label}
-              </Link>
-            ) : (
-              <span
-                className={`flex items-center ${
-                  item.current ? 'text-gray-900 font-medium' : 'text-gray-600'
-                }`}
-                aria-current={item.current ? 'page' : undefined}
-              >
-                {index === 0 && showHome && (
-                  <Home className="h-4 w-4 mr-1" />
-                )}
-                {item.label}
-              </span>
-            )}
-          </li>
-        ))}
-      </ol>
-
-      {/* Breadcrumb Schema Markup */}
-      {showSchema && (
-        <Script
-          id="breadcrumb-schema"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(breadcrumbSchema),
-          }}
-        />
-      )}
+    <nav className="flex" aria-label="Breadcrumb" {...props}>
+      <ol className="flex items-center space-x-4">{children}</ol>
     </nav>
-  );
+  )
 }
 
-export default Breadcrumb;
+export function BreadcrumbList({ children }: { children: React.ReactNode }) {
+  return <ol className="flex items-center space-x-4">{children}</ol>
+}
+
+export function BreadcrumbItem({ children }: { children: React.ReactNode }) {
+  return <li className="flex items-center">{children}</li>
+}
+
+export function BreadcrumbLink({
+  href,
+  children,
+  className,
+}: {
+  href: string
+  children: React.ReactNode
+  className?: string
+}) {
+  return (
+    <a
+      href={href}
+      className={cn("text-sm font-medium text-muted-foreground hover:text-primary", className)}
+    >
+      {children}
+    </a>
+  )
+}
+
+export function BreadcrumbSeparator() {
+  return <span className="mx-2 text-muted-foreground">/</span>
+}
+
+export function BreadcrumbPage({ children }: { children: React.ReactNode }) {
+  return <span className="text-sm font-medium text-foreground">{children}</span>
+}
+
+// Export all for use in individual imports
+export {
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+  BreadcrumbPage,
+}
