@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Navigation from "@/components/Navigation";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
 import FAQSection from "@/components/ui/faq";
-import Breadcrumb from "@/components/ui/breadcrumb";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Badge } from "@/components/ui/badge";
 import { generateMetadata as generateSEOMetadata, servicePageMetadata } from "@/lib/seo-metadata";
 import { Button } from "@/components/ui/button";

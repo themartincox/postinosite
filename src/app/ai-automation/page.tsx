@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Navigation from "@/components/Navigation";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
 import FAQSection from "@/components/ui/faq";
-import Breadcrumb from "@/components/ui/breadcrumb";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { generateMetadata as generateSEOMetadata, servicePageMetadata, generateServiceSchema } from "@/lib/seo-metadata";
 
 export const metadata: Metadata = generateSEOMetadata({
