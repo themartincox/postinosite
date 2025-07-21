@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils"
 
 export interface BreadcrumbProps extends React.HTMLAttributes<HTMLElement> {}
 
-export function Breadcrumb({ children, ...props }: BreadcrumbProps) {
+function Breadcrumb({ children, ...props }: BreadcrumbProps) {
   return (
     <nav className="flex" aria-label="Breadcrumb" {...props}>
       <ol className="flex items-center space-x-4">{children}</ol>
