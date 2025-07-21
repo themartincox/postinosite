@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+<!-- Blog Index Page -->
+<url>
+  <loc>https://postino.cc/blog</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.8</priority>
+</url>
+
+<!-- Featured Blog Posts (Higher Priority) -->
+<url>
+  <loc>https://postino.cc/blog/creating-seamless-b2b-user-experiences-that-convert</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.8</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/blog/mastering-thought-leadership-content-on-linkedin</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.8</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/blog/complete-guide-seo-topic-clusters-content-mapping</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.8</priority>
+</url>
+
+<!-- Core Topic Blog Posts -->
+<url>
+  <loc>https://postino.cc/blog/zero-click-search-optimization-featured-snippets-local-pack</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/blog/ai-enhanced-marketing-automation-workflows-sme-growth</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/blog/linkedin-marketing-strategy-b2b-lead-generation</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/blog/platform-agnostic-development-choosing-right-tech-stack</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/blog/client-training-empowerment-owning-marketing-assets</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/blog/data-driven-storytelling-compelling-b2b-narratives</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.7</priority>
+</url>
+
+</urlset>

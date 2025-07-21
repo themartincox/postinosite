@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+<!-- Core Pages -->
+<url>
+  <loc>https://postino.cc/</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>1.0</priority>
+</url>
+
+<!-- Primary Service Pages with FAQ Schema -->
+<url>
+  <loc>https://postino.cc/growth-marketing</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.9</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/ai-automation</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.9</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/nottingham-marketing-agency</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.9</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/midlands-ai-automation</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.8</priority>
+</url>
+
+<!-- Industry Pages with Schema -->
+<url>
+  <loc>https://postino.cc/industries</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.8</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/industries/dental-practices</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/industries/medical-practices</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/industries/cosmetic-clinics</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.7</priority>
+</url>
+
+<!-- Content & Authority Pages -->
+<url>
+  <loc>https://postino.cc/blog</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.8</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/case-studies</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/about</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.6</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/contact</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.5</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/pricing</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/resources</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.6</priority>
+</url>
+
+<!-- Lead Generation Pages -->
+<url>
+  <loc>https://postino.cc/revenue-forecast</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/website-audit</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/growth-consultation</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.8</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/ai-automation-demo</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.8</priority>
+</url>
+
+<!-- Local Landing Pages -->
+<url>
+  <loc>https://postino.cc/bingham</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.6</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/rushcliffe</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.6</priority>
+</url>
+
+<!-- Growth Marketing Service Pages -->
+<url>
+  <loc>https://postino.cc/growth-marketing/inbound</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.6</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/growth-marketing/inbound/seo</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.6</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/growth-marketing/inbound/content-strategy-creation</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.6</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/growth-marketing/inbound/email-marketing-automation</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.6</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/growth-marketing/inbound/social-media-management</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.6</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/growth-marketing/ai-search</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.6</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/growth-marketing/branding</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.6</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/growth-marketing/strategy</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.6</priority>
+</url>
+
+<!-- AI Automation Service Pages -->
+<url>
+  <loc>https://postino.cc/ai-automation/process</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.6</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/ai-automation/intelligence</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.6</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/ai-automation/custom-ai</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.6</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/ai-automation/custom-ai/intelligent-chatbots</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.6</priority>
+</url>
+
+<!-- Blog Posts (Latest Content) -->
+<url>
+  <loc>https://postino.cc/blog/creating-seamless-b2b-user-experiences-that-convert</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/blog/mastering-thought-leadership-content-on-linkedin</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/blog/complete-guide-seo-topic-clusters-content-mapping</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/blog/zero-click-search-optimization-featured-snippets-local-pack</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.6</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/blog/ai-enhanced-marketing-automation-workflows-sme-growth</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.6</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/blog/linkedin-marketing-strategy-b2b-lead-generation</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.6</priority>
+</url>
+
+<!-- Additional Service Pages -->
+<url>
+  <loc>https://postino.cc/content-strategy</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.5</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/seo-services</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.5</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/ecommerce</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.5</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/wellness-beauty</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.5</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/success</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.5</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/offline</loc>
+  <lastmod>2025-01-21</lastmod>
+  <changefreq>yearly</changefreq>
+  <priority>0.3</priority>
+</url>
+
+</urlset>

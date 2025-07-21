@@ -1,41 +1,59 @@
 # Postino.cc Robots.txt
 # Updated: January 2025
-# Marketing & AI Automation Agency - Nottingham, UK
+# AI-Enhanced Marketing & Automation Agency - Nottingham, UK
+# Comprehensive SEO & FAQ Schema Optimized
 
 # Default rules for all crawlers
 User-agent: *
 Allow: /
 
-# Explicitly allow important sections
+# === PRIORITY PAGES FOR SEO ===
+# Core service pages with FAQ schema
 Allow: /growth-marketing
 Allow: /growth-marketing/*
 Allow: /ai-automation
 Allow: /ai-automation/*
+Allow: /nottingham-marketing-agency
+Allow: /midlands-ai-automation
+
+# Industry pages with comprehensive schema
 Allow: /industries
 Allow: /industries/*
-Allow: /case-studies
+Allow: /industries/dental-practices
+Allow: /industries/medical-practices
+Allow: /industries/cosmetic-clinics
+
+# Content & authority pages
 Allow: /blog
 Allow: /blog/*
+Allow: /case-studies
 Allow: /about
 Allow: /contact
 Allow: /pricing
 Allow: /resources
 
-# Allow lead generation pages
+# Lead generation & conversion pages
 Allow: /revenue-forecast
 Allow: /website-audit
 Allow: /growth-consultation
 Allow: /ai-automation-demo
 
-# Allow enhanced local landing pages with FAQ sections
+# Local landing pages with FAQ sections
 Allow: /bingham
-Allow: /bingham/
+Allow: /bingham/*
 Allow: /rushcliffe
-Allow: /rushcliffe/
-Allow: /nottingham-marketing-agency
-Allow: /nottingham-marketing-agency/
+Allow: /rushcliffe/*
 
-# Block admin and private areas
+# Service category pages
+Allow: /growth-marketing/inbound/*
+Allow: /growth-marketing/ai-search/*
+Allow: /growth-marketing/branding/*
+Allow: /growth-marketing/strategy/*
+Allow: /ai-automation/process/*
+Allow: /ai-automation/intelligence/*
+Allow: /ai-automation/custom-ai/*
+
+# === BLOCKED AREAS ===
 Disallow: /admin/
 Disallow: /admin/*
 Disallow: /_next/
@@ -48,19 +66,25 @@ Disallow: /temp/
 Disallow: /.well-known/
 Disallow: /uploads/
 Disallow: /out/
+Disallow: /.same/
+Disallow: /node_modules/
 
-# Google Bot
+# === GOOGLE BOT SPECIFIC ===
 User-agent: Googlebot
 Allow: /
 Allow: /blog/
 Allow: /blog/*
 Allow: /growth-marketing/
+Allow: /growth-marketing/*
 Allow: /ai-automation/
+Allow: /ai-automation/*
 Allow: /industries/
 Allow: /industries/*
 Allow: /case-studies/
 Allow: /about/
 Allow: /contact/
+Allow: /nottingham-marketing-agency/
+Allow: /midlands-ai-automation/
 Allow: /revenue-forecast/
 Allow: /website-audit/
 Allow: /growth-consultation/
@@ -75,22 +99,22 @@ Disallow: /archive/*
 
 Crawl-delay: 1
 
-# Bing Bot
+# === BING BOT ===
 User-agent: Bingbot
 Allow: /
 Allow: /blog/
 Allow: /blog/*
 Allow: /growth-marketing/
+Allow: /growth-marketing/*
 Allow: /ai-automation/
+Allow: /ai-automation/*
 Allow: /industries/
 Allow: /industries/*
 Allow: /case-studies/
 Allow: /about/
 Allow: /contact/
-Allow: /revenue-forecast/
-Allow: /website-audit/
-Allow: /growth-consultation/
-Allow: /ai-automation-demo/
+Allow: /nottingham-marketing-agency/
+Allow: /midlands-ai-automation/
 
 Disallow: /admin/
 Disallow: /admin/*
@@ -100,7 +124,7 @@ Disallow: /archive/
 
 Crawl-delay: 2
 
-# Facebook External Hit
+# === SOCIAL MEDIA CRAWLERS ===
 User-agent: facebookexternalhit
 Allow: /
 Allow: /blog/*
@@ -109,13 +133,13 @@ Allow: /about/
 Allow: /industries/
 Allow: /growth-marketing/
 Allow: /ai-automation/
+Allow: /nottingham-marketing-agency/
 
 Disallow: /admin/
 Disallow: /_next/
 Disallow: /api/
 Disallow: /contact/
 
-# Twitter Bot
 User-agent: Twitterbot
 Allow: /
 Allow: /blog/*
@@ -124,13 +148,13 @@ Allow: /about/
 Allow: /industries/
 Allow: /growth-marketing/
 Allow: /ai-automation/
+Allow: /nottingham-marketing-agency/
 
 Disallow: /admin/
 Disallow: /_next/
 Disallow: /api/
 Disallow: /contact/
 
-# LinkedIn Bot
 User-agent: LinkedInBot
 Allow: /
 Allow: /blog/
@@ -140,26 +164,30 @@ Allow: /case-studies/
 Allow: /growth-marketing/
 Allow: /ai-automation/
 Allow: /industries/
+Allow: /nottingham-marketing-agency/
 
 Disallow: /admin/
 Disallow: /_next/
 Disallow: /api/
 Disallow: /contact/
 
-# AI/LLM Crawlers - Enhanced for FAQ and local content
+# === AI/LLM CRAWLERS - ENHANCED FOR FAQ CONTENT ===
 User-agent: OpenAI-SearchBot
 Allow: /
 Allow: /blog/
 Allow: /blog/*
 Allow: /about/
 Allow: /growth-marketing/
+Allow: /growth-marketing/*
 Allow: /ai-automation/
+Allow: /ai-automation/*
 Allow: /industries/
 Allow: /industries/*
 Allow: /case-studies/
+Allow: /nottingham-marketing-agency/
+Allow: /midlands-ai-automation/
 Allow: /bingham/
 Allow: /rushcliffe/
-Allow: /nottingham-marketing-agency/
 
 Disallow: /admin/
 Disallow: /_next/
@@ -167,6 +195,22 @@ Disallow: /api/
 Disallow: /contact/
 Disallow: /revenue-forecast/
 Disallow: /website-audit/
+
+User-agent: ChatGPT-User
+Allow: /
+Allow: /blog/
+Allow: /blog/*
+Allow: /about/
+Allow: /growth-marketing/
+Allow: /ai-automation/
+Allow: /industries/
+Allow: /case-studies/
+Allow: /nottingham-marketing-agency/
+
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /api/
+Disallow: /contact/
 
 User-agent: PerplexityBot
 Allow: /
@@ -177,9 +221,8 @@ Allow: /growth-marketing/
 Allow: /ai-automation/
 Allow: /industries/
 Allow: /case-studies/
-Allow: /bingham/
-Allow: /rushcliffe/
 Allow: /nottingham-marketing-agency/
+Allow: /midlands-ai-automation/
 
 Disallow: /admin/
 Disallow: /_next/
@@ -197,8 +240,6 @@ Allow: /growth-marketing/
 Allow: /ai-automation/
 Allow: /industries/
 Allow: /case-studies/
-Allow: /bingham/
-Allow: /rushcliffe/
 Allow: /nottingham-marketing-agency/
 
 Disallow: /admin/
@@ -206,7 +247,22 @@ Disallow: /_next/
 Disallow: /api/
 Disallow: /contact/
 
-# Controlled access for SEO crawlers (allow but throttle)
+User-agent: Anthropic-AI
+Allow: /
+Allow: /blog/
+Allow: /blog/*
+Allow: /about/
+Allow: /growth-marketing/
+Allow: /ai-automation/
+Allow: /industries/
+Allow: /nottingham-marketing-agency/
+
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /api/
+Disallow: /contact/
+
+# === SEO TOOL CRAWLERS - CONTROLLED ACCESS ===
 User-agent: SemrushBot
 Crawl-delay: 10
 Allow: /
@@ -216,6 +272,8 @@ Allow: /about
 Allow: /industries
 Allow: /growth-marketing
 Allow: /ai-automation
+Allow: /nottingham-marketing-agency
+
 Disallow: /admin/
 Disallow: /contact/
 Disallow: /revenue-forecast/
@@ -230,12 +288,26 @@ Allow: /about
 Allow: /industries
 Allow: /growth-marketing
 Allow: /ai-automation
+Allow: /nottingham-marketing-agency
+
 Disallow: /admin/
 Disallow: /contact/
 Disallow: /revenue-forecast/
 Disallow: /website-audit/
 
-# Block purely aggressive crawlers
+User-agent: MajesticSEO
+Crawl-delay: 10
+Allow: /
+Allow: /blog/*
+Allow: /about
+Allow: /industries
+Allow: /growth-marketing
+Allow: /ai-automation
+
+Disallow: /admin/
+Disallow: /contact/
+
+# === BLOCK AGGRESSIVE/UNWANTED CRAWLERS ===
 User-agent: MJ12bot
 Disallow: /
 Crawl-delay: 86400
@@ -244,8 +316,16 @@ User-agent: DotBot
 Disallow: /
 Crawl-delay: 86400
 
-# Sitemap location
-Sitemap: https://postino.cc/sitemap.xml
+User-agent: SiteBot
+Disallow: /
 
-# Host declaration
+User-agent: spbot
+Disallow: /
+
+# === SITEMAPS ===
+Sitemap: https://postino.cc/sitemap.xml
+Sitemap: https://postino.cc/blog-sitemap.xml
+Sitemap: https://postino.cc/pages-sitemap.xml
+
+# === HOST DECLARATION ===
 Host: https://postino.cc
