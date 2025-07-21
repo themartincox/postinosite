@@ -75,10 +75,7 @@ const nextConfig = {
   experimental: {
     optimizeCss: true,
     scrollRestoration: true,
-    optimizeServerReact: true,
-    turbotrace: {
-      logLevel: 'error'
-    }
+    optimizeServerReact: true
   },
 
   // Compression and caching
