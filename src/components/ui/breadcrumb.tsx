@@ -11,15 +11,15 @@ export function Breadcrumb({ children, ...props }: BreadcrumbProps) {
   )
 }
 
-export function BreadcrumbList({ children }: { children: React.ReactNode }) {
-  return <ol className="flex items-center space-x-4">{children}</ol>
-}
+const BreadcrumbList = ({ children }: { children: React.ReactNode }) => (
+  <ol className="flex items-center space-x-4">{children}</ol>
+)
 
-export function BreadcrumbItem({ children }: { children: React.ReactNode }) {
-  return <li className="flex items-center">{children}</li>
-}
+const BreadcrumbItem = ({ children }: { children: React.ReactNode }) => (
+  <li className="flex items-center">{children}</li>
+)
 
-export function BreadcrumbLink({
+const BreadcrumbLink = ({
   href,
   children,
   className,
@@ -27,27 +27,25 @@ export function BreadcrumbLink({
   href: string
   children: React.ReactNode
   className?: string
-}) {
-  return (
-    <a
-      href={href}
-      className={cn("text-sm font-medium text-muted-foreground hover:text-primary", className)}
-    >
-      {children}
-    </a>
-  )
-}
+}) => (
+  <a
+    href={href}
+    className={cn("text-sm font-medium text-muted-foreground hover:text-primary", className)}
+  >
+    {children}
+  </a>
+)
 
-export function BreadcrumbSeparator() {
-  return <span className="mx-2 text-muted-foreground">/</span>
-}
+const BreadcrumbSeparator = () => (
+  <span className="mx-2 text-muted-foreground">/</span>
+)
 
-export function BreadcrumbPage({ children }: { children: React.ReactNode }) {
-  return <span className="text-sm font-medium text-foreground">{children}</span>
-}
+const BreadcrumbPage = ({ children }: { children: React.ReactNode }) => (
+  <span className="text-sm font-medium text-foreground">{children}</span>
+)
 
-// Export all for use in individual imports
 export {
+  Breadcrumb,
   BreadcrumbList,
   BreadcrumbItem,
   BreadcrumbLink,
