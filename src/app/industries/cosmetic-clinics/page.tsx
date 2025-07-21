@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import Breadcrumb from "@/components/ui/breadcrumb";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
 import {
   ArrowRight,
   Calendar,
@@ -260,7 +260,7 @@ export default function CosmeticClinicsPage() {
           </div>
 
           <div className="grid lg:grid-cols-2 gap-8">
-            {cosmeticFeatures.map((category, index) => (
+            {(cosmeticFeatures || []).map((category, index) => (
               <Card key={index} className="border-0 shadow-lg hover:shadow-xl transition-shadow">
                 <CardHeader>
                   <div className="flex items-center space-x-4">
@@ -274,7 +274,7 @@ export default function CosmeticClinicsPage() {
                 </CardHeader>
                 <CardContent>
                   <ul className="space-y-3">
-                    {category.features.map((feature, featureIndex) => (
+                    {(category?.features || []).map((feature, featureIndex) => (
                       <li key={featureIndex} className="flex items-start space-x-3">
                         <CheckCircle className="h-4 w-4 text-forest-green flex-shrink-0 mt-1" />
                         <span className="text-gray-700 font-body text-sm">{feature}</span>
@@ -305,7 +305,7 @@ export default function CosmeticClinicsPage() {
           </div>
 
           <div className="grid lg:grid-cols-3 gap-8 mb-12">
-            {pricingTiers.map((tier, index) => (
+            {(pricingTiers || []).map((tier, index) => (
               <Card
                 key={index}
                 className={`relative border-0 shadow-lg hover:shadow-2xl transition-all duration-300 ${
@@ -342,7 +342,7 @@ export default function CosmeticClinicsPage() {
 
                 <CardContent>
                   <ul className="space-y-3 mb-8">
-                    {tier.features.map((feature, featureIndex) => (
+                    {(tier?.features || []).map((feature, featureIndex) => (
                       <li key={featureIndex} className="flex items-start space-x-3">
                         <CheckCircle className="h-4 w-4 text-forest-green flex-shrink-0 mt-1" />
                         <span className="text-gray-700 font-body text-sm">{feature}</span>

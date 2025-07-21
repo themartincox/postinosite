@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import Breadcrumb from "@/components/ui/breadcrumb";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
 import {
   ArrowRight,
   Calendar,
@@ -346,7 +346,7 @@ export default function MedicalPracticesPage() {
           </div>
 
           <div className="grid lg:grid-cols-2 gap-8">
-            {medicalFeatures.map((category, index) => (
+            {(medicalFeatures || []).map((category, index) => (
               <Card key={index} className="border-0 shadow-lg hover:shadow-xl transition-shadow">
                 <CardHeader>
                   <div className="flex items-center space-x-4">
@@ -642,7 +642,7 @@ export default function MedicalPracticesPage() {
           </div>
 
           <div className="grid lg:grid-cols-3 gap-8 mb-12">
-            {pricingTiers.map((tier, index) => (
+            {(pricingTiers || []).map((tier, index) => (
               <Card
                 key={index}
                 className={`relative border-0 shadow-lg hover:shadow-2xl transition-all duration-300 ${
@@ -716,7 +716,7 @@ export default function MedicalPracticesPage() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {addOnServices.map((service, index) => (
+            {(addOnServices || []).map((service, index) => (
               <Card key={index} className="border-0 shadow-lg hover:shadow-xl transition-shadow">
                 <CardHeader className="text-center pb-3">
                   <CardTitle className="text-lg font-heading text-midnight-blue mb-2">

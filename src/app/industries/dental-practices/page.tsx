@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import Breadcrumb from "@/components/ui/breadcrumb";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
 import {
   ArrowRight,
   Calendar,
@@ -237,7 +237,7 @@ export default function DentalPracticesPage() {
           </div>
 
           <div className="grid lg:grid-cols-2 gap-8">
-            {dentalFeatures.map((category, index) => (
+            {(dentalFeatures || []).map((category, index) => (
               <Card key={index} className="border-0 shadow-lg">
                 <CardHeader>
                   <div className="flex items-center space-x-4">
@@ -279,7 +279,7 @@ export default function DentalPracticesPage() {
           </div>
 
           <div className="grid lg:grid-cols-3 gap-8">
-            {pricingTiers.map((tier, index) => (
+            {(pricingTiers || []).map((tier, index) => (
               <Card
                 key={index}
                 className={`relative border-0 shadow-lg hover:shadow-2xl transition-all duration-300 ${
