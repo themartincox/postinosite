@@ -240,44 +240,95 @@
   <priority>0.6</priority>
 </url>
 
-<!-- Blog Posts (Latest Content) -->
+<!-- Latest Blog Posts (July 2025) -->
+<url>
+  <loc>https://postino.cc/blog/aeo-vs-seo-practical-guide-smes</loc>
+  <lastmod>2025-07-22</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.8</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/blog/structured-data-schema-ai-search-visibility</loc>
+  <lastmod>2025-07-19</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.8</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/blog/crafting-conversational-content-ai-loves</loc>
+  <lastmod>2025-07-16</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.8</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/blog/zero-click-traffic-measuring-real-business-impact</loc>
+  <lastmod>2025-07-13</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.8</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/blog/aeo-vs-geo-vs-aio-vs-aaio-what-marketers-should-know</loc>
+  <lastmod>2025-07-10</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/blog/smart-aeo-identifying-high-value-queries</loc>
+  <lastmod>2025-07-07</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/blog/becoming-cited-source-ai-answers</loc>
+  <lastmod>2025-07-04</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/blog/human-touch-ai-driven-search-why-it-matters</loc>
+  <lastmod>2025-07-01</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.7</priority>
+</url>
+
+<!-- June 2025 Blog Posts -->
+<url>
+  <loc>https://postino.cc/blog/overcoming-aeo-pitfalls-avoiding-misdirection</loc>
+  <lastmod>2025-06-28</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/blog/future-proofing-seo-agentic-ai</loc>
+  <lastmod>2025-06-25</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.7</priority>
+</url>
+
+<!-- Legacy Blog Posts -->
 <url>
   <loc>https://postino.cc/blog/creating-seamless-b2b-user-experiences-that-convert</loc>
   <lastmod>2025-01-21</lastmod>
   <changefreq>monthly</changefreq>
-  <priority>0.7</priority>
+  <priority>0.6</priority>
 </url>
 
 <url>
   <loc>https://postino.cc/blog/mastering-thought-leadership-content-on-linkedin</loc>
   <lastmod>2025-01-21</lastmod>
   <changefreq>monthly</changefreq>
-  <priority>0.7</priority>
+  <priority>0.6</priority>
 </url>
 
 <url>
   <loc>https://postino.cc/blog/complete-guide-seo-topic-clusters-content-mapping</loc>
-  <lastmod>2025-01-21</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.7</priority>
-</url>
-
-<url>
-  <loc>https://postino.cc/blog/zero-click-search-optimization-featured-snippets-local-pack</loc>
-  <lastmod>2025-01-21</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.6</priority>
-</url>
-
-<url>
-  <loc>https://postino.cc/blog/ai-enhanced-marketing-automation-workflows-sme-growth</loc>
-  <lastmod>2025-01-21</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.6</priority>
-</url>
-
-<url>
-  <loc>https://postino.cc/blog/linkedin-marketing-strategy-b2b-lead-generation</loc>
   <lastmod>2025-01-21</lastmod>
   <changefreq>monthly</changefreq>
   <priority>0.6</priority>
