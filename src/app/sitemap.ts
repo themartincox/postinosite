@@ -1,4 +1,4 @@
-import { MetadataRoute } from 'next'
+import type { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://postino.cc'
@@ -193,20 +193,27 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // Blog posts (latest content gets higher priority)
   const blogPosts = [
+    // July 2025 posts (newest)
+    'aeo-vs-seo-practical-guide-smes',
+    'structured-data-schema-ai-search-visibility',
+    'crafting-conversational-content-ai-loves',
+    'zero-click-traffic-measuring-real-business-impact',
+    'aeo-vs-geo-vs-aio-vs-aaio-what-marketers-should-know',
+    'smart-aeo-identifying-high-value-queries',
+    'becoming-cited-source-ai-answers',
+    'human-touch-ai-driven-search-why-it-matters',
+    // June 2025 posts
+    'overcoming-aeo-pitfalls-avoiding-misdirection',
+    'future-proofing-seo-agentic-ai',
+    // Legacy posts
     'creating-seamless-b2b-user-experiences-that-convert',
     'mastering-thought-leadership-content-on-linkedin',
     'complete-guide-seo-topic-clusters-content-mapping',
-    'zero-click-search-optimization-featured-snippets-local-pack',
-    'ai-enhanced-marketing-automation-workflows-sme-growth',
-    'linkedin-marketing-strategy-b2b-lead-generation',
-    'platform-agnostic-development-choosing-right-tech-stack',
-    'client-training-empowerment-owning-marketing-assets',
-    'data-driven-storytelling-compelling-b2b-narratives',
   ].map((slug, index) => ({
     url: `${baseUrl}/blog/${slug}`,
     lastModified: currentDate,
     changeFrequency: 'monthly' as const,
-    priority: index < 3 ? 0.7 : 0.6, // Recent posts get higher priority
+    priority: index < 5 ? 0.8 : index < 10 ? 0.7 : 0.6, // Newest posts get highest priority
   }))
 
   // Booking pages
