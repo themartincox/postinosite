@@ -3,6 +3,7 @@
 import type React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
+import { getChatbotAnalytics } from '@/lib/chatbot-analytics';
 
 // Simple inline components to avoid import issues
 const Button = ({ children, onClick, className = '', disabled = false, variant = 'default', size = 'default' }: any) => {
@@ -185,6 +186,9 @@ export default function IntelligentChatbot() {
   const [showBookingPrompt, setShowBookingPrompt] = useState(false);
   const [showCalendar, setShowCalendar] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Analytics tracking
+  const analytics = getChatbotAnalytics();
 
   // Enhanced conversation intelligence
   const [userPersonality, setUserPersonality] = useState<UserPersonality>({
@@ -773,6 +777,8 @@ export default function IntelligentChatbot() {
       });
 
       if (result.success) {
+        // Log successful booking
+        analytics.logBookingCompleted(bookingData);
         return result.message;
       } else {
         throw new Error(result.error || 'Booking failed');
@@ -858,7 +864,16 @@ export default function IntelligentChatbot() {
     setInput('');
     setIsLoading(true);
 
+    // Log user message
+    analytics.logUserMessage(
+      userMessage.content,
+      userMessage.sentiment,
+      userMessage.urgency,
+      currentLayer
+    );
+
     // Simulate thinking time
+    const responseStartTime = Date.now();
     setTimeout(() => {
       let botResponse = '';
 
@@ -888,6 +903,8 @@ export default function IntelligentChatbot() {
           if (message.includes('book') || message.includes('call') || message.includes('schedule') || message.includes('meeting') || message.includes('chat') || message.includes('speak') || message.includes('next') || message.includes('interested')) {
             setCurrentLayer(5);
             setBookingStep(0);
+            // Log booking started
+            analytics.logBookingStarted({ industry: getIndustryFromPath(), userMessage: message });
           }
         }
       }
@@ -897,6 +914,10 @@ export default function IntelligentChatbot() {
         content: botResponse,
         timestamp: new Date()
       };
+
+      // Log bot response with timing
+      const responseTime = Date.now() - responseStartTime;
+      analytics.logBotResponse(botResponse, responseTime, currentLayer);
 
       setMessages(prev => [...prev, botMessage]);
       setIsLoading(false);
@@ -909,6 +930,23 @@ export default function IntelligentChatbot() {
       sendMessage();
     }
   };
+
+  // Handle chatbot close - log session end
+  const handleClose = () => {
+    if (hasStarted && messages.length > 0) {
+      analytics.logConversationEnd(currentLayer, messages.length);
+    }
+    setIsOpen(false);
+  };
+
+  // Cleanup on component unmount
+  useEffect(() => {
+    return () => {
+      if (hasStarted && messages.length > 0) {
+        analytics.logConversationEnd(currentLayer, messages.length);
+      }
+    };
+  }, [hasStarted, messages.length, currentLayer, analytics]);
 
   return (
     <>
@@ -1098,7 +1136,7 @@ export default function IntelligentChatbot() {
                     Layer {currentLayer}
                   </div>
                   <Button
-                    onClick={() => setIsOpen(false)}
+                    onClick={handleClose}
                     variant="ghost"
                     size="sm"
                     className="text-white hover:bg-white/20 h-8 w-8 p-0"
