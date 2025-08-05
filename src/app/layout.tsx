@@ -380,7 +380,8 @@ export default function RootLayout({
           />
         </noscript>
 
-        <IntelligentChatbot />
+   {/* <IntelligentChatbot /> */}
+
 
         <PWAWrapper />
       </body>
