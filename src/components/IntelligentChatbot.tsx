@@ -187,8 +187,15 @@ export default function IntelligentChatbot() {
   const [showCalendar, setShowCalendar] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Analytics tracking
-  const analytics = getChatbotAnalytics();
+  // Analytics tracking - only initialize when chatbot is actually used
+  const [analytics, setAnalytics] = useState<any>(null);
+
+  // Initialize analytics only when chatbot is opened
+  useEffect(() => {
+    if (isOpen && !analytics && typeof window !== 'undefined') {
+      setAnalytics(getChatbotAnalytics());
+    }
+  }, [isOpen, analytics]);
 
   // Enhanced conversation intelligence
   const [userPersonality, setUserPersonality] = useState<UserPersonality>({
@@ -778,7 +785,7 @@ export default function IntelligentChatbot() {
 
       if (result.success) {
         // Log successful booking
-        analytics.logBookingCompleted(bookingData);
+        analytics?.logBookingCompleted(bookingData);
         return result.message;
       } else {
         throw new Error(result.error || 'Booking failed');
@@ -865,7 +872,7 @@ export default function IntelligentChatbot() {
     setIsLoading(true);
 
     // Log user message
-    analytics.logUserMessage(
+    analytics?.logUserMessage(
       userMessage.content,
       userMessage.sentiment,
       userMessage.urgency,
@@ -904,7 +911,7 @@ export default function IntelligentChatbot() {
             setCurrentLayer(5);
             setBookingStep(0);
             // Log booking started
-            analytics.logBookingStarted({ industry: getIndustryFromPath(), userMessage: message });
+            analytics?.logBookingStarted({ industry: getIndustryFromPath(), userMessage: message });
           }
         }
       }
@@ -917,7 +924,7 @@ export default function IntelligentChatbot() {
 
       // Log bot response with timing
       const responseTime = Date.now() - responseStartTime;
-      analytics.logBotResponse(botResponse, responseTime, currentLayer);
+      analytics?.logBotResponse(botResponse, responseTime, currentLayer);
 
       setMessages(prev => [...prev, botMessage]);
       setIsLoading(false);
@@ -934,7 +941,7 @@ export default function IntelligentChatbot() {
   // Handle chatbot close - log session end
   const handleClose = () => {
     if (hasStarted && messages.length > 0) {
-      analytics.logConversationEnd(currentLayer, messages.length);
+      analytics?.logConversationEnd(currentLayer, messages.length);
     }
     setIsOpen(false);
   };
@@ -943,7 +950,7 @@ export default function IntelligentChatbot() {
   useEffect(() => {
     return () => {
       if (hasStarted && messages.length > 0) {
-        analytics.logConversationEnd(currentLayer, messages.length);
+        analytics?.logConversationEnd(currentLayer, messages.length);
       }
     };
   }, [hasStarted, messages.length, currentLayer, analytics]);
