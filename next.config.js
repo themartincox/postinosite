@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const withPWA = require('next-pwa')({
   dest: 'public',
   register: true,
@@ -75,7 +76,10 @@ const nextConfig = {
   experimental: {
     optimizeCss: true,
     scrollRestoration: true,
-    optimizeServerReact: true
+    optimizeServerReact: true,
+    // Additional performance optimizations
+    webVitalsAttribution: ['CLS', 'LCP'],
+    // Removed invalid turbotrace option
   },
 
   // Compression and caching
@@ -91,40 +95,72 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
 
-  // Removed static export for Google Calendar API integration
-  // output: 'export',
-
-  // distDir: 'out',
-  // trailingSlash: true, // Disabled to fix redirect loops
   // Force fresh build to clear Netlify cache
   generateBuildId: () => 'build-' + Date.now(),
 
-  // Webpack optimizations
+  // Enhanced webpack optimizations for performance
   webpack: (config, { dev, isServer }) => {
     // Production optimizations
     if (!dev) {
-      config.optimization = {
-        ...config.optimization,
-        splitChunks: {
-          chunks: 'all',
-          cacheGroups: {
-            default: {
-              minChunks: 2,
-              priority: -20,
-              reuseExistingChunk: true,
+      // More aggressive tree shaking
+      config.optimization.usedExports = true;
+      config.optimization.sideEffects = false;
+
+      // Enhanced bundle splitting
+      config.optimization.splitChunks = {
+        chunks: 'all',
+        minSize: 20000,
+        maxSize: 244000,
+        cacheGroups: {
+          // Framework chunks (React, Next.js)
+          framework: {
+            chunks: 'all',
+            name: 'framework',
+            test: /(?<!node_modules.*)[\\/]node_modules[\\/](react|react-dom|scheduler|prop-types|use-subscription)[\\/]/,
+            priority: 40,
+            enforce: true,
+          },
+          // UI component libraries
+          ui: {
+            name: 'ui',
+            test: /[\\/]node_modules[\\/](@radix-ui|lucide-react|framer-motion)[\\/]/,
+            chunks: 'all',
+            priority: 35,
+            enforce: true,
+          },
+          // Large third-party libraries
+          lib: {
+            test(module) {
+              return module.size() > 160000 && /node_modules[/\\]/.test(module.identifier());
             },
-            vendor: {
-              test: /[\\/]node_modules[\\/]/,
-              name: 'vendors',
-              priority: -10,
-              chunks: 'all',
+            name(module) {
+              const hash = crypto.createHash('sha1');
+              hash.update(module.libIdent ? module.libIdent({context: config.context}) : module.identifier());
+              return hash.digest('hex').substring(0, 8);
             },
+            priority: 30,
+            minChunks: 1,
+            reuseExistingChunk: true,
+          },
+          // Common shared code
+          commons: {
+            name: 'commons',
+            priority: 20,
+            minChunks: 2,
+            reuseExistingChunk: true,
+            test: /[\\/]src[\\/]/,
+          },
+          // Default chunk
+          default: {
+            minChunks: 2,
+            priority: -20,
+            reuseExistingChunk: true,
           },
         },
-      }
+      };
     }
 
-    // Bundle analyzer (only in development)
+    // Optimize for development
     if (dev && !isServer) {
       config.optimization.splitChunks = {
         chunks: 'all',
@@ -141,7 +177,7 @@ const nextConfig = {
     return config
   },
 
-  // Headers for performance and security
+  // Enhanced security headers for performance and security
   async headers() {
     return [
       {
@@ -158,6 +194,40 @@ const nextConfig = {
           {
             key: 'Referrer-Policy',
             value: 'strict-origin-when-cross-origin'
+          },
+          {
+            key: 'Strict-Transport-Security',
+            value: 'max-age=31536000; includeSubDomains; preload'
+          },
+          {
+            key: 'Cross-Origin-Opener-Policy',
+            value: 'same-origin'
+          },
+          {
+            key: 'Cross-Origin-Embedder-Policy',
+            value: 'require-corp'
+          },
+          {
+            key: 'Cross-Origin-Resource-Policy',
+            value: 'cross-origin'
+          },
+          {
+            key: 'Content-Security-Policy',
+            value: [
+              "default-src 'self'",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://scripts.simpleanalyticscdn.com",
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+              "font-src 'self' https://fonts.gstatic.com",
+              "img-src 'self' data: https: blob:",
+              "connect-src 'self' https://api.openweathermap.org https://queue.simpleanalyticscdn.com",
+              "frame-src 'self'",
+              "object-src 'none'",
+              "base-uri 'self'",
+              "form-action 'self'",
+              "frame-ancestors 'none'",
+              "upgrade-insecure-requests",
+              "require-trusted-types-for 'script'"
+            ].join('; ')
           }
         ]
       },
