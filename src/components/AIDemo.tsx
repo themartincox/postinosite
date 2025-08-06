@@ -22,11 +22,23 @@ const insights = [
 ];
 
 export default function AIDemo() {
+  const [mounted, setMounted] = useState(false);
   const [currentInsight, setCurrentInsight] = useState(0);
   const [step, setStep] = useState(0); // 0: start, 1: analyzing, 2: complete
-  const [revenueIncrease] = useState(25 + Math.floor(Math.random() * 30));
+  const [revenueIncrease, setRevenueIncrease] = useState(35);
+  const [conversionIncrease, setConversionIncrease] = useState(20);
+  const [issuesFound, setIssuesFound] = useState(75);
 
   useEffect(() => {
+    setMounted(true);
+    setRevenueIncrease(25 + Math.floor(Math.random() * 30));
+    setConversionIncrease(15 + Math.floor(Math.random() * 15));
+    setIssuesFound(50 + Math.floor(Math.random() * 100));
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+
     // Simple demo cycle
     const cycle = setInterval(() => {
       if (step === 0) {
@@ -40,7 +52,19 @@ export default function AIDemo() {
     }, 8000);
 
     return () => clearInterval(cycle);
-  }, [step]);
+  }, [step, mounted]);
+
+  // Don't render anything until mounted on client
+  if (!mounted) {
+    return (
+      <div className="h-96 bg-gradient-to-br from-midnight-blue/10 to-blue-50 rounded-2xl flex items-center justify-center">
+        <div className="text-center">
+          <Brain className="h-8 w-8 text-blue-600 mx-auto mb-2" />
+          <p className="text-gray-600 text-sm">Loading AI Demo...</p>
+        </div>
+      </div>
+    );
+  }
 
   const insight = insights[currentInsight];
 
@@ -145,10 +169,10 @@ export default function AIDemo() {
       {/* Simple metrics */}
       <div className="absolute top-4 right-4 space-y-2">
         <div className="bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1 text-xs font-semibold text-gray-700 shadow-lg">
-          <span className="text-green-600">+{15 + Math.floor(Math.random() * 15)}%</span> conversion
+          <span className="text-green-600">+{conversionIncrease}%</span> conversion
         </div>
         <div className="bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1 text-xs font-semibold text-gray-700 shadow-lg">
-          <span className="text-blue-600">{Math.floor(Math.random() * 100) + 50}</span> issues found
+          <span className="text-blue-600">{issuesFound}</span> issues found
         </div>
       </div>
     </div>

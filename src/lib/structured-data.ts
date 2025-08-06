@@ -1,5 +1,108 @@
 import { getAllBlogPosts } from './blog-data'
 
+export function getBreadcrumbSchema(items: Array<{label: string, href?: string, current?: boolean}>) {
+  const itemListElement = items.map((item, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "name": item.label,
+    "item": item.href && !item.current ? `https://postino.cc${item.href}` : undefined
+  }));
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": itemListElement
+  };
+}
+
+export function getArticleSchema(post: {
+  title: string;
+  excerpt: string;
+  publishedAt: string;
+  slug: string;
+  author?: { name: string };
+  category: string;
+  readingTime?: number;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": post.title,
+    "description": post.excerpt,
+    "author": {
+      "@type": "Person",
+      "name": post.author?.name || "Martin",
+      "url": "https://postino.cc/about"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Postino",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://postino.cc/logo.png"
+      }
+    },
+    "datePublished": post.publishedAt,
+    "dateModified": post.publishedAt,
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `https://postino.cc/blog/${post.slug}`
+    },
+    "articleSection": post.category,
+    "wordCount": post.readingTime ? post.readingTime * 200 : 800,
+    "inLanguage": "en-GB",
+    "about": [
+      "AI Marketing",
+      "Business Automation",
+      "SEO Strategy",
+      "Digital Marketing"
+    ]
+  };
+}
+
+export function getProductSchema(service: {
+  name: string;
+  description: string;
+  price: string;
+  priceCurrency?: string;
+  availability?: string;
+  category: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": service.name,
+    "description": service.description,
+    "category": service.category,
+    "brand": {
+      "@type": "Brand",
+      "name": "Postino"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": service.price.replace('£', ''),
+      "priceCurrency": service.priceCurrency || "GBP",
+      "availability": service.availability || "https://schema.org/InStock",
+      "seller": {
+        "@type": "Organization",
+        "name": "Postino"
+      }
+    },
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "Postino",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "1 Fisher Lane",
+        "addressLocality": "Bingham",
+        "addressRegion": "Nottinghamshire",
+        "postalCode": "NG13 8BQ",
+        "addressCountry": "GB"
+      }
+    }
+  };
+}
+
 export function getOrganizationStructuredData() {
   return {
     "@context": "https://schema.org",
