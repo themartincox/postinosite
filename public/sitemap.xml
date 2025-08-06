@@ -139,6 +139,72 @@
   <priority>0.8</priority>
 </url>
 
+<!-- Nottingham Express Services Hub - HIGH PRIORITY -->
+<url>
+  <loc>https://postino.cc/nottingham/services</loc>
+  <lastmod>2025-01-22</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.9</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/nottingham</loc>
+  <lastmod>2025-01-22</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.8</priority>
+</url>
+
+<!-- Core Nottingham Express Services - 24-72 Hour Delivery -->
+<url>
+  <loc>https://postino.cc/nottingham/express-website-design</loc>
+  <lastmod>2025-01-22</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.9</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/nottingham/ai-chatbot-setup</loc>
+  <lastmod>2025-01-22</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.9</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/nottingham/same-day-local-seo</loc>
+  <lastmod>2025-01-22</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.9</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/nottingham/business-automation</loc>
+  <lastmod>2025-01-22</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.9</priority>
+</url>
+
+<!-- Additional Nottingham Service Pages -->
+<url>
+  <loc>https://postino.cc/nottingham/web-design</loc>
+  <lastmod>2025-01-22</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.8</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/nottingham/digital-marketing</loc>
+  <lastmod>2025-01-22</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.8</priority>
+</url>
+
+<url>
+  <loc>https://postino.cc/nottingham/seo-services</loc>
+  <lastmod>2025-01-22</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.8</priority>
+</url>
+
 <!-- Local Landing Pages -->
 <url>
   <loc>https://postino.cc/bingham</loc>

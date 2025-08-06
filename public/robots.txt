@@ -16,6 +16,18 @@ Allow: /ai-automation/*
 Allow: /nottingham-marketing-agency
 Allow: /midlands-ai-automation
 
+# Nottingham Express Services - HIGH PRIORITY LOCAL SEO
+Allow: /nottingham
+Allow: /nottingham/*
+Allow: /nottingham/services
+Allow: /nottingham/express-website-design
+Allow: /nottingham/ai-chatbot-setup
+Allow: /nottingham/same-day-local-seo
+Allow: /nottingham/business-automation
+Allow: /nottingham/web-design
+Allow: /nottingham/digital-marketing
+Allow: /nottingham/seo-services
+
 # Industry pages with comprehensive schema
 Allow: /industries
 Allow: /industries/*
@@ -48,6 +60,7 @@ Allow: /rushcliffe/*
 Allow: /growth-marketing/inbound/*
 Allow: /growth-marketing/ai-search/*
 Allow: /growth-marketing/branding/*
+Allow: /growth-marketing/branding/website-design-development/*
 Allow: /growth-marketing/strategy/*
 Allow: /ai-automation/process/*
 Allow: /ai-automation/intelligence/*
@@ -89,6 +102,18 @@ Allow: /revenue-forecast/
 Allow: /website-audit/
 Allow: /growth-consultation/
 Allow: /ai-automation-demo/
+
+# Nottingham Express Services - Priority for Local SEO
+Allow: /nottingham/
+Allow: /nottingham/*
+Allow: /nottingham/services/
+Allow: /nottingham/express-website-design/
+Allow: /nottingham/ai-chatbot-setup/
+Allow: /nottingham/same-day-local-seo/
+Allow: /nottingham/business-automation/
+Allow: /nottingham/web-design/
+Allow: /nottingham/digital-marketing/
+Allow: /nottingham/seo-services/
 
 Disallow: /admin/
 Disallow: /admin/*
