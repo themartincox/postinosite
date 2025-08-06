@@ -148,6 +148,35 @@ export default function RootLayout({
             nav { min-height: 72px; }
             /* Optimize text rendering */
             body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+            /* Additional critical styles for layout stability */
+            .max-w-7xl { max-width: 80rem; margin: 0 auto; }
+            .px-4 { padding-left: 1rem; padding-right: 1rem; }
+            .py-20 { padding-top: 5rem; padding-bottom: 5rem; }
+            .text-center { text-align: center; }
+            .grid { display: grid; }
+            .flex { display: flex; }
+            .hidden { display: none; }
+            @media (min-width: 768px) {
+              .md\\:flex { display: flex; }
+              .md\\:hidden { display: none; }
+              .md\\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+              .md\\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+            }
+            /* Prevent button layout shifts */
+            button, .btn { min-height: 2.5rem; }
+            /* Optimize images */
+            img { max-width: 100%; height: auto; }
+            /* Prevent font loading shifts */
+            .font-heading { font-display: swap; }
+            /* Critical button styles */
+            .btn-primary {
+              background: #ef4444;
+              color: white;
+              padding: 0.75rem 2rem;
+              border-radius: 0.5rem;
+              font-weight: 600;
+              transition: all 0.2s ease;
+            }
           `
         }} />
 
@@ -156,15 +185,27 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="//fonts.gstatic.com" />
         <link rel="dns-prefetch" href="//www.googletagmanager.com" />
         <link rel="dns-prefetch" href="//api.openweathermap.org" />
+        <link rel="dns-prefetch" href="//scripts.simpleanalyticscdn.com" />
 
         {/* Preconnect for critical third-party origins */}
         <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://scripts.simpleanalyticscdn.com" />
 
         {/* Preload critical assets */}
         <link rel="preload" href="/og-image.jpg" as="image" type="image/jpeg" />
         <link rel="preload" href="/logo.png" as="image" type="image/png" />
+        <link rel="preload" href="/favicon.svg" as="image" type="image/svg+xml" />
+
+        {/* Preload critical fonts */}
+        <link
+          rel="preload"
+          href="https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
 
         {/* PWA Manifest */}
         <link rel="manifest" href="/manifest.json" />
@@ -357,28 +398,32 @@ export default function RootLayout({
         />
 
         {/* GTM - Load after page content with reduced priority */}
-        <Script
-          id="gtm-script"
-          strategy="lazyOnload"
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-              })(window,document,'script','dataLayer','${process.env.NEXT_PUBLIC_GTM_ID}');
-            `,
-          }}
-        />
+        {process.env.NEXT_PUBLIC_GTM_ID && process.env.NEXT_PUBLIC_GTM_ID !== 'GTM-XXXXXXXX' && (
+          <>
+            <Script
+              id="gtm-script"
+              strategy="lazyOnload"
+              dangerouslySetInnerHTML={{
+                __html: `
+                  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                  })(window,document,'script','dataLayer','${process.env.NEXT_PUBLIC_GTM_ID}');
+                `,
+              }}
+            />
 
-        <noscript>
-          <iframe
-            src={`https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GTM_ID}`}
-            height="0"
-            width="0"
-            style={{ display: 'none', visibility: 'hidden' }}
-          />
-        </noscript>
+            <noscript>
+              <iframe
+                src={`https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GTM_ID}`}
+                height="0"
+                width="0"
+                style={{ display: 'none', visibility: 'hidden' }}
+              />
+            </noscript>
+          </>
+        )}
 
         {/* Chatbot temporarily disabled */}
         {/* <IntelligentChatbot /> */}
