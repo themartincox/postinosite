@@ -179,13 +179,14 @@ const nextConfig = {
 
   // Enhanced security headers for performance and security
   async headers() {
+    const isDev = process.env.NODE_ENV === 'development';
     return [
       {
         source: '/(.*)',
         headers: [
           {
             key: 'X-Frame-Options',
-            value: 'DENY'
+            value: isDev ? 'SAMEORIGIN' : 'DENY'
           },
           {
             key: 'X-Content-Type-Options',
@@ -224,9 +225,7 @@ const nextConfig = {
               "object-src 'none'",
               "base-uri 'self'",
               "form-action 'self'",
-              "frame-ancestors 'none'",
-              "upgrade-insecure-requests",
-              "require-trusted-types-for 'script'"
+              isDev ? "frame-ancestors 'self' https://*.same.new" : "frame-ancestors 'none'"
             ].join('; ')
           }
         ]

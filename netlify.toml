@@ -6,6 +6,11 @@
   NODE_VERSION = "22"
   NPM_VERSION = "latest"
 
+# Essential serverless functions for Next.js API routes
+[functions]
+  node_bundler = "esbuild"
+  included_files = ["node_modules/**", ".next/**"]
+
 [dev]
   command = "npm run dev"
   port = 3000
