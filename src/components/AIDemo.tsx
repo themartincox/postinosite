@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Brain, CheckCircle, ArrowRight } from "lucide-react";
 
 const insights = [
@@ -25,42 +25,46 @@ export default function AIDemo() {
   const [mounted, setMounted] = useState(false);
   const [currentInsight, setCurrentInsight] = useState(0);
   const [step, setStep] = useState(0); // 0: start, 1: analyzing, 2: complete
-  const [revenueIncrease, setRevenueIncrease] = useState(35);
-  const [conversionIncrease, setConversionIncrease] = useState(20);
-  const [issuesFound, setIssuesFound] = useState(75);
+
+  // Pre-calculate metrics to reduce runtime computation
+  const metrics = useMemo(() => ({
+    revenueIncrease: 25 + Math.floor(Math.random() * 30),
+    conversionIncrease: 15 + Math.floor(Math.random() * 15),
+    issuesFound: 50 + Math.floor(Math.random() * 100)
+  }), []);
 
   useEffect(() => {
     setMounted(true);
-    setRevenueIncrease(25 + Math.floor(Math.random() * 30));
-    setConversionIncrease(15 + Math.floor(Math.random() * 15));
-    setIssuesFound(50 + Math.floor(Math.random() * 100));
   }, []);
 
   useEffect(() => {
     if (!mounted) return;
 
-    // Simple demo cycle
+    // Optimized demo cycle with fewer state changes
     const cycle = setInterval(() => {
       if (step === 0) {
         setStep(1);
-        setTimeout(() => setStep(2), 3000);
+        setTimeout(() => setStep(2), 2000); // Reduced animation time
         setTimeout(() => {
           setStep(0);
           setCurrentInsight((prev) => (prev + 1) % insights.length);
-        }, 6000);
+        }, 4000); // Reduced cycle time
       }
-    }, 8000);
+    }, 6000); // Faster overall cycle
 
     return () => clearInterval(cycle);
   }, [step, mounted]);
 
-  // Don't render anything until mounted on client
+  // Prevent hydration mismatch
   if (!mounted) {
     return (
       <div className="h-96 bg-gradient-to-br from-midnight-blue/10 to-blue-50 rounded-2xl flex items-center justify-center">
-        <div className="text-center">
-          <Brain className="h-8 w-8 text-blue-600 mx-auto mb-2" />
-          <p className="text-gray-600 text-sm">Loading AI Demo...</p>
+        <div className="text-center max-w-sm">
+          <div className="w-12 h-12 bg-blue-600 rounded-full mx-auto mb-4 flex items-center justify-center">
+            <Brain className="h-6 w-6 text-white" />
+          </div>
+          <h3 className="text-lg font-semibold text-midnight-blue mb-2">AI Analysis Demo</h3>
+          <p className="text-gray-600 text-sm">Loading intelligent website analysis...</p>
         </div>
       </div>
     );
@@ -83,7 +87,7 @@ export default function AIDemo() {
         </p>
       </div>
 
-      {/* Industry Selector */}
+      {/* Simplified Industry Selector */}
       <div className="flex justify-center space-x-2 mb-6">
         {insights.map((item, index) => (
           <button
@@ -92,7 +96,7 @@ export default function AIDemo() {
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
               index === currentInsight
                 ? "bg-blue-600 text-white"
-                : "bg-white text-gray-600 border border-gray-200"
+                : "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50"
             }`}
           >
             {item.industry}
@@ -100,7 +104,7 @@ export default function AIDemo() {
         ))}
       </div>
 
-      {/* Simple Terminal */}
+      {/* Optimized Terminal Display */}
       <div className="bg-black rounded-lg p-6 font-mono text-sm mb-6">
         <div className="flex items-center space-x-2 mb-4 pb-2 border-b border-gray-700">
           <div className="flex space-x-1">
@@ -116,11 +120,7 @@ export default function AIDemo() {
             <span className="text-blue-400">$</span>
             <span className="text-white">Analysing {insight.industry} website...</span>
             {step === 1 && (
-              <div className="flex space-x-1">
-                <div className="w-1 h-4 bg-blue-400 animate-pulse"></div>
-                <div className="w-1 h-4 bg-blue-400 animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-                <div className="w-1 h-4 bg-blue-400 animate-pulse" style={{ animationDelay: '0.4s' }}></div>
-              </div>
+              <span className="text-blue-400 animate-pulse">●●●</span>
             )}
           </div>
 
@@ -146,7 +146,7 @@ export default function AIDemo() {
                 <div className="flex items-center space-x-2">
                   <CheckCircle className="h-5 w-5 text-green-400" />
                   <span className="text-green-400 font-semibold">
-                    Analysis complete! Estimated revenue increase: +{revenueIncrease}%
+                    Analysis complete! Estimated revenue increase: +{metrics.revenueIncrease}%
                   </span>
                 </div>
               </div>
@@ -155,7 +155,7 @@ export default function AIDemo() {
         </div>
       </div>
 
-      {/* CTA */}
+      {/* Simplified CTA */}
       <div className="text-center">
         <p className="text-gray-600 mb-4">
           See how AI can analyse and optimise your website
@@ -166,13 +166,13 @@ export default function AIDemo() {
         </button>
       </div>
 
-      {/* Simple metrics */}
+      {/* Simplified metrics overlay */}
       <div className="absolute top-4 right-4 space-y-2">
         <div className="bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1 text-xs font-semibold text-gray-700 shadow-lg">
-          <span className="text-green-600">+{conversionIncrease}%</span> conversion
+          <span className="text-green-600">+{metrics.conversionIncrease}%</span> conversion
         </div>
         <div className="bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1 text-xs font-semibold text-gray-700 shadow-lg">
-          <span className="text-blue-600">{issuesFound}</span> issues found
+          <span className="text-blue-600">{metrics.issuesFound}</span> issues found
         </div>
       </div>
     </div>
