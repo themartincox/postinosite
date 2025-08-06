@@ -1,24 +1,38 @@
-import type { Metadata } from 'next'
-import { generatePageMetadata } from '@/lib/metadata'
-import ServicePageTemplate from "@/components/ServicePageTemplate";
-import {
-  BarChart3,
-  Eye,
-  Globe,
-  Search,
-  Target,
-  TrendingUp,
-  Users,
-  Zap,
-} from "lucide-react";
+import type { Metadata } from "next";
+import { generateMetadata as generatePageMetadata } from "@/lib/seo-metadata";
 
-export const metadata: Metadata = generatePageMetadata({
-  title: "SEO Services Nottingham | Expert Search Engine Optimization",
-  description: "Professional SEO services in Nottingham. Boost your search rankings with our comprehensive SEO strategies. Local SEO, technical SEO, and content optimization for maximum visibility.",
-  path: "/growth-marketing/inbound/seo",
-  keywords: "SEO services Nottingham, search engine optimization, local SEO Nottingham, technical SEO, content optimization, keyword research, SERP rankings, organic traffic",
-  changeFreq: "weekly",
-});
+export const metadata: Metadata = {
+  title: "SEO Strategy & Implementation | Search Engine Optimization | Postino",
+  description: "AI-enhanced SEO that dominates organic rankings. Professional search engine optimization with proven results for Nottingham businesses. Technical SEO, content optimization, and local search expertise.",
+  keywords: "SEO services, search engine optimization, organic rankings, technical SEO, content optimization, local SEO, keyword research, link building",
+  alternates: {
+    canonical: "https://postino.cc/growth-marketing/inbound/seo"
+  },
+  openGraph: {
+    title: "SEO Strategy & Implementation | Search Engine Optimization | Postino",
+    description: "AI-enhanced SEO that dominates organic rankings. Professional search optimization with proven results for growing businesses.",
+    url: "https://postino.cc/growth-marketing/inbound/seo",
+    siteName: "Postino",
+    locale: "en_GB",
+    type: "website",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "SEO Strategy & Implementation - Postino"
+      }
+    ]
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@PostinoAgency",
+    creator: "@PostinoAgency",
+    title: "SEO Strategy & Implementation | Postino",
+    description: "AI-enhanced SEO that dominates organic rankings. Professional search optimization for growing businesses. 📈",
+    images: ["/og-image.jpg"]
+  }
+};
 
 export default function SEOServicePage() {
   return (

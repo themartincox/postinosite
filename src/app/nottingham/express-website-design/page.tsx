@@ -50,6 +50,14 @@ export const metadata: Metadata = {
       },
     ],
   },
+  twitter: {
+    card: "summary_large_image",
+    site: "@PostinoAgency",
+    creator: "@PostinoAgency",
+    title: "48-Hour Express Website Design Nottingham | Postino",
+    description: "Professional website designed, built and launched within 48 hours for Nottingham businesses. Mobile-responsive, SEO-optimized. 🚀",
+    images: ["/images/nottingham-express-website-design.jpg"]
+  },
 };
 
 const websiteFeatures = [

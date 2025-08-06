@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     template: '%s | Postino - AI-Enhanced Marketing Agency',
     default: 'Postino - Where Growth Meets AI Innovation | Marketing & Automation Agency'
   },
-  description: "AI-enhanced marketing agency helping SMEs achieve measurable growth through expert strategies and intelligent automation. Based in Bingham, Nottinghamshire. Services: Website Design (£150-£3,750), AI Chatbots (£112.50-£2,250), Local SEO (£60/month), Business Automation (£75-£3,000). Expert in B2B UX, LinkedIn marketing, zero-click search optimization. Call 0800 772 3291 for free consultation.",
+  description: "AI-enhanced marketing agency helping SMEs achieve measurable growth through expert strategies and automation. Nottingham local experts. Call 0800 772 3291.",
   keywords: "AI-enhanced marketing agency, intelligent automation, SME growth, Nottingham digital marketing, AI marketing automation, B2B UX design, LinkedIn thought leadership, SEO strategy optimization, zero-click search, content marketing, business automation, platform-agnostic development, client training, web development, conversion optimization, search strategy, data-driven storytelling, Bingham, Rushcliffe, East Midlands",
   authors: [{ name: "Martin", url: "https://postino.cc/about" }, { name: "Postino" }],
   creator: "Postino",

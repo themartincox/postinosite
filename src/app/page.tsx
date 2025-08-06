@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import EnhancedServiceCards from "@/components/EnhancedServiceCards";
 import Navigation from "@/components/Navigation";
 import ParticleNetwork from "@/components/ParticleNetwork";
@@ -15,7 +16,41 @@ import {
   Zap,
 } from "lucide-react";
 import Link from "next/link";
+import Script from "next/script";
 import dynamic from "next/dynamic";
+
+export const metadata: Metadata = {
+  title: "Postino - Where Growth Meets AI Innovation",
+  description: "AI-enhanced marketing agency helping SMEs achieve measurable growth through expert strategies and automation. Nottingham local experts. Call 0800 772 3291.",
+  keywords: "AI marketing agency, SME growth, Nottingham digital marketing, web design, chatbots, local SEO, business automation, intelligent automation, Bingham, Rushcliffe",
+  alternates: {
+    canonical: "https://postino.cc"
+  },
+  openGraph: {
+    title: "Postino - Where Growth Meets AI Innovation",
+    description: "AI-enhanced marketing agency helping SMEs achieve measurable growth through expert strategies and intelligent automation.",
+    url: "https://postino.cc",
+    siteName: "Postino",
+    locale: "en_GB",
+    type: "website",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Postino - AI-Enhanced Marketing & Automation Agency"
+      }
+    ]
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@PostinoAgency",
+    creator: "@PostinoAgency",
+    title: "Postino - AI-Enhanced Marketing Agency",
+    description: "Helping SMEs achieve measurable growth through expert marketing strategies and intelligent automation. 🚀 AI-powered solutions.",
+    images: ["/og-image.jpg"]
+  }
+};
 
 // Optimized dynamic imports with minimal loading states
 // Enhanced version with original copy content - ACTIVE
@@ -556,6 +591,70 @@ export default function HomePage() {
 
       {/* WhatsApp Widget */}
       <WhatsAppWidget />
+
+      {/* Review Schema for Testimonials */}
+      <Script
+        id="review-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Postino",
+            "review": [
+              {
+                "@type": "Review",
+                "author": {
+                  "@type": "Person",
+                  "name": "Simon"
+                },
+                "reviewBody": "Postino didn't just automate our processes—they transformed how we think about growth. The combination of marketing expertise and AI implementation gave us capabilities we never thought possible.",
+                "reviewRating": {
+                  "@type": "Rating",
+                  "ratingValue": "5",
+                  "bestRating": "5"
+                },
+                "datePublished": "2024-11-15"
+              },
+              {
+                "@type": "Review",
+                "author": {
+                  "@type": "Person",
+                  "name": "Jessica"
+                },
+                "reviewBody": "425% more qualified leads and £2.3M additional revenue. But what impressed me most was how they understood our industry and created solutions that actually fit how we work.",
+                "reviewRating": {
+                  "@type": "Rating",
+                  "ratingValue": "5",
+                  "bestRating": "5"
+                },
+                "datePublished": "2024-10-22"
+              },
+              {
+                "@type": "Review",
+                "author": {
+                  "@type": "Person",
+                  "name": "Emily"
+                },
+                "reviewBody": "We've gone from struggling to sell online to having customers discover us organically. The AI chatbot feels more helpful than most human support teams I've encountered.",
+                "reviewRating": {
+                  "@type": "Rating",
+                  "ratingValue": "5",
+                  "bestRating": "5"
+                },
+                "datePublished": "2024-09-18"
+              }
+            ],
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "5.0",
+              "reviewCount": "3",
+              "bestRating": "5",
+              "worstRating": "5"
+            }
+          })
+        }}
+      />
     </div>
   );
 }

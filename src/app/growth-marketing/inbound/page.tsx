@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import CategoryPageTemplate from "@/components/CategoryPageTemplate";
 import {
   BarChart3,
@@ -9,6 +10,39 @@ import {
   TrendingUp,
   Users,
 } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Inbound Marketing Services | Attract & Convert Customers | Postino",
+  description: "Comprehensive inbound marketing strategies that attract, engage and convert your ideal customers. SEO, content strategy, email automation, and social media management. Serving Nottingham SMEs with proven results.",
+  keywords: "inbound marketing, attract customers, content marketing, SEO strategy, email automation, social media management, lead generation, customer conversion",
+  alternates: {
+    canonical: "https://postino.cc/growth-marketing/inbound"
+  },
+  openGraph: {
+    title: "Inbound Marketing Services | Attract & Convert Customers | Postino",
+    description: "Stop chasing prospects and start attracting them. Comprehensive inbound marketing strategies that build trust and drive high-quality leads that convert.",
+    url: "https://postino.cc/growth-marketing/inbound",
+    siteName: "Postino",
+    locale: "en_GB",
+    type: "website",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Inbound Marketing Services - Postino"
+      }
+    ]
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@PostinoAgency",
+    creator: "@PostinoAgency",
+    title: "Inbound Marketing Services | Postino",
+    description: "Attract your ideal customers with strategic inbound marketing. SEO, content, email automation & social media. 🎯",
+    images: ["/og-image.jpg"]
+  }
+};
 
 export default function InboundCategoryPage() {
   return (

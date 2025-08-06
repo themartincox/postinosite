@@ -124,6 +124,63 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly' as const,
       priority: 0.8,
     },
+    // Nottingham Express Services Hub - HIGH PRIORITY LOCAL SEO
+    {
+      url: `${baseUrl}/nottingham/services`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/nottingham`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
+    // Core Nottingham Express Services - 24-72 Hour Delivery
+    {
+      url: `${baseUrl}/nottingham/express-website-design`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/nottingham/ai-chatbot-setup`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/nottingham/same-day-local-seo`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/nottingham/business-automation`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.9,
+    },
+    // Additional Nottingham Service Pages
+    {
+      url: `${baseUrl}/nottingham/web-design`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/nottingham/digital-marketing`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/nottingham/seo-services`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
     // Local landing pages
     {
       url: `${baseUrl}/bingham`,
@@ -155,6 +212,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     'branding/brand-identity-development',
     'branding/collateral-design',
     'branding/website-design-development',
+    'branding/website-design-development/headless-commerce',
+    'branding/website-design-development/nextjs-development',
+    'branding/website-design-development/shopify-development',
+    'branding/website-design-development/wordpress-development',
     'branding/conversion-funnels',
     'strategy',
     'strategy/research-market-analysis',
@@ -205,6 +266,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // June 2025 posts
     'overcoming-aeo-pitfalls-avoiding-misdirection',
     'future-proofing-seo-agentic-ai',
+    'human-touch-ai-driven-search-why-it-matters',
     // Legacy posts
     'creating-seamless-b2b-user-experiences-that-convert',
     'mastering-thought-leadership-content-on-linkedin',
