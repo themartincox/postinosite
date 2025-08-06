@@ -52,7 +52,7 @@ export const metadata: Metadata = {
   }
 };
 
-// More aggressive dynamic imports with better fallbacks to reduce main thread blocking
+// Dynamic imports for better performance
 const MorphingHeadlines = dynamic(() => import("@/components/EnhancedMorphingHeadlines"), {
   loading: () => (
     <div className="morphing-container min-h-[400px] flex items-center justify-center">
@@ -65,7 +65,6 @@ const MorphingHeadlines = dynamic(() => import("@/components/EnhancedMorphingHea
       </div>
     </div>
   ),
-  ssr: false, // Prevent SSR mismatch that causes layout shifts
 });
 
 // Lightweight AI Demo with better performance
@@ -81,7 +80,6 @@ const AIDemo = dynamic(() => import("@/components/AIDemo"), {
       </div>
     </div>
   ),
-  ssr: false,
 });
 
 // Deferred ROI Calculator to reduce initial bundle size
@@ -100,7 +98,6 @@ const ROICalculator = dynamic(() => import("@/components/ROICalculator"), {
       </div>
     </div>
   ),
-  ssr: false,
 });
 
 export default function HomePage() {
