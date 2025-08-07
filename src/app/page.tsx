@@ -52,53 +52,14 @@ export const metadata: Metadata = {
   }
 };
 
-// Dynamic imports for better performance
-const MorphingHeadlines = dynamic(() => import("@/components/EnhancedMorphingHeadlines"), {
-  loading: () => (
-    <div className="morphing-container min-h-[400px] flex items-center justify-center">
-      <div className="text-center">
-        <h1 className="text-6xl lg:text-9xl font-heading font-bold mb-6 text-white">
-          <span className="block">We're Postino.</span>
-          <span className="block">We Deliver:</span>
-          <span className="block text-orange-200">Strategic Innovation</span>
-        </h1>
-      </div>
-    </div>
-  ),
-});
+// Import directly to avoid SSR bailout
+import EnhancedMorphingHeadlines from "@/components/EnhancedMorphingHeadlines";
 
-// Lightweight AI Demo with better performance
-const AIDemo = dynamic(() => import("@/components/AIDemo"), {
-  loading: () => (
-    <div className="h-96 bg-gradient-to-br from-midnight-blue/10 to-blue-50 rounded-2xl flex items-center justify-center">
-      <div className="text-center max-w-sm">
-        <div className="w-12 h-12 bg-blue-600 rounded-full mx-auto mb-4 flex items-center justify-center">
-          <Brain className="h-6 w-6 text-white" />
-        </div>
-        <h3 className="text-lg font-semibold text-midnight-blue mb-2">AI Analysis Demo</h3>
-        <p className="text-gray-600 text-sm">Loading intelligent website analysis...</p>
-      </div>
-    </div>
-  ),
-});
+// Import directly to avoid SSR bailout
+import AIDemo from "@/components/AIDemo";
 
-// Deferred ROI Calculator to reduce initial bundle size
-const ROICalculator = dynamic(() => import("@/components/ROICalculator"), {
-  loading: () => (
-    <div className="bg-gradient-to-br from-soft-gray to-white py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div className="w-16 h-16 bg-coral-red rounded-full mx-auto mb-6 flex items-center justify-center">
-          <BarChart3 className="h-8 w-8 text-white" />
-        </div>
-        <h2 className="text-3xl font-heading font-bold text-midnight-blue mb-4">
-          ROI Calculator
-        </h2>
-        <p className="text-gray-600 mb-4">Loading revenue impact calculator...</p>
-        <div className="w-8 h-8 border-4 border-coral-red border-t-transparent rounded-full animate-spin mx-auto"></div>
-      </div>
-    </div>
-  ),
-});
+// Import directly to avoid SSR bailout
+import ROICalculator from "@/components/ROICalculator";
 
 export default function HomePage() {
   const homepageFAQs = [
@@ -156,7 +117,7 @@ export default function HomePage() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center">
-            <MorphingHeadlines />
+            <EnhancedMorphingHeadlines />
 
             <p className="text-xl lg:text-2xl font-body mb-8 max-w-4xl mx-auto leading-relaxed">
               Postino seamlessly blends expert marketing strategies with
