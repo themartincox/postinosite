@@ -6,10 +6,37 @@
   NODE_VERSION = "22"
   NPM_VERSION = "latest"
 
-# Essential serverless functions for Next.js API routes
+# Optimized serverless functions configuration
 [functions]
   node_bundler = "esbuild"
-  included_files = ["node_modules/**", ".next/**"]
+  # Optimize function size and performance
+  timeout = 30
+  # Only include essential runtime dependencies, not dev dependencies
+  included_files = [
+    ".next/server/**",
+    ".next/static/**",
+    ".env*"
+  ]
+  # Exclude large development and build dependencies
+  external_node_modules = [
+    "@next/swc-*",
+    "@biomejs/biome",
+    "eslint*",
+    "typescript",
+    "turbopack*",
+    "webpack*",
+    "@types/*",
+    "postcss",
+    "tailwindcss",
+    "workbox-webpack-plugin",
+    "critters"
+  ]
+
+# Alternative: Static deployment if function is still too large
+# Uncomment these lines if serverless deployment continues to fail
+# [build]
+#   command = "npm ci && npm run build && npm run export"
+#   publish = "out"
 
 [dev]
   command = "npm run dev"

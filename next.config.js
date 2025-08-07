@@ -79,7 +79,8 @@ const nextConfig = {
     optimizeServerReact: true,
     // Additional performance optimizations
     webVitalsAttribution: ['CLS', 'LCP'],
-    // Removed invalid turbotrace option
+    // Additional performance optimizations
+    webVitalsAttribution: ['CLS', 'LCP'],
   },
 
   // Compression and caching
@@ -100,6 +101,21 @@ const nextConfig = {
 
   // Enhanced webpack optimizations for performance
   webpack: (config, { dev, isServer }) => {
+    // Optimize server bundle size for deployment
+    if (isServer && !dev) {
+      // Exclude development dependencies from server bundle
+      config.externals = config.externals || [];
+      config.externals.push({
+        '@biomejs/biome': 'commonjs @biomejs/biome',
+        'eslint': 'commonjs eslint',
+        'typescript': 'commonjs typescript',
+        'postcss': 'commonjs postcss',
+        'tailwindcss': 'commonjs tailwindcss',
+        'workbox-webpack-plugin': 'commonjs workbox-webpack-plugin',
+        'critters': 'commonjs critters'
+      });
+    }
+
     // Production optimizations
     if (!dev) {
       // More aggressive tree shaking
@@ -202,11 +218,11 @@ const nextConfig = {
           },
           {
             key: 'Cross-Origin-Opener-Policy',
-            value: 'same-origin'
+            value: isDev ? 'unsafe-none' : 'same-origin'
           },
           {
             key: 'Cross-Origin-Embedder-Policy',
-            value: 'require-corp'
+            value: isDev ? 'unsafe-none' : 'require-corp'
           },
           {
             key: 'Cross-Origin-Resource-Policy',
@@ -216,7 +232,7 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://scripts.simpleanalyticscdn.com",
+              isDev ? "script-src 'self' 'unsafe-inline' 'unsafe-eval' 'unsafe-hashes' https://www.googletagmanager.com https://scripts.simpleanalyticscdn.com" : "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://scripts.simpleanalyticscdn.com",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
               "img-src 'self' data: https: blob:",
