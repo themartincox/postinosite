@@ -62,8 +62,13 @@ const withPWA = require('next-pwa')({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Static export configuration for Netlify deployment
+  output: 'export',
+  trailingSlash: true,
+
   // Enhanced image optimization
   images: {
+    unoptimized: true, // Required for static exports
     formats: ['image/webp', 'image/avif'],
     domains: ['postino.cc', 'same-assets.com', 'images.unsplash.com'],
     dangerouslyAllowSVG: true,
