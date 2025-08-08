@@ -7,9 +7,9 @@ import { generateBusinessHoursSchema, generateContactPointSchema, generateLocalB
 import dynamic from 'next/dynamic';
 
 // Dynamically import chatbot and PWA wrapper
-const IntelligentChatbot = dynamic(() => import('@/components/IntelligentChatbot'), {
-  loading: () => null,
-});
+// const IntelligentChatbot = dynamic(() => import('@/components/IntelligentChatbot'), {
+//   loading: () => null,
+// }); // Temporarily disabled for deployment
 
 const PWAWrapper = dynamic(() => import('@/components/PWAWrapper'), {
   loading: () => null,
