@@ -567,6 +567,7 @@ export default function AIAutomationPage() {
         }}
       />
 
+      {/* WhatsApp Widget */}
       <WhatsAppWidget />
     </div>
   );
