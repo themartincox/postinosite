@@ -120,7 +120,6 @@ export default function Navigation() {
   const navigationItems = [
     { href: "/growth-marketing", label: "Growth Marketing" },
     { href: "/ai-automation", label: "AI & Automation" },
-    { href: "/nottingham/services", label: "Nottingham Services" },
     { href: "/industries", label: "Industries" },
     { href: "/ai-automation-hub", label: "AI Hub", special: true },
     { href: "/case-studies", label: "Case Studies" },
