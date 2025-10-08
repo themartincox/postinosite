@@ -1,5 +1,4 @@
 import ContactForm from "@/components/ContactForm";
-import Navigation from "@/components/Navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -30,7 +29,7 @@ export default function AIAutomationDemoPage() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Navigation */}
-      <Navigation />
+      {/* Header is global; Navigation removed */}
 
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-coral-red to-midnight-blue text-white py-20">

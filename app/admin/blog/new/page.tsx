@@ -1,6 +1,5 @@
 "use client";
 
-import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -10,7 +9,7 @@ import Link from "next/link";
 export default function NewBlogPostPage() {
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navigation />
+      {/* Header is global; Navigation removed */}
 
       <div className="bg-midnight-blue text-white py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

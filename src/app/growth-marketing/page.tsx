@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Navigation from "@/components/Navigation";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
 import FAQSection from "@/components/ui/faq";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
@@ -82,7 +81,7 @@ export default function GrowthMarketingPage() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Navigation */}
-      <Navigation />
+      {/* Header is global; Navigation removed */}
 
       {/* Breadcrumb */}
       <div className="bg-white py-4 border-b border-gray-200">

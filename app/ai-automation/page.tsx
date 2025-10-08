@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Navigation from "@/components/Navigation";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
 
 export const metadata: Metadata = {
@@ -73,7 +72,7 @@ export default function AIAutomationPage() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Navigation */}
-      <Navigation />
+      {/* Header is global; Navigation removed */}
 
       {/* Hero Section */}
       <section className="bg-coral-red text-white py-20">

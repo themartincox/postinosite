@@ -1,4 +1,3 @@
-import Navigation from "@/components/Navigation";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
 import ContactForm from "@/components/ContactForm";
 import { Badge } from "@/components/ui/badge";
@@ -52,7 +51,7 @@ export default function RevenueForecastPage() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Navigation */}
-      <Navigation />
+      {/* Header is global; Navigation removed */}
 
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-forest-green to-midnight-blue text-white py-20">

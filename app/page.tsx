@@ -1,5 +1,4 @@
 import EnhancedServiceCards from "@/components/EnhancedServiceCards";
-import Navigation from "@/components/Navigation";
 import ParticleNetwork from "@/components/ParticleNetwork";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
 import { Badge } from "@/components/ui/badge";
@@ -58,7 +57,7 @@ export default function HomePage() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Navigation */}
-      <Navigation />
+      {/* Header is global; Navigation removed */}
 
       {/* Hero Section */}
       <section className="hero-gradient text-white py-20 lg:py-32 relative overflow-hidden">

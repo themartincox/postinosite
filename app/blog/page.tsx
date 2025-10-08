@@ -1,7 +1,6 @@
 import { getAllBlogPosts } from "@/lib/blog-data";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import Navigation from "@/components/Navigation";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
 import Link from "next/link";
 import Image from "next/image";
@@ -14,7 +13,7 @@ export default function BlogPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
-      <Navigation />
+      {/* Header is global; Navigation removed */}
 
       {/* Header */}
       <div className="bg-soft-gray py-16">

@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Navigation from "@/components/Navigation";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
 import FAQSection from "@/components/ui/faq";
 import { Badge } from "@/components/ui/badge";
@@ -222,7 +221,7 @@ export default function AIAutomationPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
-      <Navigation />
+      {/* Header is global; Navigation removed */}
 
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-600 to-emerald-600 text-white py-20">

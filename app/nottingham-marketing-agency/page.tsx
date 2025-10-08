@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Navigation from "@/components/Navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -72,7 +71,7 @@ const localTestimonials = [
 export default function NottinghamMarketingAgency() {
   return (
     <div className="min-h-screen bg-warm-white">
-      <Navigation />
+      {/* Header is global; Navigation removed */}
 
       {/* Hero Section */}
       <section className="relative py-20 lg:py-32 bg-gradient-to-br from-midnight-blue via-charcoal to-forest-green text-white overflow-hidden">
