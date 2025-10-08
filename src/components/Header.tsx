@@ -5,6 +5,7 @@ import nav from '@/config/navigation.config';
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const btnId = useId();
   const menuId = useId();
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -16,15 +17,25 @@ export default function Header() {
     function onEsc(e: KeyboardEvent) { if (e.key === 'Escape') setOpen(false); }
     document.addEventListener('mousedown', onDoc);
     document.addEventListener('keydown', onEsc);
-    return () => { document.removeEventListener('mousedown', onDoc); document.removeEventListener('keydown', onEsc); };
+    const onScroll = () => setScrolled(window.scrollY > 4);
+    window.addEventListener('scroll', onScroll);
+    onScroll();
+    return () => {
+      document.removeEventListener('mousedown', onDoc);
+      document.removeEventListener('keydown', onEsc);
+      window.removeEventListener('scroll', onScroll);
+    };
   }, []);
 
   const primary = nav.primary;
 
   return (
-    <header className="site-header">
+    <header className="site-header" data-scrolled={scrolled ? 'true' : 'false'}>
       <nav aria-label="Primary">
         <ul className="nav-row">
+          <li className="brand">
+            <Link href="/">Postino.</Link>
+          </li>
           <li
             ref={wrapRef}
             className="nav-item"
@@ -40,6 +51,9 @@ export default function Header() {
               onClick={() => setOpen(v => !v)}
             >
               {primary[0].label}
+              <svg className="caret" width="12" height="12" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.24 4.5a.75.75 0 01-1.08 0l-4.24-4.5a.75.75 0 01.02-1.06z" />
+              </svg>
             </button>
             {open && primary[0].type === 'mega' && (
               <div id={menuId} role="menu" aria-labelledby={btnId} className="mega">

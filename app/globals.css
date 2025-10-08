@@ -10,18 +10,30 @@
   .mobile-only { @apply block md:hidden; }
 
   /* Header & Navigation */
-  .site-header { @apply sticky top-0 z-50 bg-white/90 backdrop-blur-sm border-b border-gray-200; }
+  .site-header { @apply sticky top-0 z-50 bg-white/90 backdrop-blur-sm border-b border-gray-200 relative; }
+  .site-header::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: linear-gradient(90deg, hsl(var(--midnight-blue)), hsl(var(--forest-green)), hsl(var(--coral-red))); opacity: .25; }
+  .site-header[data-scrolled="true"] { @apply bg-white/95 shadow-md; }
   .nav-row { @apply max-w-7xl mx-auto flex items-center gap-6 px-4 py-4; }
+  .brand a { @apply font-heading font-bold text-lg text-midnight-blue; }
   .nav-item { @apply relative; }
-  .nav-link { @apply text-gray-700 hover:text-midnight-blue font-heading text-sm px-2 py-1 transition-colors; }
-  .nav-trigger { @apply inline-flex items-center gap-1 text-gray-800 hover:text-midnight-blue font-heading text-sm px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-midnight-blue transition-colors; }
+  .nav-link { @apply text-gray-700 hover:text-midnight-blue font-heading text-sm px-2 py-1 transition-colors; position: relative; }
+  .nav-trigger { @apply inline-flex items-center gap-1 text-gray-800 hover:text-midnight-blue font-heading text-sm px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-midnight-blue transition-colors; position: relative; }
+  .nav-link::after, .nav-trigger::after { content: ""; position: absolute; left: 0; bottom: -4px; height: 2px; width: 0; background-color: hsl(var(--midnight-blue)); transition: width 200ms ease; }
+  .nav-link:hover::after, .nav-trigger:hover::after { width: 100%; }
+  .nav-trigger .caret { transition: transform 150ms ease; }
+  .nav-trigger[aria-expanded="true"] .caret { transform: rotate(180deg); }
   .nav-cta { @apply ml-auto flex items-center gap-2; }
 
-  .mega { @apply absolute left-0 top-full mt-2 bg-white shadow-2xl rounded-xl p-6 grid grid-cols-2 gap-8 border border-gray-200; min-width: 44rem; }
+  .mega { @apply absolute left-0 top-full mt-2 bg-white shadow-2xl rounded-xl p-6 grid grid-cols-2 gap-8 border border-gray-200; min-width: 44rem; animation: mega-drop 160ms ease-out; }
   .mega-col { @apply min-w-56; }
   .mega-title { @apply text-xs uppercase tracking-wide text-gray-500 mb-3; }
   .mega ul li a { @apply block text-sm text-gray-700 hover:text-midnight-blue hover:bg-gray-50 rounded-md px-2 py-1; }
   .mega ul { @apply space-y-1; }
+
+  @keyframes mega-drop {
+    from { opacity: 0; transform: translateY(8px) scale(.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
 
   /* Buttons */
   .btn { @apply inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2; }
