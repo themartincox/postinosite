@@ -268,15 +268,14 @@ const nextConfig = {
     CUSTOM_KEY: 'custom_value',
   },
 
-  // Redirects for SEO
+  // Redirects for SEO and IA
   async redirects() {
     return [
-      {
-        source: '/services',
-        destination: '/growth-marketing',
-        permanent: true,
-      },
-    ]
+      { source: '/ai-hub', destination: '/resources', permanent: true },
+      { source: '/blog', destination: '/resources/blog', permanent: true },
+      { source: '/growth-marketing', destination: '/services/growth-marketing', permanent: true },
+      { source: '/ai-and-automation', destination: '/services/ai-automation', permanent: true },
+    ];
   },
 }
 

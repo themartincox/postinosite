@@ -1,4 +1,3 @@
-import Navigation from "@/components/Navigation";
 // import StickyScrollIndustries from "@/components/StickyScrollIndustries";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
 import { Badge } from "@/components/ui/badge";
@@ -217,7 +216,7 @@ export default function Industries2Page() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Navigation */}
-      <Navigation />
+      {/* Header is global; Navigation removed */}
 
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-midnight-blue to-forest-green text-white py-20">

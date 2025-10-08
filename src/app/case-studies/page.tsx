@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import { generatePageMetadata } from '@/lib/metadata'
-import Navigation from "@/components/Navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,6 +18,8 @@ import {
   Check,
 } from "lucide-react";
 import Link from "next/link";
+import { CaseStudyFilterBar } from '@/components/FilterBar';
+import { fetchCaseStudies, fetchFacetOptions } from '@/lib/cms';
 
 export const metadata: Metadata = generatePageMetadata({
   title: "Case Studies | Proven Results in Growth Marketing & AI Automation",
@@ -28,7 +29,9 @@ export const metadata: Metadata = generatePageMetadata({
   changeFreq: "monthly",
 });
 
-export default function CaseStudiesPage() {
+export default async function CaseStudiesPage({ searchParams }: { searchParams: Record<string, string | string[] | undefined> }) {
+  const { industries, services, stacks } = await fetchFacetOptions();
+  const filtered = await fetchCaseStudies(searchParams);
   const caseStudies = [
     {
       company: "Bright Dental Practice",
@@ -61,8 +64,7 @@ export default function CaseStudiesPage() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Navigation */}
-      <Navigation />
+      {/* Header is global; Navigation removed */}
 
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-midnight-blue to-forest-green text-white py-20">
@@ -89,6 +91,17 @@ export default function CaseStudiesPage() {
         </div>
       </section>
 
+      {/* Filters */}
+      <section className="py-8 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <CaseStudyFilterBar
+            industries={industries}
+            services={services}
+            stacks={stacks}
+          />
+        </div>
+      </section>
+
       {/* Case Studies */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -102,6 +115,24 @@ export default function CaseStudiesPage() {
           </div>
 
           <div className="space-y-8">
+            {/* Filtered results (data adapter) */}
+            {filtered.length > 0 && (
+              <div>
+                <h3 className="text-2xl font-heading font-bold mb-4">Filtered Case Studies</h3>
+                <div className="grid md:grid-cols-2 gap-6">
+                  {filtered.map(cs => (
+                    <div key={cs.slug} className="p-6 border rounded-lg">
+                      <h4 className="text-xl font-heading">{cs.title}</h4>
+                      <p className="text-gray-600 mb-3">{cs.summary}</p>
+                      <ul className="flex gap-2 text-sm text-gray-500 flex-wrap">
+                        <li>{cs.industry}</li>
+                        {cs.services.map(s => (<li key={s}>{s}</li>))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
             {caseStudies.map((study, index) => (
               <Card key={index} className="bg-white shadow-lg border-0 overflow-hidden">
                 <div className="grid lg:grid-cols-3 gap-0">

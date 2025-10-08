@@ -1,4 +1,3 @@
-import Navigation from "@/components/Navigation";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -17,8 +16,17 @@ import {
   Zap,
 } from "lucide-react";
 import Link from "next/link";
+import { ResourceFilterBar } from '@/components/FilterBar';
+import { fetchResources } from '@/lib/cms';
+import type { Metadata } from 'next';
 
-export default function ResourcesPage() {
+export const metadata: Metadata = {
+  title: 'Resources | Postino',
+  description: 'Blog, guides and tools.'
+};
+
+export default async function ResourcesPage({ searchParams }: { searchParams: Record<string, string | string[] | undefined> }) {
+  const items = await fetchResources(searchParams);
   const resources = [
     {
       category: "Guides",
@@ -81,8 +89,7 @@ export default function ResourcesPage() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Navigation */}
-      <Navigation />
+      {/* Header is global; Navigation removed */}
 
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-midnight-blue via-forest-green to-coral-red text-white py-20">
@@ -112,6 +119,31 @@ export default function ResourcesPage() {
           </div>
         </div>
       </section>
+
+      {/* Filters */}
+      <section className="py-8 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ResourceFilterBar />
+        </div>
+      </section>
+
+      {/* Filtered items list */}
+      {items.length > 0 && (
+        <section className="py-8 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl font-heading font-bold mb-4">Filtered Resources</h2>
+            <ul className="grid md:grid-cols-2 gap-4">
+              {items.map(r => (
+                <li key={r.slug} className="p-4 border rounded-lg">
+                  <div className="text-sm text-gray-500 mb-1">{r.type} · {r.topic} · {new Date(r.date).toLocaleDateString('en-GB')}</div>
+                  <div className="text-lg font-heading">{r.title}</div>
+                  <p className="text-gray-600">{r.summary}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
 
       {/* Resources Section */}
       <section id="resources" className="py-20 bg-white">

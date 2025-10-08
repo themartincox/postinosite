@@ -62,7 +62,7 @@ export default function NotFound() {
 
       {/* Navigation */}
       <div className="relative z-10">
-        <Navigation />
+        {/* Header is global; Navigation removed */}
       </div>
 
       {/* Main Content */}

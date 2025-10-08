@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import Navigation from '@/components/Navigation';
 import LocalServicePayment from '@/components/LocalServicePayment';
 import { BINGHAM_SERVICES, type ServiceKey } from '@/lib/stripe-config';
 
@@ -55,7 +54,7 @@ export default async function BinghamBookingPage({ params }: BookingPageProps) {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Navigation />
+      {/* Header is global; Navigation removed */}
 
       <main className="flex-1 py-20 bg-soft-gray">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

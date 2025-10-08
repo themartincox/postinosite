@@ -4,11 +4,8 @@ import "./globals.css";
 import Script from "next/script";
 import { getOrganizationStructuredData, getWebsiteStructuredData } from '@/lib/structured-data';
 import dynamic from 'next/dynamic';
-
-// Dynamically import chatbot
-const IntelligentChatbot = dynamic(() => import('@/components/IntelligentChatbot'), {
-  loading: () => null,
-});
+import Header from '@/components/Header';
+import MobileNav from '@/components/MobileNav';
 
 // More aggressive font optimization
 const inter = Inter({
@@ -153,7 +150,14 @@ export default function RootLayout({
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
       </head>
       <body className="antialiased min-h-screen bg-white text-gray-900">
-        {children}
+        <a className="skip-link" href="#main">Skip to content</a>
+        <div className="desktop-only">
+          <Header />
+        </div>
+        <div className="mobile-only">
+          <MobileNav />
+        </div>
+        <main id="main">{children}</main>
 
         {/* Structured Data */}
         <Script
@@ -315,7 +319,7 @@ export default function RootLayout({
         </noscript>
 
         {/* Intelligent Chatbot - Available on all pages */}
-        <IntelligentChatbot />
+        {/* <IntelligentChatbot /> */}
       </body>
     </html>
   );

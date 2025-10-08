@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Navigation from '@/components/Navigation'
 import WhatsAppWidget from '@/components/WhatsAppWidget'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
@@ -62,7 +61,7 @@ export default function NotFound() {
 
       {/* Navigation */}
       <div className="relative z-10">
-        <Navigation />
+        {/* Header is global; Navigation removed */}
       </div>
 
       {/* Main Content */}

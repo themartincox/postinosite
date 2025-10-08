@@ -1,4 +1,3 @@
-import Navigation from "@/components/Navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -127,7 +126,7 @@ export default function AdminDashboard() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Navigation */}
-      <Navigation />
+      {/* Header is global; Navigation removed */}
 
       {/* Admin Header */}
       <div className="bg-midnight-blue text-white py-8">

@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Navigation from "@/components/Navigation";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -281,7 +280,7 @@ const pricingPackages = [
 export default function NottinghamWebDesignPage() {
   return (
     <div className="flex flex-col min-h-screen bg-white">
-      <Navigation />
+      {/* Header is global; Navigation removed */}
 
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-midnight-blue via-forest-green to-coral-red text-white py-20">
