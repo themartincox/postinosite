@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Navigation from "@/components/Navigation";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -47,7 +46,7 @@ export const metadata: Metadata = {
 export default function ConversationalContentPage() {
   return (
     <div className="flex flex-col min-h-screen">
-      <Navigation />
+      {/* Header is global; Navigation removed */}
 
       {/* Blog Header */}
       <header className="bg-white border-b border-gray-200 py-8">

@@ -5,6 +5,8 @@ import Script from "next/script";
 import { getOrganizationStructuredData, getWebsiteStructuredData } from '@/lib/structured-data';
 import { generateBusinessHoursSchema, generateContactPointSchema, generateLocalBusinessSchema } from '@/lib/seo-metadata';
 import dynamic from 'next/dynamic';
+import Header from '@/components/Header';
+import MobileNav from '@/components/MobileNav';
 
 // Dynamically import chatbot and PWA wrapper
 // const IntelligentChatbot = dynamic(() => import('@/components/IntelligentChatbot'), {
@@ -234,7 +236,16 @@ export default function RootLayout({
         <meta name="color-scheme" content="light" />
       </head>
       <body className="antialiased min-h-screen bg-white text-gray-900">
-        {children}
+        <a className="skip-link" href="#main">Skip to content</a>
+        {/* Desktop header */}
+        <div className="desktop-only">
+          <Header />
+        </div>
+        {/* Mobile navigation */}
+        <div className="mobile-only">
+          <MobileNav />
+        </div>
+        <main id="main">{children}</main>
 
         {/* Structured Data */}
         <Script
