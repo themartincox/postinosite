@@ -150,7 +150,6 @@ export default function RootLayout({
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
       </head>
       <body className="antialiased min-h-screen bg-white text-gray-900">
-        <a className="skip-link" href="#main">Skip to content</a>
         <div className="desktop-only">
           <Header />
         </div>
